@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>汉字转拼音</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="public/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('Index/index')}">系统</a>
+                    </li>
+                                        <li class="active">汉字转拼音</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">汉字转拼音</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">输入汉字（转换首字母）</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="han" required="" type="text" id="han">
+                            </div>
+                            <input type="button" id="send" class="btn btn-success" value="点击开始转换">
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right"></label>
+                            <div class="col-sm-6">
+                                <p class="help-block red han">xxx</p>
+                            </div>
+                            
+                        </div> 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">输入汉字（全部转换）</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="han1" required="" type="text" id="han1">
+                            </div>
+                            <input type="button" id="send1" class="btn btn-success" value="点击开始转换">
+                        </div> 
+                       <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right"></label>
+                            <div class="col-sm-6">
+                                <p class="help-block red han1">xxx</p>
+                            </div>
+                            
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+
+    <script type="text/javascript"> 
+    var countdown=60; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击开始转换"; 
+            countdown = 60; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新转换(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+      
+    //点击事件
+    $('#send').click(function(){
+        if($('#han').val()){
+             //转换
+            $.post("{:url('funs/sendhan')}",{han:$('#han').val(),type:1},function(res){
+                //console.log(res)
+                if(res.code == 1001){
+                    $(".han").removeClass('red').addClass('green').html(res.msg+':'+res.data.data);
+                }
+                if(res.code == 2001){
+                    $(".han").html(res.msg);
+                }
+            },"json");
+            //倒数60s
+            settime(this);
+
+        }else{
+            $('.han').html('请输入邮箱');
+        }
+    })
+
+
+     //点击事件
+    $('#send1').click(function(){
+        if($('#han1').val()){
+             //转换
+            $.post("{:url('funs/sendhan')}",{han:$('#han1').val(),type:2},function(res){
+                //console.log(res)
+                if(res.code == 1001){
+                    $(".han1").removeClass('red').addClass('green').html(res.msg+':'+res.data.data);
+                }
+                if(res.code == 2001){
+                    $(".han1").html(res.msg);
+                }
+            },"json");
+            //倒数60s
+            settime(this);
+
+        }else{
+            $('.han1').html('请输入邮箱');
+        }
+    })
+    </script>
+
+</body></html>

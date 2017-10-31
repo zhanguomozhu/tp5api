@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>地图定位</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <style type="text/css">
+        .show_iframe iframe {height: 1000px;width: 100%}
+    </style>
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="public/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('Index/index')}">系统</a>
+                    </li>
+                                        <li class="active">地图定位</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <form class="form-horizontal" role="form" action="" method="post">
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label no-padding-right">输入地址查询经纬度</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" placeholder="" name="lnglat" required="" type="text" id="lnglat">
+                    </div>
+                    <input type="button" id="send" class="btn btn-success" value="点击开始查询">
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                    </div>
+                    <p class="col-sm-2 help-block red lnglat">xxx</p>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label no-padding-right">根据经纬度或者地址来获取百度地图</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" placeholder="" name="address" required="" type="text" id="address">
+                    </div>
+                    <input type="button" id="send1" class="btn btn-success" value="点击开始查询">
+                </div>
+                 <div class="form-group">
+                    <div class="col-sm-2">
+                    </div>
+                    <p class="col-sm-2 help-block red address">xxx</p>
+                </div>
+            </form>
+            <div class="show_iframe">
+                <iframe scrolling="yes" frameborder="0" src="{:url('showmap')}" id='map'></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+   
+    <script type="text/javascript"> 
+    var countdown=60; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击发送邮件"; 
+            countdown = 60; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+      
+    //点击事件
+    $('#send').click(function(){
+        if($('#lnglat').val()){
+             //发送邮件
+            $.post("{:url('funs/sendMap')}",{lnglat:$('#lnglat').val(),type:1},function(res){
+                //console.log(res)
+                if(res.code == 1001){
+                    console.log(res.data.data)
+                    $(".lnglat").removeClass('red').addClass('green').html('经度'+res.data.data.result.location.lng+',纬度'+res.data.data.result.location.lat);
+                }
+                if(res.code == 2001){
+                    $(".lnglat").html(res.msg);
+                }
+            },"json");
+
+            //倒数60s
+            settime(this);
+
+        }else{
+            $('.lnglat').html('请输入经纬度');
+        }
+        
+    })
+
+
+    //点击事件
+    $('#send1').click(function(){
+        if($('#address').val()){
+             //发送邮件
+            $.post("{:url('funs/sendMap')}",{address:$('#address').val(),type:2},function(res){
+                //console.log(res)
+                if(res.code == 1001){
+                    $('#map').attr('src',res.data.data);
+                    $(".address").removeClass('red').addClass('green').html(res.msg);
+                }
+                if(res.code == 2001){
+                    $(".address").html(res.msg);
+                }
+            },"json");
+
+            //倒数60s
+            settime(this);
+
+        }else{
+            $('.address').html('请输入经纬度或者地址');
+        }
+        
+    })
+    </script>
+
+</body></html>

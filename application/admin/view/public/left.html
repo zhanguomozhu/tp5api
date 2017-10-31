@@ -1,0 +1,115 @@
+          <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input class="searchinput" type="text">
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">没啥用啊</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    {if condition="isset($leftMenus)"}
+                    {volist name="leftMenus" id="vo"}
+                        <li>
+                            <a href="{:url($vo.path)}" class="menu-dropdown">
+                                <i class="menu-icon fa {$vo.icon}"></i>
+                                <span class="menu-text">{$vo.title}</span>
+                                <i class="menu-expand"></i>
+                            </a>
+                            <ul class="submenu">
+                                {if condition="isset($vo.son)"}
+                                {volist name="vo.son" id="v"}
+                                <li>
+                                    <a href="{:url($v.path)}">
+                                        <i class="menu-icon fa {$v.icon}"></i>
+                                        <span class="menu-text">{$v.title}</span>
+                                        <i class="menu-expand"></i>
+                                    </a>
+                                </li>
+                                {/volist}
+                                {/if}
+                            </ul>
+                        </li>
+
+
+
+                    {/volist}
+                    {/if}
+
+
+
+
+
+                    <!-- <li>
+                        <a href="{:url('index/index')}" class="menu-dropdown">
+                            <i class="menu-icon fa fa-th-large"></i>
+                            <span class="menu-text">后台首页</span>
+                            <i class="menu-expand"></i>
+                        </a>                           
+                    </li>
+                    <li>
+                        <a href="" class="menu-dropdown">
+                            <i class="menu-icon fa fa-key"></i>
+                            <span class="menu-text">权限管理</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{:url('Menu/lst')}">
+                                    <span class="menu-text">菜单管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:url('Admin/lst')}">
+                                    <span class="menu-text">用户管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:url('AuthGroup/lst')}">
+                                    <span class="menu-text">角色管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:url('AuthRule/lst')}">
+                                    <span class="menu-text">权限管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{:url('cate/index')}" class="menu-dropdown">
+                            <i class="menu-icon fa fa-folder-o"></i>
+                            <span class="menu-text">常用函数</span>
+                            <i class="menu-expand"></i>
+                        </a>                           
+                    </li>
+                    <li>
+                        <a href="{:url('lists/index')}" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-tasks"></i>
+                            <span class="menu-text">常用功能</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('link/index')}" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-link"></i>
+                            <span class="menu-text">api功能</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li> 
+                     <li>
+                        <a href="{:url('link/index')}" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-chain-broken"></i>
+                            <span class="menu-text">api测试</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li>    -->
+                   
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
