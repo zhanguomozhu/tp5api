@@ -6,7 +6,7 @@ class Menu extends Validate
 	//验证规则
 	protected  $rule = [
 		'pid'    => 'require',
-        'title'  => 'require|length:4,18',
+        'title'  => 'require|length:4,50',
         'path'   => 'require',
 	];
 	//验证提示

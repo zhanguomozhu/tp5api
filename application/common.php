@@ -19,7 +19,7 @@ header("Content-type:text/html;charset=utf-8");
  * @return [string]         	[加密或解密后字符串]
  */
 function enctypetion($value, $type=0){
-	$key = config('ENCTYPETION_KEY');
+	$key = config('sfun.enctypetion_key');
 	if(!$type){
 		return str_replace('=','',base64_encode($value ^ $key));
 	}
@@ -36,7 +36,7 @@ function enctypetion($value, $type=0){
  * @param string $url
  */
 function alertMes($mes,$url){
-	echo "<script type='text/javascript'>alert('{$mes}');location.href='{$url}';</script>";
+	return "<script type='text/javascript'>alert('{$mes}');location.href='{$url}';</script>";
 }
 
 /**
@@ -122,7 +122,7 @@ function doCurl($url,$type=0,$data=[])
  * @param  string $content 内容
  * @return boolean       是否成功
  */
-function send_email($address,$subject,$content){
+function send_email1($address,$subject,$content){
     $email_smtp=config('email.email_smtp');
     $email_username=config('email.email_username');
     $email_password=config('email.email_password');
@@ -752,7 +752,9 @@ function strip_html_tags($tags,$str,$content=0){
  * @return array       匹配的图片数组
  */
 function get_ueditor_image_path($str){
-    $preg='/\/Upload\/image\/u(m)?editor\/\d*\/\d*\.[jpg|jpeg|png|bmp]*/i';
+    //$preg='/\/ueditor\/php\/upload\/image\/u(m)?editor\/\d*\/\d*\.[jpg|jpeg|png|bmp]*/i';
+    $preg='/\<img.*?src\=\"(.*?)\"[^>]*>/i';
+
     preg_match_all($preg, $str,$data);
     return current($data);
 }
@@ -783,28 +785,7 @@ function re_substr($str, $start=0, $length, $suffix=true, $charset="utf-8") {
     return $suffix ? $slice.$omit : $slice;
 }
 
-// 设置验证码
-function show_verify($config=''){
-    if($config==''){
-        $config=array(
-            'codeSet'=>'1234567890',
-            'fontSize'=>30,
-            'useCurve'=>false,
-            'imageH'=>60,
-            'imageW'=>240,
-            'length'=>4,
-            'fontttf'=>'4.ttf',
-            );
-    }
-    $verify=new \Think\Verify($config);
-    return $verify->entry();
-}
 
-// 检测验证码
-function check_verify($code){
-    $verify=new \Think\Verify();
-    return $verify->check($code);
-}
 
 /**
  * 取得根域名
@@ -862,68 +843,6 @@ function cut_str($str,$sign,$number){
     }
 }
 
-/**
- * 发送邮件
- * @param  string $address 需要发送的邮箱地址 发送给多个地址需要写成数组形式
- * @param  string $subject 标题
- * @param  string $content 内容
- * @return boolean       是否成功
- */
-function send_email($address,$subject,$content){
-    $email_smtp=C('EMAIL_SMTP');
-    $email_username=C('EMAIL_USERNAME');
-    $email_password=C('EMAIL_PASSWORD');
-    $email_from_name=C('EMAIL_FROM_NAME');
-    $email_smtp_secure=C('EMAIL_SMTP_SECURE');
-    $email_port=C('EMAIL_PORT');
-    if(empty($email_smtp) || empty($email_username) || empty($email_password) || empty($email_from_name)){
-        return array("error"=>1,"message"=>'邮箱配置不完整');
-    }
-    require_once './ThinkPHP/Library/Org/Nx/class.phpmailer.php';
-    require_once './ThinkPHP/Library/Org/Nx/class.smtp.php';
-    $phpmailer=new \Phpmailer();
-    // 设置PHPMailer使用SMTP服务器发送Email
-    $phpmailer->IsSMTP();
-    // 设置设置smtp_secure
-    $phpmailer->SMTPSecure=$email_smtp_secure;
-    // 设置port
-    $phpmailer->Port=$email_port;
-    // 设置为html格式
-    $phpmailer->IsHTML(true);
-    // 设置邮件的字符编码'
-    $phpmailer->CharSet='UTF-8';
-    // 设置SMTP服务器。
-    $phpmailer->Host=$email_smtp;
-    // 设置为"需要验证"
-    $phpmailer->SMTPAuth=true;
-    // 设置用户名
-    $phpmailer->Username=$email_username;
-    // 设置密码
-    $phpmailer->Password=$email_password;
-    // 设置邮件头的From字段。
-    $phpmailer->From=$email_username;
-    // 设置发件人名字
-    $phpmailer->FromName=$email_from_name;
-    // 添加收件人地址，可以多次使用来添加多个收件人
-    if(is_array($address)){
-        foreach($address as $addressv){
-            $phpmailer->AddAddress($addressv);
-        }
-    }else{
-        $phpmailer->AddAddress($address);
-    }
-    // 设置邮件标题
-    $phpmailer->Subject=$subject;
-    // 设置邮件正文
-    $phpmailer->Body=$content;
-    // 发送邮件。
-    if(!$phpmailer->Send()) {
-        $phpmailererror=$phpmailer->ErrorInfo;
-        return array("error"=>1,"message"=>$phpmailererror);
-    }else{
-        return array("error"=>0);
-    }
-}
 
 /**
  * 获取一定范围内的随机数字
@@ -943,7 +862,7 @@ function rand_number ($min=1, $max=9999) {
  * @param integer $number 数量
  * @param string $len 长度
  * @param string $type 字串类型
- * 0 字母 1 数字 其它 混合
+ * 0 小写字母 1大写字母 2 数字 3大小写 4小写与数字 5大写与数字     其它 混合
  * @return string
  */
 function build_count_rand ($number,$length=4,$mode=1) {
@@ -968,6 +887,38 @@ function build_count_rand ($number,$length=4,$mode=1) {
 }
 
 /**
+ * 随机生成一定长度的字符串
+ * @param  [type] $length [长度]
+ * @param  [type] $model  [类别]
+ * @return [type]         [description]
+ *  0 小写字母 1大写字母 2 数字 3大小写 4小写与数字 5大写与数字     其它 混合
+ */
+function rand_string($length,$model=0){
+	if($model == 0){
+		$str = "abcdefghijklmnopqrstuvwxyz";
+	}elseif($model == 1){
+		$str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	}elseif($model == 2){
+		$str = "0123456789";
+	}elseif($model == 3){
+		$str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	}elseif($model == 4){
+		$str = "0123456789abcdefghijklmnopqrstuvwxyz";
+	}elseif($model == 5){
+		$str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	}else{
+		$str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	}
+	$res = '';
+	for($i=0;$i<$length;$i++){
+		$res .=$str[mt_rand(0,strlen($str)-1)];
+	}
+	return $res;
+}
+
+
+
+/**
  * 生成不重复的随机数
  * @param  int $start  需要生成的数字开始范围
  * @param  int $end 结束范围
@@ -986,40 +937,45 @@ function get_rand_number($start=1,$end=10,$length=4){
     return $data;
 }
 
+
+
 /**
- * 实例化page类
- * @param  integer  $count 总数
- * @param  integer  $limit 每页数量
- * @return subject       page类
+ * 将路径转换加密
+ * @param  string $file_path 路径
+ * @return string            转换后的路径
  */
-function new_page($count,$limit=10){
-    return new \Org\Nx\Page($count,$limit);
+function path_encode($file_path){
+    return rawurlencode(base64_encode($file_path));
 }
 
 /**
- * 获取分页数据
- * @param  subject  $model  model对象
- * @param  array    $map    where条件
- * @param  string   $order  排序规则
- * @param  integer  $limit  每页数量
- * @return array            分页数据
+ * 将路径解密
+ * @param  string $file_path 加密后的字符串
+ * @return string            解密后的路径
  */
-function get_page_data($model,$map,$order='',$limit=10){
-    $count=$model
-        ->where($map)
-        ->count();
-    $page=new_page($count,$limit);
-    // 获取分页数据
-    $list=$model
-            ->where($map)
-            ->order($order)
-            ->limit($page->firstRow.','.$page->listRows)
-            ->select();
-    $data=array(
-        'data'=>$list,
-        'page'=>$page->show()
-        );
-    return $data;
+function path_decode($file_path){
+    return base64_decode(rawurldecode($file_path));
+}
+
+
+
+/**
+ * 使用curl获取远程数据
+ * @param  string $url url连接
+ * @return string      获取到的数据
+ */
+function curl_get_contents($url){
+    $ch=curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);                //设置访问的url地址
+    // curl_setopt($ch,CURLOPT_HEADER,1);               //是否显示头部信息
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);               //设置超时
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);   //用户访问代理 User-Agent
+    curl_setopt($ch, CURLOPT_REFERER,$_SERVER['HTTP_HOST']);        //设置 referer
+    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);          //跟踪301
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);        //返回结果
+    $r=curl_exec($ch);
+    curl_close($ch);
+    return $r;
 }
 
 /**
@@ -1124,24 +1080,7 @@ function upload($path='file',$format='empty',$maxSize='52428800'){
     }
 }
 
-/**
- * 使用curl获取远程数据
- * @param  string $url url连接
- * @return string      获取到的数据
- */
-function curl_get_contents($url){
-    $ch=curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);                //设置访问的url地址
-    // curl_setopt($ch,CURLOPT_HEADER,1);               //是否显示头部信息
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);               //设置超时
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);   //用户访问代理 User-Agent
-    curl_setopt($ch, CURLOPT_REFERER,$_SERVER['HTTP_HOST']);        //设置 referer
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);          //跟踪301
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);        //返回结果
-    $r=curl_exec($ch);
-    curl_close($ch);
-    return $r;
-}
+
 
 /*
 * 计算星座的函数 string get_zodiac_sign(string month, string day)
@@ -1211,23 +1150,6 @@ function send_sms_code($phone,$code){
     }
 }
 
-/**
- * 将路径转换加密
- * @param  string $file_path 路径
- * @return string            转换后的路径
- */
-function path_encode($file_path){
-    return rawurlencode(base64_encode($file_path));
-}
-
-/**
- * 将路径解密
- * @param  string $file_path 加密后的字符串
- * @return string            解密后的路径
- */
-function path_decode($file_path){
-    return base64_decode(rawurldecode($file_path));
-}
 
 /**
  * 根据文件后缀的不同返回不同的结果
@@ -1292,30 +1214,6 @@ function in_iarray($str,$array){
     return false;
 }
 
-/**
- * 传入时间戳,计算距离现在的时间
- * @param  number $time 时间戳
- * @return string     返回多少以前
- */
-function word_time($time) {
-    $time = (int) substr($time, 0, 10);
-    $int = time() - $time;
-    $str = '';
-    if ($int <= 2){
-        $str = sprintf('刚刚', $int);
-    }elseif ($int < 60){
-        $str = sprintf('%d秒前', $int);
-    }elseif ($int < 3600){
-        $str = sprintf('%d分钟前', floor($int / 60));
-    }elseif ($int < 86400){
-        $str = sprintf('%d小时前', floor($int / 3600));
-    }elseif ($int < 1728000){
-        $str = sprintf('%d天前', floor($int / 86400));
-    }else{
-        $str = date('Y-m-d H:i:s', $time);
-    }
-    return $str;
-}
 
 /**
  * 生成缩略图

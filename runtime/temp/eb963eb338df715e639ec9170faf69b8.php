@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\menu\lst.html";i:1509328395;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\uploadfile.html";i:1509526769;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>菜单管理</title>
+    <title>小功能</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,11 +18,15 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
     
 </head>
 <body>
 	<!-- 头部 -->
-        <div class="navbar">
+	    <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -202,9 +206,9 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="#">系统</a>
+                        <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">菜单管理</li>
+                                        <li class="active">小功能</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -212,67 +216,58 @@
                 <!-- Page Body -->
                 <div class="page-body">
                     
-<button type="button" tooltip="添加管理员" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '<?php echo url('add'); ?>'"> <i class="fa fa-plus"></i> 添加
-</button>
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">
+                    <!-- 万年历 -->
+                    <script type="text/javascript" charset="utf-8" src="__ADMIN__/style/clock.js"></script>
+                    <script type="text/javascript">showcal();</script>
+                </span>
+            </div>
             <div class="widget-body">
-                <div class="flip-scroll">
-                    <form action="" method="post"> 
-                    <table class="table table-bordered table-hover">
-                       <thead class="">
-                            <tr>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">排序</th>
-                                <th class="text-center">菜单名称</th>
-                                <th class="text-center">菜单图标</th>
-                                <th class="text-center">菜单路径</th>
-                                <th class="text-center">级别</th>
-                                <th class="text-center">是否显示</th>
-                                <th class="text-center">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php if(is_array($menus) || $menus instanceof \think\Collection || $menus instanceof \think\Paginator): $i = 0; $__LIST__ = $menus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                            <tr>
-                                <td align="center" style="width: 5%;"><?php echo $vo['id']; ?></td>
-                                <td align="center" style="width: 10%;">
-                                    <input type="text" style="width: 50%;text-align: center;" name="<?php echo $vo['id']; ?>" value="<?php echo $vo['sort']; ?>">
-                                </td>
-                                <td align="left" style="width: 20%;"><?php echo $vo['title']; ?></td>
-                                <td align="center" style="width: 10%;"><i class="menu-icon fa <?php echo $vo['icon']; ?>"></i></td>
-                                <td align="center" style="width: 20%;"><?php echo $vo['path']; ?></td>
-                                <td align="center" style="width: 5%;"><?php echo $vo['level']; ?>级别</td>
-                                <td align="center" style="width: 10%;">
-                                <?php if($vo['status'] == 1): ?>
-                                    <a href="<?php echo url('edit_status',['id'=>$vo['id'],'status'=>0]); ?>" title="点击修改状态" class="btn btn-sm btn-success">显示</a>
-                                <?php else: ?>
-                                    <a href="<?php echo url('edit_status',['id'=>$vo['id'],'status'=>1]); ?>" class="btn btn-sm btn-danger">隐藏</a>
-                                <?php endif; ?>
-                            </td>
-                               <td align="center" style="width: 20%;">
-                                    <a href="<?php echo url('edit',array('id'=>$vo['id'])); ?>" class="btn btn-primary btn-sm shiny">
-                                        <i class="fa fa-edit"></i> 编辑
-                                    </a>
-                                    <a href="#" onClick="warning('确实要删除吗', '<?php echo url('del',array('id'=>$vo['id'])); ?>')" class="btn btn-danger btn-sm shiny">
-                                        <i class="fa fa-trash-o"></i> 删除
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php endforeach; endif; else: echo "" ;endif; ?>
-                             <tr>
-                                <td></td>
-                                <td style="text-align: center;">
-                                    <input type="submit" class="btn btn-primary btn-sm shiny" name="" value="排序">
-                                </td>
-                                <td colspan="5"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" id="uploadForm">
+                       <div class="form-group">
+                             <input type="file" name="img" id="file" value="" onchange="select_file_excel()" style="display: none;">
+                             <div align="left">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">上传图片</label>
+                                <div class="col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="file_excel()" value="点击开始上传">
+                                </div>
+                                <div class="col-sm-4">
+                                <p class="red img1"></p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label for="username" class="col-sm-2 control-label no-padding-right">预览图片</label>
+                            <div class="col-sm-10">
+                                <div style="height: 100%;" id="img1">
+                                </div>
+                            </div>
+                       </div>
+
+
+                       
                     </form>
                 </div>
-                <div style="padding-top:10px;text-align: center;">
+                <div id="horizontal-form" style="margin-top: 100px;">
+                     <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" id="uploadForm1" >
+                       <div class="form-group">
+                             <input type="file" name="file" id="file1" value="" onchange="select_file_excel1()" style="display: none;">
+                             <div align="left">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">上传文件</label>
+                                <div class="col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="file_excel1()" value="点击开始上传">
+                                </div>
+                                <div class="col-sm-4">
+                                <p class="red file1"></p>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -284,6 +279,7 @@
             </div>
             <!-- /Page Content -->
 		</div>	
+
 	</div>
 
 	    <!--Basic Scripts-->
@@ -292,7 +288,110 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script>
+    layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          
+          //常规用法
+          laydate.render({
+            elem: '#sign'
+          });
 
+          //常规用法
+          laydate.render({
+            elem: '#fortime'
+          });
+          //时间
+          laydate.render({
+            elem: '#fortime1'
+            ,type: 'time'
+          });
+      });
+    </script>
+    <script type="text/javascript"> 
+    var countdown=10; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击发送邮件"; 
+            countdown = 10; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+
+
+    //上传图片*****************************************
+    //导入excel
+    function file_excel(){
+       $("#file").click();
+    }
+
+    //选择图片
+    function select_file_excel() {
+
+        $.ajax({
+            url: "<?php echo url('sfun/douploadimg'); ?>",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#uploadForm')[0]),
+            dataType:'json',
+            processData: false,
+            contentType: false,
+            success:function(json){
+
+                //返回提示信息
+                if(json.code == 1001){
+                    $('.img1').removeClass('red').addClass('green').html(json.msg);
+                    var str = "<img style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"'>";
+                    $('#img1').append(str);
+                }
+                if(json.code == 2001){
+                    $('.img1').html(json.msg);
+                }
+            }
+        });
+    }
+
+
+    //上传文件*****************************************
+     //导入excel
+    function file_excel1(){
+       $("#file1").click();
+    }
+
+    //选择图片
+    function select_file_excel1() {
+
+        $.ajax({
+            url: "<?php echo url('sfun/douploadfile'); ?>",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#uploadForm1')[0]),
+            dataType:'json',
+            processData: false,
+            contentType: false,
+            success:function(json){
+                console.log(json)
+                //返回提示信息
+                if(json.code == 1001){
+                    $('.file1').removeClass('red').addClass('green').html(json.msg+" | "+json.data.data);
+                }
+                if(json.code == 2001){
+                    $('.file1').html(json.msg);
+                }
+            }
+        });
+    }
+
+   
+    </script>
 
 </body></html>

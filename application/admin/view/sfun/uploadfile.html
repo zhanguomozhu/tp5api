@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>小功能</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="public/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('Index/index')}">系统</a>
+                    </li>
+                                        <li class="active">小功能</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">
+                    <!-- 万年历 -->
+                    <script type="text/javascript" charset="utf-8" src="__ADMIN__/style/clock.js"></script>
+                    <script type="text/javascript">showcal();</script>
+                </span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" id="uploadForm">
+                       <div class="form-group">
+                             <input type="file" name="img" id="file" value="" onchange="select_file_excel()" style="display: none;">
+                             <div align="left">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">上传图片</label>
+                                <div class="col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="file_excel()" value="点击开始上传">
+                                </div>
+                                <div class="col-sm-4">
+                                <p class="red img1"></p>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label for="username" class="col-sm-2 control-label no-padding-right">预览图片</label>
+                            <div class="col-sm-10">
+                                <div style="height: 100%;" id="img1">
+                                </div>
+                            </div>
+                       </div>
+
+
+                       
+                    </form>
+                </div>
+                <div id="horizontal-form" style="margin-top: 100px;">
+                     <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" id="uploadForm1" >
+                       <div class="form-group">
+                             <input type="file" name="file" id="file1" value="" onchange="select_file_excel1()" style="display: none;">
+                             <div align="left">
+                                <label for="username" class="col-sm-2 control-label no-padding-right">上传文件</label>
+                                <div class="col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="file_excel1()" value="点击开始上传">
+                                </div>
+                                <div class="col-sm-4">
+                                <p class="red file1"></p>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script>
+    layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          
+          //常规用法
+          laydate.render({
+            elem: '#sign'
+          });
+
+          //常规用法
+          laydate.render({
+            elem: '#fortime'
+          });
+          //时间
+          laydate.render({
+            elem: '#fortime1'
+            ,type: 'time'
+          });
+      });
+    </script>
+    <script type="text/javascript"> 
+    var countdown=10; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击发送邮件"; 
+            countdown = 10; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+
+
+    //上传图片*****************************************
+    //导入excel
+    function file_excel(){
+       $("#file").click();
+    }
+
+    //选择图片
+    function select_file_excel() {
+
+        $.ajax({
+            url: "{:url('sfun/douploadimg')}",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#uploadForm')[0]),
+            dataType:'json',
+            processData: false,
+            contentType: false,
+            success:function(json){
+
+                //返回提示信息
+                if(json.code == 1001){
+                    $('.img1').removeClass('red').addClass('green').html(json.msg);
+                    var str = "<img style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"'>";
+                    $('#img1').append(str);
+                }
+                if(json.code == 2001){
+                    $('.img1').html(json.msg);
+                }
+            }
+        });
+    }
+
+
+    //上传文件*****************************************
+     //导入excel
+    function file_excel1(){
+       $("#file1").click();
+    }
+
+    //选择图片
+    function select_file_excel1() {
+
+        $.ajax({
+            url: "{:url('sfun/douploadfile')}",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#uploadForm1')[0]),
+            dataType:'json',
+            processData: false,
+            contentType: false,
+            success:function(json){
+                console.log(json)
+                //返回提示信息
+                if(json.code == 1001){
+                    $('.file1').removeClass('red').addClass('green').html(json.msg+" | "+json.data.data);
+                }
+                if(json.code == 2001){
+                    $('.file1').html(json.msg);
+                }
+            }
+        });
+    }
+
+   
+    </script>
+
+</body></html>
