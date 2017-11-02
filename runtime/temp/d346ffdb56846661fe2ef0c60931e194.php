@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\index\index.html";i:1508727988;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1508914442;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\index\index.html";i:1508727988;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">

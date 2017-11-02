@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html";i:1509169979;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1508914442;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html";i:1509169979;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">

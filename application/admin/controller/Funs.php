@@ -328,4 +328,76 @@ class Funs extends Base
 			
 		}
 	}
+
+	/**
+	 * excel
+	 * @return [type] [description]
+	 */
+	public function excel(){
+		return $this->fetch();
+	}
+
+
+	/**
+	 * 读取excel
+	 * @return [type] [description]
+	 */
+	public function doupload(){
+		//上传文件名
+		$filename = '.'.$this->doUploadExcel();
+		$data = $this->doExcel($filename);
+		if($data){
+			echo $this->show(1001,'获取成功',['data'=>$data]);
+		}else{
+			echo $this->show(2001);
+		}
+	}
+
+
+
+	/**
+	 * 下载excel
+	 * @return [type] [description]
+	 */
+	public function dodownload(){
+		//上传文件名
+		if(request()->isAjax()){
+			//数据
+			$data = input('post.arr/a');
+			//格式
+			if(input('tp') == 1){
+				$extion = '.csv';
+			}
+			if(input('tp') == 2){
+				$extion = '.xls';
+			}
+			if(input('tp') == 3){
+				$extion = '.xlsx';
+			}
+
+			$res = array();
+			//表头
+			$head = array('ID','站台','账号','笔数','总金额','有效金额','派彩结果');
+			//下载后文件名
+			$filename = date("YmdHis").$extion;
+			$res = array();
+			foreach ($data as $k => $v) {
+				foreach ($v as $k1 => $v1) {
+					foreach ($v1 as $k2 => $v2) {
+						$res[] = $v2;
+					}
+				}
+			}
+			
+
+			$path = create_csv_ajax($res,$head,$filename);
+			if($path){
+				echo $this->show(1001,'生成csv成功',['data'=>$path]);
+			}else{
+				echo $this->show(2001);
+			}
+		}
+	}
+
+
 }

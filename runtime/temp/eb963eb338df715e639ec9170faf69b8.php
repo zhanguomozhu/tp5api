@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\uploadfile.html";i:1509526769;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\uploadfile.html";i:1509594655;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -18,9 +18,6 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.all.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/lang/zh-cn/zh-cn.js"></script>
 
     
 </head>
@@ -288,44 +285,24 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    <script src="/static/layui/layui.js" charset="utf-8"></script>
-    <script>
-    layui.use('laydate', function(){
-          var laydate = layui.laydate;
-          
-          //常规用法
-          laydate.render({
-            elem: '#sign'
-          });
 
-          //常规用法
-          laydate.render({
-            elem: '#fortime'
-          });
-          //时间
-          laydate.render({
-            elem: '#fortime1'
-            ,type: 'time'
-          });
-      });
-    </script>
     <script type="text/javascript"> 
-    var countdown=10; 
-    function settime(obj) { 
-        if (countdown == 0) { 
-            obj.removeAttribute("disabled");    
-            obj.value="点击发送邮件"; 
-            countdown = 10; 
-            return;
-        } else { 
-            obj.setAttribute("disabled", true); 
-            obj.value="重新发送(" + countdown + ")"; 
-            countdown--; 
-        } 
-    setTimeout(function() { 
-        settime(obj) }
-        ,1000) 
-    }
+    // var countdown=10; 
+    // function settime(obj) { 
+    //     if (countdown == 0) { 
+    //         obj.removeAttribute("disabled");    
+    //         obj.value="点击发送邮件"; 
+    //         countdown = 10; 
+    //         return;
+    //     } else { 
+    //         obj.setAttribute("disabled", true); 
+    //         obj.value="重新发送(" + countdown + ")"; 
+    //         countdown--; 
+    //     } 
+    // setTimeout(function() { 
+    //     settime(obj) }
+    //     ,1000) 
+    // }
 
 
     //上传图片*****************************************
@@ -350,7 +327,7 @@
                 //返回提示信息
                 if(json.code == 1001){
                     $('.img1').removeClass('red').addClass('green').html(json.msg);
-                    var str = "<img style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"'>";
+                    var str = "<img class='uploadimg' style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"' title='点击删除图片'>";
                     $('#img1').append(str);
                 }
                 if(json.code == 2001){
@@ -360,6 +337,35 @@
         });
     }
 
+    //img点击删除事件,live高版本已经废除，用on
+    // $(document).live(function(){
+    // })
+    $(document).on("click",'.uploadimg',function(){
+        //提示
+        if(confirm('确认删除吗？')){
+            //执行删除
+            $.ajax({
+                url: "<?php echo url('sfun/delfile'); ?>",
+                type: 'POST',
+                data: {src:$(this).attr('src')},
+                dataType:'json',
+                success:function(json){
+                    console.log(json)
+                    //返回提示信息
+                    if(json.code == 1001){
+                        
+                        $('.img1').removeClass('red').addClass('green').html(json.msg);
+                    }
+                    if(json.code == 2001){
+                        $('.img1').addClass('red').html(json.msg);
+                    }
+                }
+            });
+            //移除节点
+            $(this).remove();
+        }
+        
+    });
 
     //上传文件*****************************************
      //导入excel

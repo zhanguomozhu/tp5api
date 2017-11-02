@@ -1535,6 +1535,49 @@ function create_csv($data,$header=null,$filename='simple.csv'){
     }
 }
 
+
+
+/**
+ * ajax下载csv格式的excle
+ * @param  array $data      需要转的数组
+ * @param  string $header   要生成的excel表头
+ * @param  string $filename 生成的excel文件名
+ *      示例数组：
+        $data = array(
+            '1,2,3,4,5',
+            '6,7,8,9,0',
+            '1,3,5,6,7'
+            );
+        $header='用户名,密码,头像,性别,手机号';
+ */
+function create_csv_ajax($data,$header=null,$filename='simple.csv'){
+	ini_set('max_execution_time', '0');
+    // 如果手动设置表头；则放在第一行
+    if (!is_null($header)) {
+        array_unshift($data, $header);
+    }
+    // 防止没有添加文件后缀
+    $filename=str_replace('.csv', '', $filename).'.csv';
+    ob_clean();
+    Header( "Content-type:  application/octet-stream ");
+    Header( "Accept-Ranges:  bytes ");
+    Header( "Content-Disposition:  attachment;  filename=".$filename);
+    //这里的CSV即你项目的根目录下新建一个CSV文件夹
+	$path = ('./down/csv/'.iconv('UTF-8','gb2312',$filename));
+	$fp = fopen($path, 'w');
+    foreach( $data as $k => $v){
+    	foreach ($v as $k1 => &$v1)
+		{
+			//将数据值进行在编码 避免中文乱码问题
+			$v1 = iconv('UTF-8','gb2312',$v1);
+		}
+		fputcsv($fp, $v); 
+    }
+	fclose($fp);
+	return trim($path,'.');
+	exit;
+}
+
 /**
  * 导入excel文件
  * @param  string $file excel文件路径

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\map.html";i:1509437709;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1508914442;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\map.html";i:1509594410;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -290,7 +290,7 @@
                 //console.log(res)
                 if(res.code == 1001){
                     console.log(res.data.data)
-                    $(".lnglat").removeClass('red').addClass('green').html('经度'+res.data.data.result.location.lng+',纬度'+res.data.data.result.location.lat);
+                    $(".lnglat").removeClass('red').addClass('green').html('经纬度'+res.data.data.result.location.lng+','+res.data.data.result.location.lat);
                 }
                 if(res.code == 2001){
                     $(".lnglat").html(res.msg);

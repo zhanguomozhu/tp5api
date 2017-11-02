@@ -39,6 +39,7 @@ class ComposerStaticInit2d9ae6040777a9c31a6650c37e069647
         'think\\' => 
         array (
             0 => __DIR__ . '/../..' . '/thinkphp/library/think',
+            1 => __DIR__ . '/..' . '/topthink/think-image/src',
         ),
         'Symfony\\Component\\OptionsResolver\\' => 
         array (

@@ -12,6 +12,8 @@ return [
     //上传目录
     'upload_path'=>'/upload',
 
+
+    //上传图片配置
     //上传图片文件路径
     'upload_images_path'=>'/upload/images',
     //存储上传图片文件的数据表名称
@@ -25,7 +27,8 @@ return [
 
 
 
-
+    //上传文件配置
+    //上传文件路径
     "upload_files_path"=>'/upload/files',
     //存储上传文件的数据表名称
     //'upload_files_table'=>'mk_common_files',

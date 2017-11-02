@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\index.html";i:1509522052;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\index.html";i:1509594232;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -522,6 +522,40 @@
                                 <p class="red alerts"></p>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">城市二级联动</label>
+                            <div class="col-sm-2">
+                                <select name="province" id="">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <select name="city">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">城市三级联动</label>
+                            <div class="col-sm-1">
+                                <select name="s_province" id="s_province">
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <select name="s_city" id="s_city">
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <select name="s_county" id="s_county">
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group ueimagesss">
                             <label for="username" class="col-sm-2 control-label no-padding-right">获取编辑器图片的路径</label>
                             <div class="col-sm-4">
@@ -556,7 +590,14 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <!-- layui -->
     <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <!-- 城市二级联动 -->
+    <script src="__ADMIN__/style/city.js" charset="utf-8"></script>
+    <!-- 城市三级联动 -->
+    <script src="__ADMIN__/style/area.js" charset="utf-8"></script>
+    <script type="text/javascript">_init_area();</script>
+    <!-- 百度编辑器 -->
     <script type="text/javascript">
          UE.getEditor('content',{
             "initialFrameWidth":"100%",
@@ -564,6 +605,7 @@
             "maximumWords":50000
           });
     </script>
+    <!-- layui -->
     <script>
     layui.use('laydate', function(){
           var laydate = layui.laydate;
@@ -584,7 +626,9 @@
           });
       });
     </script>
+
     <script type="text/javascript"> 
+    //60s倒计时
     var countdown=10; 
     function settime(obj) { 
         if (countdown == 0) { 
@@ -602,6 +646,7 @@
         ,1000) 
     }
 
+    //ajax请求
     function ajaxPOST($url,$data,$msg){
         $.post($url,$data,function(res){
             if(res.code == 1001){
@@ -839,6 +884,27 @@
         //倒数60s
         settime(this);
     })
+
+
+    //二级城市联动
+    var province = '';
+    $.each(city, function (i, k) {
+        province += '<option value="' + k.name + '" index="' + i + '">' + k.name + '</option>';
+    });
+    $('select[name=province]').append(province).change(function () {
+        var option = '';
+        if ($(this).val() == '') {
+            option += '<option value="">请选择</option>';
+        } else {
+            var index = $(':selected', this).attr('index');
+            var data = city[index].child;
+            for (var i = 0; i < data.length; i++) {
+                option += '<option value="' + data[i] + '">' + data[i] + '</option>';
+            }
+        }
+        
+        $('select[name=city]').html(option);
+    });
     </script>
 
 </body></html>

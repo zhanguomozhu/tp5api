@@ -1,7 +1,8 @@
 <?php 
 namespace app\admin\controller;
 use app\base\controller\Base;
-
+use think\Image;
+use think\image\Exception as ImageException;
 class Sfun extends Base
 {
 
@@ -16,63 +17,7 @@ class Sfun extends Base
 		return $this->fetch();
 	}
 
-
-
-	/**
-	 * 上传图片
-	 * @return [type] [description]
-	 */
-	public function douploadimg(){
-		if(request()->isAjax()){
-			// 获取表单上传文件 例如上传了001.jpg
-		    $file = request()->file('img');
-		    //执行上传操作
-		    $info = $file->validate(config("uploadfile.upload_images_validate"))->move(ROOT_PATH . 'public' . DS .config('uploadfile.upload_images_path'));
-
-		    if($info){
-		         //获取文件名
-		        $path = config('uploadfile.upload_images_path').'/'.$info->getSaveName();
-		        if($path){
-		        	echo $this->show(1001,'上传成功',['data'=>$path]);
-		        }else{
-		        	echo $this->show(2001);
-		        }
-			}else{
-				echo $this->show(2001,'上传失败');
-			}
-
-			
-
-		}
-	}
-
-
-
-	/**
-	 * 上传图片
-	 * @return [type] [description]
-	 */
-	public function douploadfile(){
-		if(request()->isAjax()){
-			// 获取表单上传文件 例如上传了001.jpg
-		    $file = request()->file('file');
-		    //执行上传操作
-		    $info = $file->validate(config("uploadfile.upload_files_validate"))->move(ROOT_PATH . 'public' . DS .config('uploadfile.upload_files_path'));
-
-		    if($info){
-		         //获取文件名
-		        $path = config('uploadfile.upload_files_path').'/'.$info->getSaveName();
-		        if($path){
-		        	echo $this->show(1001,'上传成功',['data'=>$path]);
-		        }else{
-		        	echo $this->show(2001);
-		        }
-			}else{
-				echo $this->show(2001,'上传失败');
-			}
-
-		}
-	}
+	
 
 	/**
 	 * 异位或加密字符串
@@ -392,6 +337,7 @@ class Sfun extends Base
 			}
 		}
 	}
+
 
 
 
