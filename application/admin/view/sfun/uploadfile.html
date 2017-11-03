@@ -99,6 +99,19 @@
                         </div>
                     </form>
                 </div>
+
+
+            <div id="horizontal-form" style="height: 100px;">
+                <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-6">
+                           <ul id="file2">
+                               
+                           </ul>
+                        </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -160,7 +173,7 @@
                 //返回提示信息
                 if(json.code == 1001){
                     $('.img1').removeClass('red').addClass('green').html(json.msg);
-                    var str = "<img class='uploadimg' style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"' title='点击删除图片'>";
+                    var str = "<img class='uploadimg' style='height:100px;margin:5px 5px;float:left;' src='__PUBLIC__"+json.data.data+"' title='点击删除图片'>";
                     $('#img1').append(str);
                 }
                 if(json.code == 2001){
@@ -221,7 +234,9 @@
                 console.log(json)
                 //返回提示信息
                 if(json.code == 1001){
-                    $('.file1').removeClass('red').addClass('green').html(json.msg+" | "+json.data.data);
+                    $('.file1').removeClass('red').addClass('green').html(json.msg);
+                    var filetext = "<li class='uploadimg' src='"+json.data.data+"'>"+json.data.data+"</li>";
+                    $('#file2').append(filetext);
                 }
                 if(json.code == 2001){
                     $('.file1').html(json.msg);

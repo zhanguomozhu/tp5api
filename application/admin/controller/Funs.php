@@ -343,9 +343,15 @@ class Funs extends Base
 	 * @return [type] [description]
 	 */
 	public function doupload(){
+
 		//上传文件名
-		$filename = '.'.$this->doUploadExcel();
-		$data = $this->doExcel($filename);
+		$filename = $this->doUploadExcel();
+		if(getExt($filename) == 'csv'){
+			$data[0] =doCsv($filename);
+		}else{
+			$data =doExcel($filename);
+		}
+		//$data是三维数字
 		if($data){
 			echo $this->show(1001,'获取成功',['data'=>$data]);
 		}else{
@@ -364,23 +370,12 @@ class Funs extends Base
 		if(request()->isAjax()){
 			//数据
 			$data = input('post.arr/a');
-			//格式
-			if(input('tp') == 1){
-				$extion = '.csv';
-			}
-			if(input('tp') == 2){
-				$extion = '.xls';
-			}
-			if(input('tp') == 3){
-				$extion = '.xlsx';
-			}
-
 			$res = array();
-			//表头
-			$head = array('ID','站台','账号','笔数','总金额','有效金额','派彩结果');
-			//下载后文件名
-			$filename = date("YmdHis").$extion;
+			//如果需要设置表头
+			//$head = array('ID','站台','账号','笔数','总金额','有效金额','派彩结果');
+			$head = null;
 			$res = array();
+			//组合数据
 			foreach ($data as $k => $v) {
 				foreach ($v as $k1 => $v1) {
 					foreach ($v1 as $k2 => $v2) {
@@ -388,16 +383,61 @@ class Funs extends Base
 					}
 				}
 			}
-			
 
-			$path = create_csv_ajax($res,$head,$filename);
+			//生成格式
+			if(input('tp') == 1){
+				$extion = '.csv';
+				//下载后文件名
+				$filename = date("YmdHis").$extion;
+				//生成文件夹路径
+				$filepath = 'down/csv/';
+				//生成文件的路径
+				$path = create_csv_ajax($res,$head,$filename,$filepath);
+			}
+			if(input('tp') == 2){
+				$extion = '.xls';
+				//下载后文件名
+				$filename = date("YmdHis").$extion;
+				//生成文件夹路径
+				$filepath = 'down/xls/';
+				//生成文件的路径
+				$path = create_xls_ajax($res,$head,$filename,$filepath);
+			}
+			if(input('tp') == 3){
+				$extion = '.xlsx';
+				//下载后文件名
+				$filename = date("YmdHis").$extion;
+				//生成文件夹路径
+				$filepath = 'down/xlsx/';
+				//生成文件的路径
+				$path = create_xls_ajax($res,$head,$filename,$filepath);
+			}
+
 			if($path){
-				echo $this->show(1001,'生成csv成功',['data'=>$path]);
+				echo $this->show(1001,'生成excel成功',['data'=>$path]);
 			}else{
 				echo $this->show(2001);
 			}
 		}
 	}
 
+
+	/**
+	 * pdf
+	 * @return [type] [description]
+	 */
+	public function pdf()
+	{
+		return $this->fetch();
+	}
+
+	/**
+	 * 生成pdf
+	 */
+	public function doPdf()
+	{
+		$content=input('content');
+        pdf($content);
+	}
 
 }

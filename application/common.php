@@ -1400,7 +1400,7 @@ function get_device_type(){
  * @param  string $html      需要生成的内容
  */
 function pdf($html='<h1 style="color:red">hello word</h1>'){
-    vendor('Tcpdf.tcpdf');
+    vendor('tcpdf.tcpdf');
     $pdf = new \Tcpdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
     // 设置打印模式
     $pdf->SetCreator(PDF_CREATOR);
@@ -1443,8 +1443,11 @@ function pdf($html='<h1 style="color:red">hello word</h1>'){
     // 设置字体
     $pdf->SetFont('stsongstdlight', '', 14, '', true);
     $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+    ob_end_clean();
     $pdf->Output('example_001.pdf', 'I');
 }
+
+
 /**
  * 生成二维码
  * @param  string  $url  url连接
@@ -1454,6 +1457,7 @@ function qrcode($url,$upload=false,$size=10){
     Vendor('Phpqrcode.phpqrcode');
     QRcode::png($url,$upload,QR_ECLEVEL_L,$size,2,false,0xFFFFFF,0x000000);
 }
+
 
 /**
  * 数组转xls格式的excel文件
@@ -1497,6 +1501,146 @@ function create_xls($data,$filename='simple.xls'){
     exit;
 }
 
+
+
+/**
+ * ajax数组转xls或者xlsx格式的excel文件
+ * @param  array  $data      需要生成excel文件的数组
+ * @param  string $filename  生成的excel文件名
+ */
+function create_xls_ajax($data,$header=null,$filename='simple.xls',$filepath){
+    ini_set('max_execution_time', '0');
+    Vendor('PHPExcel.PHPExcel');
+    // 如果手动设置表头；则放在第一行
+    if (!is_null($header)) {
+        array_unshift($data, $header);
+    }
+    //文件后缀
+    $type = getExt($filename);
+    if ($type=='xlsx') { 
+        $type='Excel2007'; 
+    }elseif($type=='xls') { 
+        $type = 'Excel5'; 
+    } 
+    $phpexcel = new PHPExcel();
+    $phpexcel->getProperties()
+        ->setCreator("Maarten Balliauw")
+        ->setLastModifiedBy("Maarten Balliauw")
+        ->setTitle("Office 2007 XLSX Test Document")
+        ->setSubject("Office 2007 XLSX Test Document")
+        ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+        ->setKeywords("office 2007 openxml php")
+        ->setCategory("Test result file");
+    $phpexcel->getActiveSheet()->fromArray($data);
+    $phpexcel->getActiveSheet()->setTitle('Sheet1');
+    $phpexcel->setActiveSheetIndex(0);
+    header('Content-Type: application/vnd.ms-excel');
+    header("Content-Disposition: attachment;filename=$filename");
+    header('Cache-Control: max-age=0');
+    header('Cache-Control: max-age=1');
+    header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+    header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+    header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+    header ('Pragma: public'); // HTTP/1.0
+    $objwriter = PHPExcel_IOFactory::createWriter($phpexcel,$type);
+    //创建文件夹，保存xls文件，返回路径
+    mkdirs($filepath);
+    //生成文件路径
+    $path = $filepath.$filename;
+    //生成文件
+    $objwriter->save($filepath.iconv('UTF-8','gb2312',$filename));
+    //返回路径
+    return trim($path,'.');
+    exit;
+}
+
+
+/**
+ * 读取csv文件
+ * @return [type] [description]
+ */
+function  doCsv($filename){
+
+	$row = 0;
+	$j = 1; 
+	$file = $filename; 
+	$res = array();
+	if (($handle = fopen($file, "r")) !== FALSE) {
+		
+		 while (($data = fgetcsv($handle, ",")) !== FALSE) {
+		 		foreach ($data as $k => &$v)
+				{
+					//将数据值进行在编码 避免中文乱码问题
+					$v = iconv('GBK','UTF-8',$v);
+				}
+			   $res[] = $data;
+			   $j++;
+			   $row++; 
+		 }
+	}
+	return $res;
+}
+
+
+/**
+ * 遍历获取execl数据
+ * @return [type] [description]
+ */
+function doExcel($filename){
+	ini_set('max_execution_time', '0');
+	//引入phpexcel类
+	vendor("phpexcel.PHPExcel");
+	//判断截取文件扩展名
+	//$extension = strtolower( pathinfo($filename, PATHINFO_EXTENSION) );
+	$extension = getExt($filename);
+
+	//区分上传文件格式
+	if($extension == 'xlsx') {
+	    $objReader =\PHPExcel_IOFactory::createReader('Excel2007');
+	    $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
+	}else if($extension == 'xls'){
+	    $objReader =\PHPExcel_IOFactory::createReader('Excel5');
+	    $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
+	}
+
+	//获取execl有多少个sheet
+	$sheetCount = $objPHPExcel->getSheetCount();
+	//循环sheet,读取数据，放入到数组中
+	for($i=0;$i<$sheetCount;$i++){
+	    $data[$i] = $objPHPExcel->getSheet($i)->toArray();
+	}
+
+	//重组数据去除空sheet
+	foreach ($data as $k => $v) {
+	    //删除头一行
+	    //array_shift($data[$k]);
+	    //去除空sheet
+	    if(!$data[$k]){
+	        unset($data[$k]);
+	    }
+	}
+
+	//去除空数组
+	foreach ($data as $k1 => $v1) {
+	    foreach ($v1 as $k2 => $v2) {
+	        foreach ($v2 as $k3 => $v3) {
+	            if(!$v3){
+	                unset($data[$k1][$k2]);
+	            }
+	        }
+	    }
+	}
+
+
+	return $data;
+}
+
+
+
+
+
+
+
 /**
  * 数据转csv格式的excle
  * @param  array $data      需要转的数组
@@ -1531,7 +1675,7 @@ function create_csv($data,$header=null,$filename='simple.csv'){
         // 解决导出的数字会显示成科学计数法的问题
         $v=str_replace(',', "\t,", $v); 
         // 转成gbk以兼容office乱码的问题
-        echo iconv('UTF-8','GBK',$v)."\t\r\n";
+        echo iconv('UTF-8','gb2312',$v)."\t\r\n";
     }
 }
 
@@ -1550,7 +1694,7 @@ function create_csv($data,$header=null,$filename='simple.csv'){
             );
         $header='用户名,密码,头像,性别,手机号';
  */
-function create_csv_ajax($data,$header=null,$filename='simple.csv'){
+function create_csv_ajax($data,$header=null,$filename='simple.csv',$filepath){
 	ini_set('max_execution_time', '0');
     // 如果手动设置表头；则放在第一行
     if (!is_null($header)) {
@@ -1562,8 +1706,10 @@ function create_csv_ajax($data,$header=null,$filename='simple.csv'){
     Header( "Content-type:  application/octet-stream ");
     Header( "Accept-Ranges:  bytes ");
     Header( "Content-Disposition:  attachment;  filename=".$filename);
-    //这里的CSV即你项目的根目录下新建一个CSV文件夹
-	$path = ('./down/csv/'.iconv('UTF-8','gb2312',$filename));
+    //这里的CSV即你项目的根目录下新建一个CSV文件夹,判断是否存在，不存在则创建
+    mkdirs($filepath);
+    //文件路径
+	$path = ($filepath.iconv('UTF-8','gb2312',$filename));
 	$fp = fopen($path, 'w');
     foreach( $data as $k => $v){
     	foreach ($v as $k1 => &$v1)
@@ -1574,8 +1720,32 @@ function create_csv_ajax($data,$header=null,$filename='simple.csv'){
 		fputcsv($fp, $v); 
     }
 	fclose($fp);
-	return trim($path,'.');
+	return $path;
 	exit;
+}
+
+
+/**
+ * 判断文件夹是否存在不存在则创建
+ * @param  [type]  $dir  [目录]
+ * @param  integer $mode [权限]
+ * @return [type]        [bool]
+ */
+function mkdirs($dir, $mode = 0777)
+ {
+     if (is_dir($dir) || @mkdir($dir, $mode)) return TRUE;
+     if (!mkdirs(dirname($dir), $mode)) return FALSE;
+     return @mkdir($dir, $mode);
+ } 
+
+/**
+ * 删除文件
+ * @param  [type] $path [description]
+ * @return [type]       [description]
+ */
+function unlinks($path)
+{
+	return is_file($path) && unlink($path);
 }
 
 /**
@@ -1583,40 +1753,40 @@ function create_csv_ajax($data,$header=null,$filename='simple.csv'){
  * @param  string $file excel文件路径
  * @return array        excel文件内容数组
  */
-function import_excel($file){
-    // 判断文件是什么格式
-    $type = pathinfo($file); 
-    $type = strtolower($type["extension"]);
-    if ($type=='xlsx') { 
-        $type='Excel2007'; 
-    }elseif($type=='xls') { 
-        $type = 'Excel5'; 
-    } 
-    ini_set('max_execution_time', '0');
-    Vendor('PHPExcel.PHPExcel');
-    // 判断使用哪种格式
-    $objReader = PHPExcel_IOFactory::createReader($type);
-    $objPHPExcel = $objReader->load($file); 
-    $sheet = $objPHPExcel->getSheet(0); 
-    // 取得总行数 
-    $highestRow = $sheet->getHighestRow();     
-    // 取得总列数      
-    $highestColumn = $sheet->getHighestColumn(); 
-    //循环读取excel文件,读取一条,插入一条
-    $data=array();
-    //从第一行开始读取数据
-    for($j=1;$j<=$highestRow;$j++){
-        //从A列读取数据
-        for($k='A';$k<=$highestColumn;$k++){
-            // 读取单元格
-            $cell = $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
-            // 开始格式化 
-            if(is_object($cell))  $cell= $cell->__toString();
-            $data[$j][] = $cell;
-        } 
-    }  
-    return $data;
-}
+// function import_excel($file){
+//     // 判断文件是什么格式
+//     $type = pathinfo($file); 
+//     $type = strtolower($type["extension"]);
+//     if ($type=='xlsx') { 
+//         $type='Excel2007'; 
+//     }elseif($type=='xls') { 
+//         $type = 'Excel5'; 
+//     } 
+//     ini_set('max_execution_time', '0');
+//     Vendor('PHPExcel.PHPExcel');
+//     // 判断使用哪种格式
+//     $objReader = PHPExcel_IOFactory::createReader($type);
+//     $objPHPExcel = $objReader->load($file); 
+//     $sheet = $objPHPExcel->getSheet(0); 
+//     // 取得总行数 
+//     $highestRow = $sheet->getHighestRow();     
+//     // 取得总列数      
+//     $highestColumn = $sheet->getHighestColumn(); 
+//     //循环读取excel文件,读取一条,插入一条
+//     $data=array();
+//     //从第一行开始读取数据
+//     for($j=1;$j<=$highestRow;$j++){
+//         //从A列读取数据
+//         for($k='A';$k<=$highestColumn;$k++){
+//             // 读取单元格
+//             $cell = $objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
+//             // 开始格式化 
+//             if(is_object($cell))  $cell= $cell->__toString();
+//             $data[$j][] = $cell;
+//         } 
+//     }  
+//     return $data;
+// }
 
 /**
  * 跳向支付宝付款

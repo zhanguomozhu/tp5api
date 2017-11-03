@@ -71,17 +71,7 @@
                                     <div class="flip-scroll">
                                         <form action="" method="post"> 
                                         <table class="table table-bordered table-hover">
-                                            <thead class="">
-                                                <tr>
-                                                    <th class="text-center" width="5%">ID</th>
-                                                    <th class="text-center" width="10%">站台</th>
-                                                    <th class="text-center" width="15%">账号</th>
-                                                    <th class="text-center" width="10%">笔数</th>
-                                                    <th class="text-center" width="10%">总金额</th>
-                                                    <th class="text-center" width="10%">有效金额</th>
-                                                    <th class="text-center" width="10%">派彩结果</th>
-                                                </tr>
-                                            </thead>
+                                           
                                             <tbody id='exceltext'>
                                                 
                                               
@@ -133,26 +123,20 @@
             processData: false,
             contentType: false,
             success:function(json){
-                //console.log(json)
+                console.log(json)
                 //返回提示信息
                 if(json.code == 1001){
                     gdata = {};
                     gdata = json.data;
                     var res = json.data.data;
                     var text = '';
-                    if(res.length == 1){
-                        for(var i=0;i<res[0].length;i++){
-                            text += '<tr><td align="center">'+res[0][i][0]+'</td><td align="center">'+res[0][i][1]+'</td><td align="center">'+res[0][i][2]+'</td><td align="center">'+res[0][i][3]+'</td><td align="center">'+res[0][i][4]+'</td><td align="center">'+res[0][i][5]+'</td><td align="center">'+res[0][i][6]+'</td>';
+                    //res为三维数组
+                    for(var i=0;i<res.length;i++){
+                        for(var j=0;j<res[i].length;j++){
+                            text += '<tr><td align="center">'+res[i][j][0]+'</td><td align="center">'+res[i][j][1]+'</td><td align="center">'+res[i][j][2]+'</td><td align="center">'+res[i][j][3]+'</td><td align="center">'+res[i][j][4]+'</td><td align="center">'+res[i][j][5]+'</td><td align="center">'+res[i][j][6]+'</td>';
                         }
-                        $('#exceltext').append(text);
-                    }else{
-                        for(var i=0;i<res.length;i++){
-                            for(var j=0;j<res[i].length;j++){
-                                text += '<tr><td align="center">'+res[i][j][0]+'</td><td align="center">'+res[i][j][1]+'</td><td align="center">'+res[i][j][2]+'</td><td align="center">'+res[i][j][3]+'</td><td align="center">'+res[i][j][4]+'</td><td align="center">'+res[i][j][5]+'</td><td align="center">'+res[i][j][6]+'</td>';
-                            }
-                        }
-                        $('#exceltext').append(text);
                     }
+                    $('#exceltext').append(text);
                 }
                 if(json.code == 2001){
                     alert(json.msg);
@@ -174,16 +158,42 @@
             success:function(res){
                 //console.log(res)
                 if(res.code == 1001){
-                    window.location.href=res.data.data;
+                    window.location.href='/'+res.data.data;
+                    //删除源文件
+                    delfile(res.data.data);
                 }
                 if(res.code ==2001){
                     alert(res.msg);
                 }
+
             }
         });
     }
 
-   
+
+     //删除事件,live高版本已经废除，用on
+    // $(document).live(function(){
+    // })
+    function delfile(fileurl){
+        //执行删除
+        $.ajax({
+            url: "{:url('funs/delfile')}",
+            type: 'POST',
+            data: {src:fileurl},
+            dataType:'json',
+            success:function(json){
+                console.log(json)
+                //返回提示信息
+                if(json.code == 1001){
+                    
+                    $('.img1').removeClass('red').addClass('green').html(json.msg);
+                }
+                if(json.code == 2001){
+                    $('.img1').addClass('red').html(json.msg);
+                }
+            }
+        });
+    }
     </script>
 
 </body></html>

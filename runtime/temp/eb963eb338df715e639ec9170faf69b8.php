@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\uploadfile.html";i:1509594655;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\uploadfile.html";i:1509682518;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -266,6 +266,19 @@
                         </div>
                     </form>
                 </div>
+
+
+            <div id="horizontal-form" style="height: 100px;">
+                <div class="form-group">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-6">
+                           <ul id="file2">
+                               
+                           </ul>
+                        </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -327,7 +340,7 @@
                 //返回提示信息
                 if(json.code == 1001){
                     $('.img1').removeClass('red').addClass('green').html(json.msg);
-                    var str = "<img class='uploadimg' style='height:100px;margin:5px 5px;float:left;' src='"+json.data.data+"' title='点击删除图片'>";
+                    var str = "<img class='uploadimg' style='height:100px;margin:5px 5px;float:left;' src='__PUBLIC__"+json.data.data+"' title='点击删除图片'>";
                     $('#img1').append(str);
                 }
                 if(json.code == 2001){
@@ -388,7 +401,9 @@
                 console.log(json)
                 //返回提示信息
                 if(json.code == 1001){
-                    $('.file1').removeClass('red').addClass('green').html(json.msg+" | "+json.data.data);
+                    $('.file1').removeClass('red').addClass('green').html(json.msg);
+                    var filetext = "<li class='uploadimg' src='"+json.data.data+"'>"+json.data.data+"</li>";
+                    $('#file2').append(filetext);
                 }
                 if(json.code == 2001){
                     $('.file1').html(json.msg);

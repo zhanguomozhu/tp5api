@@ -207,7 +207,7 @@ class Base extends Controller
                 //获取文件名
                 $path = config('uploadfile.upload_images_path').'/'.$info->getSaveName();
                 //图片处理
-                $img =Image::open('.'.$path);
+                $img =Image::open($path);
                 //获取图像信息
                 // 返回图片的宽度
                 $width = $img->width(); 
@@ -224,11 +224,11 @@ class Base extends Controller
                 //图片水印logo路径
                 $logo = './static/admin/images/adam-jansen.jpg';
                 //保存路径
-                $save_crop  = '.'.config('uploadfile.upload_images_path').'/crop/'.date("YmdHis").'.png';//剪裁
-                $save_thumb = '.'.config('uploadfile.upload_images_path').'/thumb/'.date("YmdHis").'.png';//压缩
-                $save_rotate= '.'.config('uploadfile.upload_images_path').'/rotate/'.date("YmdHis").'.png';//图片旋转
-                $save_water = '.'.config('uploadfile.upload_images_path').'/water/'.date("YmdHis").'.png';//图片水印
-                $save_text  = '.'.config('uploadfile.upload_images_path').'/text/'.date("YmdHis").'.png';//文字水印
+                $save_crop  = config('uploadfile.upload_images_path').'/crop/'.date("YmdHis").'.png';//剪裁
+                $save_thumb = config('uploadfile.upload_images_path').'/thumb/'.date("YmdHis").'.png';//压缩
+                $save_rotate= config('uploadfile.upload_images_path').'/rotate/'.date("YmdHis").'.png';//图片旋转
+                $save_water = config('uploadfile.upload_images_path').'/water/'.date("YmdHis").'.png';//图片水印
+                $save_text  = config('uploadfile.upload_images_path').'/text/'.date("YmdHis").'.png';//文字水印
                 //剪裁
                 $img->crop(300, 300)->save($save_crop);
                 //缩略图
@@ -265,7 +265,7 @@ class Base extends Controller
      * 上传图片,返回json
      * @return [type] [description]
      */
-    public function douploadfile($json){
+    public function douploadfile(){
         if(request()->isAjax()){
             // 获取表单上传文件 例如上传了001.jpg
             $file = request()->file('file');
@@ -275,10 +275,6 @@ class Base extends Controller
             if($info){
                 //获取文件名
                 $path = config('uploadfile.upload_files_path').'/'.$info->getSaveName();
-                if(file_exists('.'.$path)){
-                    //echo (is_writable('.'.$path) ? '' : '不').'可写';
-                    //unlink('.'.$path);
-                }
                 if($path){
                     echo $this->show(1001,'上传成功',['data'=>$path]);
                 }else{
@@ -306,10 +302,6 @@ class Base extends Controller
             if($info){
                  //获取文件名
                 $path = config('uploadfile.upload_files_path').'/'.$info->getSaveName();
-                if(file_exists('.'.$path)){
-                    //echo (is_writable('.'.$path) ? '' : '不').'可写';
-                    //unlink('.'.$path);
-                }
                 if($path){
                     return $path;
                 }else{
@@ -330,75 +322,15 @@ class Base extends Controller
     public function delfile(){
         if(request()->isAjax()){
             //搜索替换路径中\
-            $url = '.'.str_replace('\\','/',input('src'));
-            //判断是否存在文件
-            if(file_exists($url)){
-                $res = unlink($url);
+            $url = trim(input('src'),'/');
+                $res = unlinks($url);
                 if($res){
                     echo $this->show(1001,'删除成功');
                 }else{
                     echo $this->show(2001,'删除失败');
                 }
-            }else{
-                echo $this->show(2001,'文件不存在');
-            }
-            
         }
     }
-
-    /**
-     * 遍历获取execl数据
-     * @return [type] [description]
-     */
-    public function doExcel($filename){
-        //引入phpexcel类
-        vendor("phpexcel.PHPExcel");
-        //判断截取文件扩展名
-        //$extension = strtolower( pathinfo($filename, PATHINFO_EXTENSION) );
-        $extension = getExt($filename);
-
-        //区分上传文件格式
-        if($extension == 'xlsx') {
-            $objReader =\PHPExcel_IOFactory::createReader('Excel2007');
-            $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
-        }else if($extension == 'xls'){
-            $objReader =\PHPExcel_IOFactory::createReader('Excel5');
-            $objPHPExcel = $objReader->load($filename, $encode = 'utf-8');
-        }
-
-        //获取execl有多少个sheet
-        $sheetCount = $objPHPExcel->getSheetCount();
-        //循环sheet,读取数据，放入到数组中
-        for($i=0;$i<$sheetCount;$i++){
-            $data[$i] = $objPHPExcel->getSheet($i)->toArray();
-        }
-        
-        //重组数据去除空sheet
-        foreach ($data as $k => $v) {
-            //删除头一行
-            array_shift($data[$k]);
-            //去除空sheet
-            if(!$data[$k]){
-                unset($data[$k]);
-            }
-        }
-
-        //去除空数组
-        foreach ($data as $k1 => $v1) {
-            foreach ($v1 as $k2 => $v2) {
-                foreach ($v2 as $k3 => $v3) {
-                    if(!$v3){
-                        unset($data[$k1][$k2]);
-                    }
-                }
-            }
-        }
-
-
-        return $data;
-    }
-
-
 
 }
 
