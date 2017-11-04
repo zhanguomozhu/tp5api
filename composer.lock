@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9367d8d3a1695339ce5b9b885d8ff53b",
+    "content-hash": "6c4140b7ab6c8fbcbbc93f6fea263e04",
     "packages": [
         {
             "name": "endroid/qrcode",
@@ -287,6 +287,40 @@
                 }
             ],
             "time": "2017-05-27T06:58:09+00:00"
+        },
+        {
+            "name": "zoujingli/pay-php-sdk",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zoujingli/pay-php-sdk.git",
+                "reference": "70b30cb76f5c0c7405e66b5c148842f0dffc8f52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/zoujingli/pay-php-sdk/70b30cb76f5c0c7405e66b5c148842f0dffc8f52.zip",
+                "reference": "70b30cb76f5c0c7405e66b5c148842f0dffc8f52",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pay\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "WxPay and AliPay development of SDK",
+            "homepage": "https://github.com/zoujingli/pay-php-sdk",
+            "keywords": [
+                "pay-php-sdk"
+            ],
+            "time": "2017-10-31T17:07:19+00:00"
         }
     ],
     "packages-dev": [],

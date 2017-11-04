@@ -21,6 +21,10 @@ class ComposerStaticInit2d9ae6040777a9c31a6650c37e069647
         array (
             'Symfony\\Component\\OptionsResolver\\' => 34,
         ),
+        'P' => 
+        array (
+            'Pay\\' => 4,
+        ),
         'E' => 
         array (
             'Endroid\\QrCode\\' => 15,
@@ -44,6 +48,10 @@ class ComposerStaticInit2d9ae6040777a9c31a6650c37e069647
         'Symfony\\Component\\OptionsResolver\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/options-resolver',
+        ),
+        'Pay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zoujingli/pay-php-sdk/src',
         ),
         'Endroid\\QrCode\\' => 
         array (

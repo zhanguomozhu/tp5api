@@ -20,7 +20,8 @@
         "topthink/framework": "^5.0",
         "topthink/think-captcha": "1.*",
         "endroid/qrcode": "^1.9",
-        "topthink/think-image": "^1.0"
+        "topthink/think-image": "^1.0",
+        "zoujingli/pay-php-sdk": "^1.0"
     },
     "extra": {
         "think-path": "thinkphp"

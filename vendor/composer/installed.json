@@ -292,5 +292,41 @@
             }
         ],
         "description": "The ThinkPHP5 Image Package"
+    },
+    {
+        "name": "zoujingli/pay-php-sdk",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/pay-php-sdk.git",
+            "reference": "70b30cb76f5c0c7405e66b5c148842f0dffc8f52"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/zoujingli/pay-php-sdk/70b30cb76f5c0c7405e66b5c148842f0dffc8f52.zip",
+            "reference": "70b30cb76f5c0c7405e66b5c148842f0dffc8f52",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2017-10-31T17:07:19+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Pay\\": "./src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "WxPay and AliPay development of SDK",
+        "homepage": "https://github.com/zoujingli/pay-php-sdk",
+        "keywords": [
+            "pay-php-sdk"
+        ]
     }
 ]
