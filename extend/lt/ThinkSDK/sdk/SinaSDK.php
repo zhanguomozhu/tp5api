@@ -72,6 +72,7 @@ class SinaSDK extends ThinkOauth
     protected function parseToken($result, $extend)
     {
         $data = json_decode($result, true);
+        dump($data);
         if ($data['access_token'] && $data['expires_in'] && $data['remind_in'] && $data['uid']) {
             $data['openid'] = $data['uid'];
             unset($data['uid']);

@@ -72,7 +72,9 @@ class TypeEvent
     public function sina($token)
     {
         $sina = ThinkOauth::getInstance('sina', $token);
+        dump($sina);
         $data = $sina->call('users/show', "uid={$sina->openid()}");
+        dump($data);
         if ($data['error_code'] == 0) {
             $userInfo['type'] = 'SINA';
             $userInfo['name'] = $data['name'];
