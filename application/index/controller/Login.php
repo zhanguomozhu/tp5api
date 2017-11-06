@@ -8,9 +8,17 @@
  */
 namespace app\index\controller;
 use think\Controller;
-include EXTEND_PATH.'wx/wxlogin.php';//微信红包支付类
-class  login extends Controller
+include EXTEND_PATH.'wx/wxlogin.php';//微信登录类
+class  Login extends Controller
 {
+
+	/**
+	 * 登录
+	 * @return [type] [description]
+	 */
+	public function index(){
+		
+	}
 
 	// 用户授权成功的操作
 	public function wxlogin()
@@ -18,6 +26,7 @@ class  login extends Controller
 	     // 当你设置微信回调网址设置为http://your domain/index/weixin/wxlogin时
 	     // 用户同意授权后，微信后台会访问该网站同时返回code参数
 	     $config = config('weixin');//获取微信相关配置
+	    
 	     $wechat = new \WxLogin($config);
 
 	     if(isset($_GET['code'])){
@@ -26,9 +35,9 @@ class  login extends Controller
 		 // 通过code参数获取用户信息
 		 $info = $wechat ->get_userinfo($token->access_token, $token->openid);
 		 // $info即为已经获得的用户的信息，数据格式为对象形式。如获取用户的openid,获取方式为$info->openid。
-			 
+			
 		 //你的操作
-             }
+        }
     }
 	
 
