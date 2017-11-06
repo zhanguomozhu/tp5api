@@ -53,9 +53,12 @@ class Oauth extends Controller
         //获取当前登录用户信息
         if (is_array($token)) {
             $TypeEven = new TypeEvent();
+
             $result = $TypeEven->$type($token);
+            dump(session('userinfo','','tp5'));
+            dump($result);die;
             if ($result === true) {
-                $this->success("恭喜！使用{$type}用户登录成功！", 'center/index');
+                $this->success("恭喜！使用{$type}用户登录成功！", 'index/index');
                 //$this->redirect('center/index');
             } else {
                 $this->error($result);

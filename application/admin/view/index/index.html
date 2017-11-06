@@ -43,8 +43,112 @@
                 <!-- Page Body -->
                 <div class="page-body">
                     
-				<div style="text-align:center; line-height:1000%; font-size:24px;">
-                    ThinkPHP功能集锦
+				<div style="text-align:center; line-height:1000%;">
+                <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center" colspan="2">网站配置信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name='data' id="vo" }
+                            <tr>
+                                <td align="center" style="width: 30%;">管理员</td>
+                                <td align="left" style="width: 70%;">{$vo.username}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">登录时间</td>
+                                <td align="left" style="width: 70%;">{$vo.logintime}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">登录IP</td>
+                                <td align="left" style="width: 70%;">{$vo.loginip}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">登录地址</td>
+                                <td align="left" style="width: 70%;" id='getip'></td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">登陆次数</td>
+                                <td align="left" style="width: 70%;">{$vo.num}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">操作系统</td>
+                                <td align="left" style="width: 70%;">{$vo.os}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">运行环境</td>
+                                <td align="left" style="width: 70%;">{$vo.huanjing}</td>
+                            </tr>
+                             <tr>
+                                <td align="center" style="width: 30%;">当前主机名</td>
+                                <td align="left" style="width: 70%;">{$vo.pc}</td>
+                            </tr>
+                             <tr>
+                                <td align="center" style="width: 30%;">获取服务器语言</td>
+                                <td align="left" style="width: 70%;">{$vo.language}</td>
+                            </tr>
+                             <tr>
+                                <td align="center" style="width: 30%;">端口</td>
+                                <td align="left" style="width: 70%;">{$vo.port}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">PHP版本</td>
+                                <td align="left" style="width: 70%;">{$vo.php}</td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" style="width: 30%;">MYSQL版本</td>
+                                <td align="left" style="width: 70%;">{$vo.mysql}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">PHP运行方式</td>
+                                <td align="left" style="width: 70%;">{$vo.run}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">ThinkPHP版本</td>
+                                <td align="left" style="width: 70%;">{$vo.think}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">上传附件限制</td>
+                                <td align="left" style="width: 70%;">{$vo.upload}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">执行时间限制</td>
+                                <td align="left" style="width: 70%;">{$vo.gotime}</td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" style="width: 30%;">服务器时间</td>
+                                <td align="left" style="width: 70%;">{$vo.ostime}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">北京时间</td>
+                                <td align="left" style="width: 70%;">{$vo.bjtime}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">服务器域名/IP</td>
+                                <td align="left" style="width: 70%;">{$vo.os_do_ip}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">剩余空间</td>
+                                <td align="left" style="width: 70%;">{$vo.kongjian}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">register_globals</td>
+                                <td align="left" style="width: 70%;">{$vo.register_globals}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">magic_quotes_gpc</td>
+                                <td align="left" style="width: 70%;">{$vo.magic_quotes_gpc}</td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width: 30%;">magic_quotes_runtime</td>
+                                <td align="left" style="width: 70%;">{$vo.magic_quotes_runtime}</td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
                 </div>
                 </div>
                 
@@ -63,6 +167,35 @@
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
     
+<script type="text/javascript">
 
+    get_client_location(function (info) {
+        $('#getip').html('你的ip所在地为:' + info.country + info.province + info.city);
+    });
+
+    /**
+     * 获得ip所在地址
+     * @param  {Function} cb [回调函数]
+     * @return {[type]}      [description]
+     */
+    function get_client_location(cb){
+        var script = document.createElement("script"),
+        s = document.getElementsByTagName("script")[0];
+        script.src = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=jsonp";
+        s.parentNode.insertBefore(script, s);
+        var it = setInterval(
+                function(){
+                    //console.log(remote_ip_info)
+                    if(remote_ip_info){
+                        cb(remote_ip_info);
+                        remote_ip_info = null;
+                         clearInterval(it);
+                         it = null;
+                    }
+                },100);
+    } 
+
+   
+</script>
 
 </body></html>

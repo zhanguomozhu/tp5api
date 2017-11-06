@@ -72,13 +72,12 @@ class SinaSDK extends ThinkOauth
     protected function parseToken($result, $extend)
     {
         $data = json_decode($result, true);
-        dump($data);
         if ($data['access_token'] && $data['expires_in'] && $data['remind_in'] && $data['uid']) {
             $data['openid'] = $data['uid'];
             unset($data['uid']);
             return $data;
         } else {
-            throw new \think\Exception("获取新浪微博ACCESS_TOKEN出错：{$data['error']}");
+            throw new \think\Exception("获取新浪微博ACCESS_TOKEN出错：错误码{$data['error_code']},{$data['error']}");
         }
     }
 

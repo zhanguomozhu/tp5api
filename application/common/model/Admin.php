@@ -170,7 +170,14 @@ class Admin extends Model
 				//存储session，session_id 用户标识，防止覆盖
 				session(session_id().'_uid',$res['id'],'global');
 				session(session_id().'_username',$res['username'],'global');
-
+				//修改数据表
+				$param = [
+					'logintime'	=>time(),
+					'loginip'	=>get_client_ip(),
+					'session_id'=>session_id(),
+					'num'		=>$res['num']+1,
+				];
+				$this->save($param,['id'=>$res['id']]);
 				return 2;//密码正确
 			}else{
 				return 3;//密码错误

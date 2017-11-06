@@ -32,6 +32,9 @@ class Base extends Controller
         //登录检测
         $this->checkLogin();
 
+        //检测是否有异地登录
+        $this->checkSessionId();
+
         //检查权限
         $this->checkAuth();
 
@@ -131,6 +134,32 @@ class Base extends Controller
         $menus = model('Menu')->getLeft();
         //dump($menus);
         $this->assign('leftMenus',$menus);
+    }
+
+
+    /**
+     * 检测是否有异地登录
+     * @return [type] [description]
+     */
+    public function checkSessionId(){
+        //查询数据表
+        $user = model('Admin')->where(['id'=>session(session_id().'_uid','','global')])->find();  
+        //本地session
+        $session_id = session_id();
+        //判断是否异地
+        if($user['session_id'] != $session_id){  
+            session_destroy();  
+            $this->error('您的账号在其他地方登录,您已经被强制下线', url('admin/login/login'));  
+        }  
+    }
+
+
+    /**
+     *  获取用户信息
+     */
+    public function getUserInfo(){
+        $res = model('Admin')->where(['id'=>session(session_id().'_uid','','global')])->find();
+        return $res;
     }
 
 
