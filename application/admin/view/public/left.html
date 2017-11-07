@@ -17,8 +17,8 @@
                                 <span class="menu-text">{$vo.title}</span>
                                 <i class="menu-expand"></i>
                             </a>
+                            {if condition="isset($vo.son)"}
                             <ul class="submenu">
-                                {if condition="isset($vo.son)"}
                                 {volist name="vo.son" id="v"}
                                 <li>
                                     <a href="{:url($v.path)}">
@@ -28,8 +28,8 @@
                                     </a>
                                 </li>
                                 {/volist}
-                                {/if}
-                            </ul>
+                            </ul> 
+                            {/if}
                         </li>
 
                     {/volist}

@@ -33,8 +33,8 @@ class Index extends Base
 			'huanjing'	=>$_SERVER["SERVER_SOFTWARE"],
 			'run'		=>php_sapi_name(),
 			'php'		=>phpversion(),
-			//'mysql'		=>mysql_get_server_info(),
-			'mysql'		=>'5.3',
+			'mysql'		=>$this->_mysql_version(),
+			'mysql_size'=>$this->_mysql_db_size(),
 			'think'		=>THINK_VERSION.' [ <a href="http://thinkphp.cn" target="_blank">查看最新版本</a> ]',
 			'upload'	=>ini_get('upload_max_filesize'),
 			'gotime'	=>ini_get('max_execution_time').'秒',
@@ -59,6 +59,33 @@ class Index extends Base
 	{
 		return $this->fetch();
 	}
+
+
+
+	private function _mysql_version()
+    {
+
+        $Model = model('admin');
+        $version = $Model->query("select version() as ver");
+        return $version[0]['ver'];
+    }
+
+
+    private function _mysql_db_size()
+    {        
+        $Model = model('admin');
+        $sql = "SHOW TABLE STATUS FROM tp5api";
+        $tblPrefix = 'tp_';
+        if($tblPrefix != null) {
+            $sql .= " LIKE '{$tblPrefix}%'";
+        }
+        $row = $Model->query($sql);
+        $size = 0;
+        foreach($row as $value) {
+            $size += $value["Data_length"] + $value["Index_length"];
+        }
+        return round(($size/1048576),2).'M';
+    }
 }
 
 

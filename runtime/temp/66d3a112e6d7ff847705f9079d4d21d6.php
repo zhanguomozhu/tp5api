@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\index\index.html";i:1510027718;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\admin\lst.html";i:1509424876;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>ThinkPHP功能集锦</title>
+    <title>管理员列表</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +18,11 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    <!-- 万年历 -->
-    <script type="text/javascript" charset="utf-8" src="__ADMIN__/style/clock.js"></script>
+    
 </head>
 <body>
-  <!-- 头部 -->
-         <div class="navbar">
+	<!-- 头部 -->
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -80,8 +79,7 @@
         </div>
     </div>
 </div>
-  <!-- /头部 -->
-
+	<!-- /头部 -->
 	
 	<div class="main-container container-fluid">
 		<div class="page-container">
@@ -203,7 +201,10 @@
                 <!-- Page Breadcrumb -->
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
-                                        <li class="active">控制面板</li>
+                                        <li>
+                        <a href="#">系统</a>
+                    </li>
+                                        <li class="active">管理员管理</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -211,122 +212,51 @@
                 <!-- Page Body -->
                 <div class="page-body">
                     
-				<div style="text-align:center; line-height:1000%;">
-                <table class="table table-bordered table-hover">
+<button type="button" tooltip="添加管理员" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '<?php echo url('add'); ?>'"> <i class="fa fa-plus"></i> 添加
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
                         <thead class="">
                             <tr>
-                                <th class="text-center" colspan="2">网站配置信息</th>
-                            </tr>
-                            <tr>
-                                <th class="text-center" colspan="2"><script type="text/javascript">showcal();</script></th>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">管理员名称</th>
+                                <th class="text-center">所属用户组</th>
+                                <th class="text-center">操作</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                        <?php if(is_array($res) || $res instanceof \think\Collection || $res instanceof \think\Paginator): $i = 0; $__LIST__ = $res;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                             <tr>
-                                <td align="center" style="width: 30%;">管理员</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['username']; ?></td>
+                                <td align="center" style="width: 20%;"><?php echo $vo['id']; ?></td>
+                                <td align="center" style="width: 30%;"><?php echo $vo['username']; ?></td>
+                                <td align="center" style="width: 30%;">
+                                    <?php echo $vo['group']; ?>
+                                </td>
+                                <td align="center" style="width: 20%;">
+                                    <a href="<?php echo url('edit',array('id'=>$vo['id'])); ?>" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="warning('确实要删除吗','<?php echo url('del',array('id'=>$vo['id'])); ?>')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">登录时间</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['logintime']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">登录IP</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['loginip']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">登录地址</td>
-                                <td align="left" style="width: 70%;" id='getip'></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">登陆次数</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['num']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">操作系统</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['os']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">运行环境</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['huanjing']; ?></td>
-                            </tr>
-                             <tr>
-                                <td align="center" style="width: 30%;">当前主机名</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['pc']; ?></td>
-                            </tr>
-                             <tr>
-                                <td align="center" style="width: 30%;">获取服务器语言</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['language']; ?></td>
-                            </tr>
-                             <tr>
-                                <td align="center" style="width: 30%;">端口</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['port']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">PHP版本</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['php']; ?></td>
-                            </tr>
-
-                            <tr>
-                                <td align="center" style="width: 30%;">MYSQL版本</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['mysql']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">数据库大小</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['mysql_size']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">PHP运行方式</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['run']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">ThinkPHP版本</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['think']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">上传附件限制</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['upload']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">执行时间限制</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['gotime']; ?></td>
-                            </tr>
-
-                            <tr>
-                                <td align="center" style="width: 30%;">服务器时间</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['ostime']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">北京时间</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['bjtime']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">服务器域名/IP</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['os_do_ip']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">剩余空间</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['kongjian']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">register_globals</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['register_globals']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">magic_quotes_gpc</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['magic_quotes_gpc']; ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center" style="width: 30%;">magic_quotes_runtime</td>
-                                <td align="left" style="width: 70%;"><?php echo $vo['magic_quotes_runtime']; ?></td>
-                            </tr>
-                            <?php endforeach; endif; else: echo "" ;endif; ?>
+                        <?php endforeach; endif; else: echo "" ;endif; ?>                         
                         </tbody>
                     </table>
                 </div>
+                <div style="padding-top:10px;text-align: center;">
+                    <?php echo $res->render(); ?>
                 </div>
-                
+            </div>
+        </div>
+    </div>
+</div>
 
                 </div>
                 <!-- /Page Body -->
@@ -342,37 +272,6 @@
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
     
-    
-    
-<script type="text/javascript">
 
-    get_client_location(function (info) {
-        $('#getip').html('你的ip所在地为:' + info.country + info.province + info.city);
-    });
-
-    /**
-     * 获得ip所在地址
-     * @param  {Function} cb [回调函数]
-     * @return {[type]}      [description]
-     */
-    function get_client_location(cb){
-        var script = document.createElement("script"),
-        s = document.getElementsByTagName("script")[0];
-        script.src = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=jsonp";
-        s.parentNode.insertBefore(script, s);
-        var it = setInterval(
-                function(){
-                    //console.log(remote_ip_info)
-                    if(remote_ip_info){
-                        cb(remote_ip_info);
-                        remote_ip_info = null;
-                         clearInterval(it);
-                         it = null;
-                    }
-                },100);
-    } 
-
-   
-</script>
 
 </body></html>

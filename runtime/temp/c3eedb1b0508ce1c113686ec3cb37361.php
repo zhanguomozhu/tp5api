@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\menu\edit.html";i:1509327883;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509328037;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\menu\edit.html";i:1509327883;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
         <meta charset="utf-8">
@@ -102,8 +102,9 @@
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
+                            <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(isset($vo['son'])): if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
                                 <li>
                                     <a href="<?php echo url($v['path']); ?>">
                                         <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
@@ -111,11 +112,10 @@
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; endif; ?>
-                            </ul>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </ul> 
+                            <?php endif; ?>
                         </li>
-
-
 
                     <?php endforeach; endif; else: echo "" ;endif; endif; ?>
 

@@ -1,7 +1,8 @@
 <?php 
 namespace app\admin\controller;
 use app\base\controller\Base;
-
+use org\Rest;//容联云短信类
+use org\Lottery;//概率抽奖类
 class Funs extends Base
 {
 	/**
@@ -55,6 +56,50 @@ class Funs extends Base
 		return $this->fetch();
 	}
 
+	/**
+	 * 容联云发送短信
+	 * @return [type] [description]
+	 */
+	public function rong(){
+		return $this->fetch();
+	}
+
+
+	/**
+	 * 容联云发送短信
+	 * @return [type] [description]
+	 */
+	public function rongSms(){
+		//配置信息
+	    $rong = config('sms.rong');
+
+	    $rest = new Rest($rong['serverIP'],$rong['serverPort'],$rong['softVersion']);
+	    $rest->setAccount($rong['accountSid'],$rong['accountToken']);
+	    $rest->setAppId($rong['appId']);
+	    $to = input('phone');
+	     // 发送模板短信
+	     $result = $rest->sendTemplateSMS($to,array('1234','1234'),"1234");
+	     if($result == NULL ) {
+	     	echo $this->show(1051,'result error!');  
+	        break;
+	     }
+	     if($result->statusCode!=0) {
+	         // echo "error code :" . $result->statusCode . "<br>";
+	          //echo "error msg :" . $result->statusMsg . "<br>";
+	         $msg = json_decode(json_encode($result->statusMsg),TRUE);//对象转化为数组
+	         echo $this->show(1051,$msg[0]);  
+	         //TODO 添加错误处理逻辑
+	     }else{
+	         //echo "Sendind TemplateSMS success!<br/>";
+	         // 获取返回信息
+	         $smsmessage = $result->TemplateSMS;
+	         // echo "dateCreated:".$smsmessage->dateCreated."<br/>";
+	         // echo "smsMessageSid:".$smsmessage->smsMessageSid."<br/>";
+	         echo $this->show(1050,$smsmessage->dateCreated);  
+	         //TODO 添加成功处理逻辑
+	     }
+	}
+
 
 	//云之讯短信验证码
     public function sendY(){
@@ -70,11 +115,12 @@ class Funs extends Base
 		        $randnum=rand(0,9); // 10+26;
 		        $authnum.=$list[$randnum];
 	        }
-	        
+	        //加载配置
+	        $yun = config('sms.yun');
 	        //短信验证码（模板短信）,默认以65个汉字（同65个英文）为一条（可容纳字数受您应用名称占用字符影响），超过长度短信平台将会自动分割为多条发送。分割后的多条短信将按照具体占用条数计费。
-	        $appId = config('ysms.appid');  			//appId
+	        $appId = $yun['appid'];  			//appId
 	        $phone = input('phone');				//手机号
-	        $templateId = config('ysms.templateid');	//模板id
+	        $templateId = $yun['templateid'];	//模板id
 	        $param=$authnum;							//验证码
 	        //把生成的验证码拼接手机号生成md5码存储到session***用于ajax验证***********************************【重要】
 	 		//加密手机和验证码
@@ -97,16 +143,19 @@ class Funs extends Base
     //阿里大鱼短信验证码
     public function sendA(){
     	if(request()->isAjax()){
+    		//加载配置
+	        $ali = config('sms.alidayu');
+	        
     		$phone = input('phone'); 					//手机号
     		$content = input('content');				//内容
-    		$this->alidayu->appkey = config('asms.appkey'); 	//appkey
-	        $this->alidayu->secretKey = config('asms.secretKey');//secretKey
+    		$this->alidayu->appkey = $ali['appkey']; 	//appkey
+	        $this->alidayu->secretKey = $ali['secretKey'];//secretKey
 	        $req = new \AlibabaAliqinFcSmsNumSendRequest();
 	        $req->setSmsType("normal");	//镀锌业务参数
-	        $req->setSmsFreeSignName(config('asms.FreeSignName'));//你在阿里大于设置的那个
+	        $req->setSmsFreeSignName($ali['freeSignName']);//你在阿里大于设置的那个
 	        $req->setSmsParam("{code:'".$content."'}");//我只是用来做验证码，因此只有这一个
 	        $req->setRecNum($phone);//手机号码
-	        $req->setSmsTemplateCode(config('asms.smsTemplateCode'));//自己的编号
+	        $req->setSmsTemplateCode($ali['smsTemplateCode']);//自己的编号
 	        $res = $this->alidayu->execute($req);
 	        // dump($res);
 	        // dump($res->code);
@@ -145,15 +194,42 @@ class Funs extends Base
 			$url=input('httpURL');//网址或者是文本内容
 			$level=3;
 			$size=4;
-			$pathname ="./qrcode";
-			if(!is_dir($pathname)) { //若目录不存在则创建之
-				mkdir($pathname);
-			}
-			$ad = $pathname . "/qrcode_" . rand(10000,99999) . ".png";
+			$pathname ="qrcode";
+			// if(!is_dir($pathname)) { //若目录不存在则创建之
+			// 	mkdir($pathname);
+			// }
+			mkdirs($pathname);
+			//图片名
+			$imgpath = rand(10000,99999) . ".png";
+			//原图路径
+			$QR = $pathname . "/qrcode_" .$imgpath;
+			//带logo路径
+			$logopath = $pathname . "/qrcode_logo_" .$imgpath;
+
 			$errorCorrectionLevel =intval($level) ;//容错级别
 			$matrixPointSize = intval($size);//生成图片大小
-			$object->png($url, $ad, $errorCorrectionLevel, $matrixPointSize, 2);
-			echo $this->show(1001,'生成二维码成功',['qrcode'=>substr($ad,1,-1).substr($ad,-1)]);
+			$object->png($url, $QR, $errorCorrectionLevel, $matrixPointSize, 2);
+
+
+			//logo图片路径
+			$logo = 'static/admin/images/adam-jansen.jpg';//需要显示在二维码中的Logo图像
+			if ($logo !== FALSE) {
+			    $QR = imagecreatefromstring ( file_get_contents ( $QR ) );
+			    $logo = imagecreatefromstring ( file_get_contents ( $logo ) );
+			    $QR_width = imagesx ( $QR );
+			    $QR_height = imagesy ( $QR );
+			    $logo_width = imagesx ( $logo );
+			    $logo_height = imagesy ( $logo );
+			    $logo_qr_width = $QR_width / 5;
+			    $scale = $logo_width / $logo_qr_width;
+			    $logo_qr_height = $logo_height / $scale;
+			    $from_width = ($QR_width - $logo_qr_width) / 2;
+			    imagecopyresampled ( $QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height );
+			}
+			imagepng ( $QR, $logopath );//带Logo二维码的文件名
+
+
+			echo $this->show(1001,'生成二维码成功',['qrcode'=>'/'.$logopath]);
 		}
 	}
 
@@ -440,4 +516,63 @@ class Funs extends Base
         pdf($content);
 	}
 
+
+	/**
+	 * 概率抽奖
+	 * @return [type] [description]
+	 */
+	public function chou(){
+		
+		return $this->fetch();
+	}
+
+	/**
+	 * 抽奖
+	 * @return [type] [description]
+	 */
+	public function choujiang(){
+		if(request()->isAjax()){
+			$lottery = new Lottery();
+			$awards = array(
+			    '0' => array('pro' => 2, 'info' => '一等奖2%的可能性','num'=>0),
+			    '1' => array('pro' => 18, 'info' => '二等奖18%的可能性','num'=>0),
+			    '2' => array('pro' => 30, 'info' => '三等奖30%的可能性','num'=>0),
+			    '3' => array('pro' => 50, 'info' => '四等奖50%的可能性','num'=>0),
+			    );
+			 
+			$lottery::setProField('pro');
+			$lottery::setAwards($awards);
+			 
+			$result = array();
+			
+			//奖品结果集
+			for ($i = 10000; $i --;) {
+			    $result[] = $lottery::roll();
+			}
+
+			/**
+			 * 检测中奖概率
+			 * @var [type]
+			 */
+			// foreach ($result as $key => $value) {
+			//     $awards[$value['roll_key']]['num'] ++;
+			// }
+			// dump($awards);
+
+
+			//生成0-9999之间随机数
+			$num = mt_rand(0,9999);
+			//奖品详情
+			if($result[$num]['msg'] == 'roll success'){
+				$jiang = $awards[$result[$num]['roll_key']];
+				echo $this->show(1001,'成功',['data'=>$jiang['info']]);
+			}elseif($result[$num]['msg'] == 'roll fail'){
+				echo $this->show(2001,'系统错误，请重新抽取');
+			}
+			
+			
+
+			
+		}
+	}
 }

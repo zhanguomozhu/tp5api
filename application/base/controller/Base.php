@@ -21,7 +21,7 @@ class Base extends Controller
     public $ucpaas;     //云之讯短信类
     public $alidayu;        //阿里大鱼短信类
     public $qrcode;     //二维码类
-	public $pinyin;		//拼音类
+    public $pinyin;     //拼音类
 
     /**
      * 初始化公共数据
@@ -59,7 +59,6 @@ class Base extends Controller
         //加载阿里大鱼短信类
         include EXTEND_PATH.'alidayu/TopSdk.php';//这是载入阿里大鱼
         $this->alidayu = new \TopClient();
-
 
 
         //加载拼音类

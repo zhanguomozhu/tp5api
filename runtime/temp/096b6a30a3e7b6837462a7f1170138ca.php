@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sfun\index.html";i:1510026364;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -25,13 +26,179 @@
 </head>
 <body>
 	<!-- 头部 -->
-	{include file="public/top"}
+	    <div class="navbar">
+    <div class="navbar-inner">
+        <div class="navbar-container">
+            <!-- Navbar Barnd -->
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                            <img src="__ADMIN__/images/logo.png" alt="">
+                        </small>
+                </a>
+            </div>
+            <!-- /Navbar Barnd -->
+            <!-- Sidebar Collapse -->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="collapse-icon fa fa-bars"></i>
+            </div>
+            <!-- /Sidebar Collapse -->
+             <!-- 登录开始-->
+            <div class="navbar-header pull-right">
+                <div class="navbar-account">
+                    <ul class="account-area">
+                        <li>
+                            <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                <div class="avatar" title="View your public profile">
+                                    <img src="__ADMIN__/images/adam-jansen.jpg">
+                                </div>
+                                <section>
+                                    <h2><span class="profile"><span><?php echo $user; ?></span></span></h2>
+                                </section>
+                            </a>
+                            <!--Login Area Dropdown-->
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                <li class="username"><a>David Stevenson</a></li>
+                                <li class="dropdown-footer">
+                                    <a href="<?php echo url('admin/loginout'); ?>">
+                                            退出登录
+                                        </a>
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a href="<?php echo url('admin/changePW'); ?>">
+                                            修改密码
+                                        </a>
+                                </li>
+                            </ul>
+                            <!--/Login Area Dropdown-->
+                        </li>
+                        <!-- /Account Area -->
+                        <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                        <!-- Settings -->
+                    </ul>
+                </div>
+            </div>
+           <!-- 登录结束-->
+        </div>
+    </div>
+</div>
 	<!-- /头部 -->
 	
 	<div class="main-container container-fluid">
 		<div class="page-container">
 			<!-- Page Sidebar -->
-            {include file="public/left"}
+                      <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input class="searchinput" type="text">
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">没啥用啊</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                        <li>
+                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                                <span class="menu-text"><?php echo $vo['title']; ?></span>
+                                <i class="menu-expand"></i>
+                            </a>
+                            <?php if(isset($vo['son'])): ?>
+                            <ul class="submenu">
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                <li>
+                                    <a href="<?php echo url($v['path']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                        <span class="menu-text"><?php echo $v['title']; ?></span>
+                                        <i class="menu-expand"></i>
+                                    </a>
+                                </li>
+                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                            </ul> 
+                            <?php endif; ?>
+                        </li>
+
+                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+
+
+
+
+
+                    <!-- <li>
+                        <a href="<?php echo url('index/index'); ?>" class="menu-dropdown">
+                            <i class="menu-icon fa fa-th-large"></i>
+                            <span class="menu-text">后台首页</span>
+                            <i class="menu-expand"></i>
+                        </a>                           
+                    </li>
+                    <li>
+                        <a href="" class="menu-dropdown">
+                            <i class="menu-icon fa fa-key"></i>
+                            <span class="menu-text">权限管理</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="<?php echo url('Menu/lst'); ?>">
+                                    <span class="menu-text">菜单管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo url('Admin/lst'); ?>">
+                                    <span class="menu-text">用户管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo url('AuthGroup/lst'); ?>">
+                                    <span class="menu-text">角色管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo url('AuthRule/lst'); ?>">
+                                    <span class="menu-text">权限管理</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="<?php echo url('cate/index'); ?>" class="menu-dropdown">
+                            <i class="menu-icon fa fa-folder-o"></i>
+                            <span class="menu-text">常用函数</span>
+                            <i class="menu-expand"></i>
+                        </a>                           
+                    </li>
+                    <li>
+                        <a href="<?php echo url('lists/index'); ?>" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-tasks"></i>
+                            <span class="menu-text">常用功能</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo url('link/index'); ?>" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-link"></i>
+                            <span class="menu-text">api功能</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li> 
+                     <li>
+                        <a href="<?php echo url('link/index'); ?>" class="menu-dropdown">
+                            <i class="menu-icon fa  fa-chain-broken"></i>
+                            <span class="menu-text">api测试</span>
+                            <i class="menu-expand"></i>
+                        </a>
+                    </li>    -->
+                   
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
             <!-- /Page Sidebar -->
             <!-- Page Content -->
             <div class="page-content">
@@ -39,7 +206,7 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="{:url('Index/index')}">系统</a>
+                        <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
                                         <li class="active">小功能</li>
                                         </ul>
@@ -496,7 +663,7 @@
         var encstr1 = $('#encstr1').val();
         if(encstr1){
             //加密字符串
-            ajaxPOST("{:url('sfun/encstr')}",{str:encstr1,type:0},$('.encstr1'));
+            ajaxPOST("<?php echo url('sfun/encstr'); ?>",{str:encstr1,type:0},$('.encstr1'));
             //倒数60s
             settime(this);
         }
@@ -508,7 +675,7 @@
         var encstr2 = $('#encstr2').val();
         if(encstr2){
             //解密字符串
-            ajaxPOST("{:url('sfun/encstr')}",{str:encstr2,type:1},$('.encstr2'));
+            ajaxPOST("<?php echo url('sfun/encstr'); ?>",{str:encstr2,type:1},$('.encstr2'));
             //倒数60s
             settime(this);
         }
@@ -519,7 +686,7 @@
         var encurl1 = $('#encurl1').val();
         if(encurl1){
             //加密url
-            ajaxPOST("{:url('sfun/encurl')}",{hurl:encurl1,type:0},$('.encurl1'));
+            ajaxPOST("<?php echo url('sfun/encurl'); ?>",{hurl:encurl1,type:0},$('.encurl1'));
             //倒数60s
             settime(this);
         }
@@ -530,7 +697,7 @@
         var encurl2 = $('#encurl2').val();
         if(encurl2){
             //加密url
-            ajaxPOST("{:url('sfun/encurl')}",{hurl:encurl2,type:1},$('.encurl2'));
+            ajaxPOST("<?php echo url('sfun/encurl'); ?>",{hurl:encurl2,type:1},$('.encurl2'));
             //倒数60s
             settime(this);
         }
@@ -543,7 +710,7 @@
         var sign = $('#sign').val();
         if(sign){
             //加密url
-            ajaxPOST("{:url('sfun/sign')}",{sign:sign},$('.sign'));
+            ajaxPOST("<?php echo url('sfun/sign'); ?>",{sign:sign},$('.sign'));
             //倒数60s
             settime(this);
         }
@@ -553,7 +720,7 @@
     //IP
     $('#send_ip').click(function(){
         //加密url
-        ajaxPOST("{:url('sfun/ipAdress')}",{type:1},$('.ip'));
+        ajaxPOST("<?php echo url('sfun/ipAdress'); ?>",{type:1},$('.ip'));
         //倒数60s
         settime(this);
     })
@@ -564,7 +731,7 @@
         var inArr2 = $('#inArr2').val();
         if(inArr1 && inArr2){
             //加密url
-            ajaxPOST("{:url('sfun/inArr')}",{inArr1:inArr1,inArr2:inArr2,},$('.inArr'));
+            ajaxPOST("<?php echo url('sfun/inArr'); ?>",{inArr1:inArr1,inArr2:inArr2,},$('.inArr'));
             //倒数60s
             settime(this);
         }
@@ -576,7 +743,7 @@
         var emoji = $('#emoji').val();
         if(emoji){
             //加密url
-            ajaxPOST("{:url('sfun/emoji')}",{emoji:emoji},$('.emoji'));
+            ajaxPOST("<?php echo url('sfun/emoji'); ?>",{emoji:emoji},$('.emoji'));
             //倒数60s
             settime(this);
         }
@@ -585,7 +752,7 @@
      //是否手机访
     $('#send_phone').click(function(){
         //加密url
-        ajaxPOST("{:url('sfun/phone')}",{phone:1},$('.phone'));
+        ajaxPOST("<?php echo url('sfun/phone'); ?>",{phone:1},$('.phone'));
         //倒数60s
         settime(this);
     })
@@ -594,7 +761,7 @@
     //获取当前设备类型
     $('#send_device').click(function(){
         //加密url
-        ajaxPOST("{:url('sfun/device')}",{device:1},$('.device'));
+        ajaxPOST("<?php echo url('sfun/device'); ?>",{device:1},$('.device'));
         //倒数60s
         settime(this);
     })
@@ -608,7 +775,7 @@
         var end = $("#end").val();
         //个数
         var leng = $("#leng").val();
-        ajaxPOST("{:url('sfun/randnum')}",{start:start,end:end,leng:leng},$('.randnum'));
+        ajaxPOST("<?php echo url('sfun/randnum'); ?>",{start:start,end:end,leng:leng},$('.randnum'));
         //倒数60s
         settime(this);
     })
@@ -622,7 +789,7 @@
         var length = $("#length").val();
         //0 小写字母 1大写字母 2 数字 3大小写 4小写与数字 5大写与数字  其它 混合
         var model = $("#model").val();
-        ajaxPOST("{:url('sfun/morenum')}",{num:num,leng:length,model:model},$('.morenum'));
+        ajaxPOST("<?php echo url('sfun/morenum'); ?>",{num:num,leng:length,model:model},$('.morenum'));
         //倒数60s
         settime(this);
         
@@ -635,7 +802,7 @@
         var st = $("#st").val();
         //结束范围
         var et = $("#et").val();
-        ajaxPOST("{:url('sfun/fannum')}",{st:st,et:et},$('.fannum'));
+        ajaxPOST("<?php echo url('sfun/fannum'); ?>",{st:st,et:et},$('.fannum'));
         //倒数60s
         settime(this);
     })
@@ -649,7 +816,7 @@
         var si = $("#si").val();
         //长度
         var number = $("#number").val();
-        ajaxPOST("{:url('sfun/cutstr')}",{str:str,si:si,number:number},$('.cutstr'));
+        ajaxPOST("<?php echo url('sfun/cutstr'); ?>",{str:str,si:si,number:number},$('.cutstr'));
         //倒数60s
         settime(this);
     })
@@ -660,7 +827,7 @@
         //字符串
         var demaio = $("#demaio").val();
         if(demaio){
-            ajaxPOST("{:url('sfun/demaio')}",{demaio:demaio},$('.demaio'));
+            ajaxPOST("<?php echo url('sfun/demaio'); ?>",{demaio:demaio},$('.demaio'));
             //倒数60s
             settime(this);
         }
@@ -675,7 +842,7 @@
         var suffix3 = $("#suffix3").val();
         var charset3 = $("#charset3").val();
         if(str3){
-            ajaxPOST("{:url('sfun/substrs')}",{str3:str3,start3:start3,length3:length3,suffix3:suffix3,charset3:charset3},$('.str3'));
+            ajaxPOST("<?php echo url('sfun/substrs'); ?>",{str3:str3,start3:start3,length3:length3,suffix3:suffix3,charset3:charset3},$('.str3'));
             //倒数60s
             settime(this);
         }
@@ -687,7 +854,7 @@
         //字符串
         var fortime = $("#fortime").val();
         var fortime1 = $("#fortime1").val();
-        ajaxPOST("{:url('sfun/fortime')}",{fortime:fortime,fortime1:fortime1},$('.fortime'));
+        ajaxPOST("<?php echo url('sfun/fortime'); ?>",{fortime:fortime,fortime1:fortime1},$('.fortime'));
         //倒数60s
         settime(this);
     })
@@ -697,7 +864,7 @@
     $('#send_uniqidName').click(function(){
         //字符串
         var length4 = $("#length4").val();
-        ajaxPOST("{:url('sfun/uniqidName')}",{length4:length4},$('.uniqidName'));
+        ajaxPOST("<?php echo url('sfun/uniqidName'); ?>",{length4:length4},$('.uniqidName'));
         //倒数60s
         settime(this);
     })
@@ -708,7 +875,7 @@
         var msg = $("#msg").val();
         var url1 = $("#url1").val();
         if(msg && url1){
-            ajaxPOST("{:url('sfun/alerts')}",{msg:msg,url:url1},$('.alerts'));
+            ajaxPOST("<?php echo url('sfun/alerts'); ?>",{msg:msg,url:url1},$('.alerts'));
             //倒数60s
             settime(this);
         }
@@ -718,7 +885,7 @@
     $('#send_ueimages').click(function(){
         //字符串
         var str4 = UE.getEditor('content').getContent();
-        ajaxPOST("{:url('sfun/ueimages')}",{str4:str4},$('.ueimages'));
+        ajaxPOST("<?php echo url('sfun/ueimages'); ?>",{str4:str4},$('.ueimages'));
         $('.ueimagesss').hide();
         //倒数60s
         settime(this);
