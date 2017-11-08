@@ -14,13 +14,13 @@ class Menu extends Validate
         'pid.require'   => '父级id必须填写',
         'title.require' => '标题必须填写',
         'title.length'  => '标题长度必须是4-18位',
-        'name.require'  => '名称必须填写',
+        'path.require'  => '路径必须填写',
         
     ];
     //验证场景
     protected $scene = [
-        'add'     =>  ['pid','title','name'],//添加
-        'edit'    =>  ['pid','title','name'],//修改
+        'add'     =>  ['pid','title','path'],//添加
+        'edit'    =>  ['pid','title','path'],//修改
     ];
 
 

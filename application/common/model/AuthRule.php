@@ -1,8 +1,7 @@
 <?php 
 namespace app\common\model;
-use think\Model;
 use app\base\model\Base;
-use think\Db;
+
 class AuthRule extends Base
 {
 

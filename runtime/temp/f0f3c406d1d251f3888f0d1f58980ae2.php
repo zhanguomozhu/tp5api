@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\short.html";i:1510119859;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>生成短链接</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,6 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
    <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
@@ -206,7 +205,7 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">生成短链接</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -214,8 +213,34 @@
                 <!-- Page Body -->
                 <div class="page-body">
                 
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">短链接</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
 
-					<button onclick="chou()">点击抽奖</button>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-1 control-label no-padding-right">生成短链接</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" placeholder="" name="short" required="" type="text" id="short">
+                            </div>
+                            <input type="button" id="send" class="btn btn-success" value="点击验证码">
+                        </div> 
+                        <div class="form-group" style="height: 100px;">
+                            <div class="col-sm-1">
+                            </div>
+                            <p class="help-block col-sm-2 red short"></p>
+                        </div> 
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
          		</div>
                 <!-- /Page Body -->
             </div>
@@ -224,25 +249,38 @@
 	</div>
 
 </body>
+<!--Basic Scripts-->
+<script src="__ADMIN__/style/jquery_002.js"></script>
 <script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/jquery.js"></script>
+<!--Beyond Scripts-->
+<script src="__ADMIN__/style/beyond.js"></script>
 <script type="text/javascript">
 
-	//下载excel
-    function chou(){
-
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
+	  //点击事件
+    $('#send').click(function(){
+        if($('#short').val()){
+            //检测格式
+             if($('#short').val().match(/^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/)){
+                    $.post("<?php echo url('funs/shortUrl'); ?>",{short:$('#short').val()},function(res){
+                        console.log(res)
+                        if(res.code == 1001){
+                        	var short = res.data.data;
+                            $(".short").removeClass('red').addClass('green').html("<h3><a href='<?php echo url('funs/shortUrl'); ?>?short="+short+"'>"+window.location.protocol+"//"+top.location.hostname+"/"+short+"</a></h3>");
+                        }
+                        if(res.code == 2001){
+                            $(".short").html(res.msg);
+                        }
+                    },"json");
+            }else{
+                $('.short').html('链接地址格式不正确');
             }
-        });
-    }
+            
+        }else{
+            $('.short').html('请输入链接地址');
+        }
+        
+    })
 </script>
 
 </html>

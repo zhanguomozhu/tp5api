@@ -3,8 +3,10 @@ namespace app\admin\controller;
 use app\base\controller\Base;
 use org\Rest;//容联云短信类
 use org\Lottery;//概率抽奖类
+use think\Request;
 class Funs extends Base
 {
+
 	/**
 	 * 发送邮件
 	 * @return [type] [description]
@@ -532,15 +534,18 @@ class Funs extends Base
 	 */
 	public function choujiang(){
 		if(request()->isAjax()){
+			//实例化抽奖概率类
 			$lottery = new Lottery();
+			//设置奖品概率信息
 			$awards = array(
 			    '0' => array('pro' => 2, 'info' => '一等奖2%的可能性','num'=>0),
 			    '1' => array('pro' => 18, 'info' => '二等奖18%的可能性','num'=>0),
 			    '2' => array('pro' => 30, 'info' => '三等奖30%的可能性','num'=>0),
 			    '3' => array('pro' => 50, 'info' => '四等奖50%的可能性','num'=>0),
 			    );
-			 
+			//传入概率字段
 			$lottery::setProField('pro');
+			//传入奖品设置
 			$lottery::setAwards($awards);
 			 
 			$result = array();
@@ -559,7 +564,6 @@ class Funs extends Base
 			// }
 			// dump($awards);
 
-
 			//生成0-9999之间随机数
 			$num = mt_rand(0,9999);
 			//奖品详情
@@ -569,10 +573,79 @@ class Funs extends Base
 			}elseif($result[$num]['msg'] == 'roll fail'){
 				echo $this->show(2001,'系统错误，请重新抽取');
 			}
-			
-			
-
-			
 		}
 	}
+
+
+
+
+	/**
+	 * 短连接
+	 * @return [type] [description]
+	 */
+	public function short(){
+		return $this->fetch();
+	}
+
+	/**
+	 * 获取短连接
+	 * @return [type] [description]
+	 */
+	public function shortUrl(){
+		//生成短连接
+		if(request()->isAjax()){
+			//原始url
+			$url=input('short');
+			//判断原始url是否有http或者https
+	        if(strlen($url)>4){
+	            $p_http='/http:\/\/|https:\/\//i';
+	            $http=preg_match($p_http,$url);
+	            if(!$http){
+	                $url="http://".$url;
+	            }
+	            //插入数据库信息
+	        	$info['uid']=session(session_id().'_uid','','global');
+	        	$info['ip']=request()->ip();
+	        	$info['original']=$url;
+	       		$res=model('Url')->create_info($info,5);//返回key
+	            if($res){
+	            	echo $this->show(1001,'成功',['data'=>$res]);
+	            }else{
+	            	echo $this->show(2001,'失败');
+	            }
+	        }
+	    }
+	    //跳转短链
+	    if(request()->isGet()){
+	    	$short = input('short');
+	    	//查看是否有此短链
+	    	$res=model('Url')->is_short($short);
+	    	if($res){
+	    		//修改短链点击状态
+	    		$data=[
+	    			'short'=>$short,
+	    			'ip'=>request()->ip(),
+	    		];
+	    		$result  =	model('Url')->click($data);
+		    	if($result){
+		    		echo alertMes('确定跳转？请点击确定',$result);
+		    	}else{
+		    		echo alertMes('没有此链接');
+		    	}
+	    	}else{
+	    		echo alertMes('没有此链接');
+	    	}
+	    }
+		
+	}
+
+
+	/**
+	 * editor模板标签
+	 * @return [type] [description]
+	 */
+	public function editor(){
+		return $this->fetch();
+	}
+
 }

@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\email.html";i:1510038930;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>发送邮件</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +18,9 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__ADMIN__/ueditor/lang/zh-cn/zh-cn.js"></script>
     
 </head>
 <body>
@@ -206,43 +207,138 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">发送邮件</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">发送邮件</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">邮箱</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" placeholder="" name="email" required="" type="text" id="email">
+                            </div>
+                            <p class="help-block col-sm-2 red email">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">标题</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="title" required="" type="text" id="title">
+                            </div>
+                            <p class="help-block col-sm-2 red title">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">内容</label>
+                            <div class="col-sm-6">
+                                <textarea name="content" id="content">
+                                    
+                                </textarea>
+                            </div>
+                            <p class="help-block col-sm-2 red content">* 必填</p>
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="button" id="send" class="btn btn-success" value="点击发送邮件">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
 		</div>	
 	</div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
-
-	//下载excel
-    function chou(){
-
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript">
+         UE.getEditor('content',{
+            "initialFrameWidth":"100%",
+            "initialFrameHeight":350,
+            "maximumWords":50000
+          });
+    </script>
+    <script type="text/javascript"> 
+    var countdown=60; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击发送邮件"; 
+            countdown = 60; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
     }
-</script>
+      
+    //点击事件
+    $('#send').click(function(){
+        if($('#email').val()){
 
-</html>
+            //检测邮箱格式
+            if($('#email').val().match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)){
+                //检测标题
+                if($('#title').val()){
+                    //检测内容
+                    if(UE.getEditor('content').getContent()){
+                            var email = $('#email').val();
+                            var title = $('#title').val();
+                            var content = UE.getEditor('content').getContent();
+                             //发送邮件
+                            $.post("<?php echo url('funs/sendEmail'); ?>",{email:email,title:title,content:content},function(res){
+                                //console.log(res)
+                                if(res.code == 1001){
+                                    $(".email").removeClass('red').addClass('green').html(res.msg);
+                                }
+                                if(res.code == 2001){
+                                    $(".email").html(res.msg);
+                                }
+                            },"json");
+                            
+                            //倒数60s
+                            settime(this);
+                    }else{
+                        $('.content').html('请输入内容');
+                    }
+                }else{
+                    $('.title').html('请输入标题');
+                }
+                
+            }else{
+                $('.email').html('邮箱格式不正确');
+            }
+            
+        }else{
+            $('.email').html('请输入邮箱');
+        }
+        
+    })
+    </script>
+
+</body></html>

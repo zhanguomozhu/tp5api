@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\index.html";i:1510119568;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>功能展示</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +18,6 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
@@ -206,16 +204,14 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">功能展示</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
 
-					<button onclick="chou()">点击抽奖</button>
          		</div>
                 <!-- /Page Body -->
             </div>
@@ -225,24 +221,4 @@
 
 </body>
 <script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
-
-	//下载excel
-    function chou(){
-
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
 </html>

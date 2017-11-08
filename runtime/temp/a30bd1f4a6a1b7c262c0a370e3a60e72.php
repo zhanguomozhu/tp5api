@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\lst.html";i:1510130860;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>系统配置</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +18,11 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
 	<!-- 头部 -->
-	    <div class="navbar">
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -204,45 +202,110 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="<?php echo url('Index/index'); ?>">系统</a>
+                        <a href="#">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">系统配置</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
+                    
+<button type="button" tooltip="添加系统配置" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '<?php echo url('add'); ?>'"> <i class="fa fa-plus"></i> Add
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                <form action="" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">排序</th>
+                                <th class="text-center">英文名称</th>
+                                <th class="text-center">中文名称</th>
+                                <th class="text-center">配置类型</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(is_array($confs) || $confs instanceof \think\Collection || $confs instanceof \think\Paginator): $i = 0; $__LIST__ = $confs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                            <tr>
+                                <td align="center" style="width: 10%;"><?php echo $vo['id']; ?></td>
+                                <td align="center" style="width: 10%;"> 
+                                    <input type="text" style="width: 50%;text-align: center;" name="<?php echo $vo['id']; ?>" value="<?php echo $vo['sort']; ?>">
+                                </td>
+                                <td align="center" style="width: 10%;"><?php echo $vo['enname']; ?></td>
+                                <td align="center" style="width: 10%;"><?php echo $vo['cnname']; ?></td>
+                                <td align="center" style="width: 10%;">
+                                <?php if($vo['type'] == 1): ?>
+                                <span style="color: green;">单行文本</span>
+                                <?php elseif($vo['type'] == 2): ?>
+                                <span style="color: red;">多行文本</span>
+                                <?php elseif($vo['type'] == 3): ?>
+                                <span style="color: blue;">单选按钮</span>
+                                <?php elseif($vo['type'] == 4): ?>
+                                <span style="color: #e500ff;">复选按钮</span>
+                                <?php elseif($vo['type'] == 5): ?>
+                                <span style="color: #00a1ff;">下拉菜单</span>
+                                <?php else: ?>
+                                <span style="color: #ff00f2;">未知类型</span>
+                                <?php endif; ?>
+                                </td>
+                                
+                                <td align="center" style="width: 20%;">
+                                    <a href="<?php echo url('edit',array('id'=>$vo['id'])); ?>" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="warning('确实要删除吗', '<?php echo url('del',array('id'=>$vo['id'])); ?>')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; endif; else: echo "" ;endif; ?> 
+                          <tr>
+                                <td></td>
+                                <td style="text-align: center;">
+                                    <input type="submit" class="btn btn-primary btn-sm shiny" name="" value="排序">
+                                </td>
+                                <td colspan="5"></td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                     </form>
+                </div>
+                <div style="padding-top:10px;text-align: center;">
+                <?php echo $confs->render(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+<!-- 声明使用 TagLib -->
+
+<!-- 引入 ueditor 使用的静态资源文件 type:编辑器名称，path:编辑器静态资源存放路径 -->
+<!-- 配置文件 --><script type="text/javascript" src="http://tp5api.com/static/admin/ueditor/ueditor.config.js"></script><!-- 编辑器源码文件 --><script type="text/javascript" src="http://tp5api.com/static/admin/ueditor/ueditor.all.min.js"></script>
+<!-- 在需要使用 ueditor 编辑器的地方插入 -->
+<!-- 加载编辑器的容器 --><script id="container" name="content" type="text/plain" style=""></script><!-- 实例化编辑器 --><script type="text/javascript">var ue_container = UE.getEditor('container');</script>
+
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
 		</div>	
 	</div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    
 
-	//下载excel
-    function chou(){
 
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
-</html>
+</body></html>

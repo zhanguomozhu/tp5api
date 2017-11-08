@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\conf.html";i:1510121368;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+        <meta charset="utf-8">
+    <title>系统配置</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +18,11 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
-	<!-- 头部 -->
-	    <div class="navbar">
+    <!-- 头部 -->
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -81,11 +79,11 @@
         </div>
     </div>
 </div>
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -204,45 +202,94 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="<?php echo url('Index/index'); ?>">系统</a>
+                        <a href="#">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">系统配置</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
+                    
+<button type="button" tooltip="添加系统配置" class="btn btn-sm btn-azure btn-addon"> 网站配置
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                <form action="" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">配置名称</th>
+                                <th class="text-center">配置值</th>
+                        
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                            <tr>
+                                <td align="center" style="width: 20%;"><?php echo $vo['cnname']; ?></td>
+                                <td align="left" style="width: 80%;"> 
+                                    <?php if($vo['type'] == 1): ?>
+                                    <input class="form-control" placeholder="" name="<?php echo $vo['enname']; ?>"  type="text" value="<?php echo $vo['value']; ?>">
+                                    <?php elseif($vo['type'] == 2): ?>
+                                        <textarea class="form-control" name="<?php echo $vo['enname']; ?>"><?php echo $vo['value']; ?></textarea>
+                                    <?php elseif($vo['type'] == 3): if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $i = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                        <div style="float: left;padding-right: 20px;">
+                                            <label>
+                                                <input name="<?php echo $vo['enname']; ?>" value="<?php echo $v; ?>" type="radio" <?php if($vo['value'] == $v): ?>checked<?php endif; ?>>
+                                                <span class="text"><?php echo $v; ?></span>
+                                            </label>
+                                        </div>
+                                        <?php endforeach; endif; else: echo "" ;endif; elseif($vo['type'] == 4): ?>
+                                        <div class="checkbox" style="">
+                                            <label>
+                                                <input name="<?php echo $vo['enname']; ?>" type="checkbox" value="<?php echo $vo['values']; ?>" <?php if($vo['value'] == $vo['values']): ?>checked<?php endif; ?> >
+                                                <span class="text"><?php echo $vo['values']; ?></span>
+                                            </label>
+                                        </div>
+                                    <?php elseif($vo['type'] == 5): ?>
+                                        <select name="<?php echo $vo['enname']; ?>">
+                                            <?php if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $k = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($k % 2 );++$k;?>
+                                                <option value="<?php echo $v; ?>" <?php if($vo['value'] == $v): ?>selected="selected"<?php endif; ?>><?php echo $v; ?></option>
+                                            <?php endforeach; endif; else: echo "" ;endif; ?>
+                                        </select>
+                                    <?php endif; ?>
+                                   
+                                </td>
+                            </tr>
+                        <?php endforeach; endif; else: echo "" ;endif; ?> 
+                          <tr >
+                                <td  colspan='2' style="text-align: center;">
+                                    <input type="submit" style="width: 500px;height: 50px;font-size: 20px;" class="btn btn-primary btn-sm shiny" name="" value="提交修改">
+                                </td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    
 
-	//下载excel
-    function chou(){
 
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
-</html>
+</body></html>

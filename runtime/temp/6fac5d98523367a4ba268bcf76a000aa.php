@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\add.html";i:1510122613;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>添加配置</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,8 +18,6 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
@@ -204,45 +202,90 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="<?php echo url('Index/index'); ?>">系统</a>
+                        <a href="<?php echo url('index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
-                                        </ul>
+                                        <li>
+                        <a href="<?php echo url('lst'); ?>">系统配置</a>
+                    </li>
+                    <li class="active">添加配置</li>
+                    </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">新增系统配置</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="<?php echo url('add'); ?>" method="post">
+                      
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">英文名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="enname"  type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="cnname"  type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">配置类型</label>
+                            <div class="col-sm-6">
+                                <select name='type'>
+                                    <option value="0">请选择</option>
+                                    <option value="1">单行文本</option>
+                                    <option value="2">多行文本</option>
+                                    <option value="3">单选按钮</option>
+                                    <option value="4">复选按钮</option>
+                                    <option value="5">下拉菜单</option>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">可选值</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" name="values"></textarea>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
 		</div>	
 	</div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    
 
-	//下载excel
-    function chou(){
 
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
-</html>
+</body></html>

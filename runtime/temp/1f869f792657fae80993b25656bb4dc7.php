@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\edit.html";i:1510123396;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+        <meta charset="utf-8">
+    <title>编辑配置</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +18,11 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
-	<!-- 头部 -->
-	    <div class="navbar">
+    <!-- 头部 -->
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -81,11 +79,11 @@
         </div>
     </div>
 </div>
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -206,43 +204,95 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
-                                        </ul>
+                                        <li>
+                        <a href="<?php echo url('lst'); ?>">系统配置</a>
+                    </li>
+                    <li class="active">编辑配置</li>
+                    </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">编辑系统配置</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="<?php echo url('edit'); ?>" method="post">
+                        <input type="hidden" name="id" value="<?php echo $res['id']; ?>">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">英文名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="enname"  type="text" value="<?php echo $res['enname']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="cnname"  type="text" value="<?php echo $res['cnname']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">配置类型</label>
+                            <div class="col-sm-6">
+                                <select name='type'>
+                                    <option value="0">请选择</option>
+                                    <option value="1" <?php if($res['type'] == 1): ?>selected="selected"<?php endif; ?>>单行文本</option>
+                                    <option value="2" <?php if($res['type'] == 2): ?>selected="selected"<?php endif; ?>>多行文本</option>
+                                    <option value="3" <?php if($res['type'] == 3): ?>selected="selected"<?php endif; ?>>单选按钮</option>
+                                    <option value="4" <?php if($res['type'] == 4): ?>selected="selected"<?php endif; ?>>复选按钮</option>
+                                    <option value="5" <?php if($res['type'] == 5): ?>selected="selected"<?php endif; ?>>下拉菜单</option>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                         <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">可选值</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" name="values"><?php echo $res['values']; ?></textarea>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                       <!-- <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">配置排序</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="sort"  type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div> -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    
 
-	//下载excel
-    function chou(){
 
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
-</html>
+</body></html>

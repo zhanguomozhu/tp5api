@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou.html";i:1510110240;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\editor.html";i:1510131975;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>系统配置</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +18,11 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-   <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
     
 </head>
 <body>
 	<!-- 头部 -->
-	    <div class="navbar">
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -204,45 +202,38 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="<?php echo url('Index/index'); ?>">系统</a>
+                        <a href="#">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">系统配置</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
+                    
+                <!-- 声明使用 TagLib -->
                 
+                <!-- 引入 ueditor 使用的静态资源文件 type:编辑器名称，src:编辑器静态资源存放路径 -->
+                <!-- 配置文件 --><script type='text/javascript' src='http://tp5api.com/static/admin/ueditor/ueditor.config.js'></script><!-- 编辑器源码文件 --><script type='text/javascript' src='http://tp5api.com/static/admin/ueditor/ueditor.all.min.js'></script><!-- 字体文件 --><script type='text/javascript' charset='utf-8' src='http://tp5api.com/static/admin/ueditor/lang/zh-cn/zh-cn.js'></script>
+                <!-- 在需要使用 ueditor 编辑器的地方插入 -->
+                <!-- 加载编辑器的容器 --><script id='container' name='content' type='text/plain' style='height:500px;'></script><!-- 实例化编辑器 --><script type='text/javascript'>UE.getEditor('container',{'initialFrameWidth':'100','initialFrameHeight':350,'maximumWords':50000});</script>
 
-					<button onclick="chou()">点击抽奖</button>
-         		</div>
+
+                </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
 		</div>	
 	</div>
 
-</body>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script type="text/javascript">
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    
 
-	//下载excel
-    function chou(){
 
-        $.ajax({
-            url: "<?php echo url('funs/choujiang'); ?>",
-            type: 'POST',
-            cache: false,
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-                
-
-            }
-        });
-    }
-</script>
-
-</html>
+</body></html>
