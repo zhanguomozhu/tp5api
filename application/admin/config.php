@@ -17,15 +17,16 @@ return [
         '__ADMIN__'  => '/static/admin',
         '__STATIC__' => '/static',
     ],
-    // 'template'               => [
-    //         // 模板引擎类型 支持 php think 支持扩展
-    //         'type'         => 'Think',
-    //         // 模板路径
-    //         'view_path'    => '',
-    //         // 模板后缀
-    //         'view_suffix'  => '.html',
-    //         // 预先加载的标签库
-    //         'taglib_pre_load'     =>    'Editor', 
+     //模板标签配置
+     // 'template'               => [
+     //         // 模板引擎类型 支持 php think 支持扩展
+     //         'type'         => 'Think',
+     //         // 模板路径
+     //         'view_path'    => '',
+     //         // 模板后缀
+     //         'view_suffix'  => '.html',
+     //         // 预先加载的标签库
+     //         'taglib_pre_load'     =>    'Editor',
           
-    //     ],
+     //     ],
 ];

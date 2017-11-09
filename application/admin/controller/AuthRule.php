@@ -33,6 +33,7 @@ class AuthRule extends Base
             	'pid' 	=>'pid',
                 'title' => 'title',
                 'name' 	=> 'name',
+                'level' => 'level',
                 'status'=> 'status',
             ];
             $param_data = $this->buildParam($param);
@@ -72,6 +73,7 @@ class AuthRule extends Base
             	'pid' 	=> 'pid',
                 'title' => 'title',
                 'name' 	=> 'name',
+                'level' => 'level',
                 'status'=> 'status',
             ];
             $param_data = $this->buildParam($param);
@@ -82,7 +84,7 @@ class AuthRule extends Base
     			return $this->error($validate->getError());
     		}
     		//插入数据库
-    		$res = model('AuthRule')->saveRule($param_data);
+    		$res = model('AuthRule')->editAll($param_data);
 			if($res){
 				$this->success('更新成功','lst');
 			}else{
@@ -110,6 +112,31 @@ class AuthRule extends Base
 		}else{
 			$this->error('修改失败');
 		}
+	}
+
+
+
+	/**
+	 * 修改状态
+	 * @return [type] [description]
+	 */
+	public function edit_status()
+	{
+		 if(request()->isGet()){
+            //数据库字段 网页字段转换，过滤参数
+            $param = [
+            	'id' =>'id',
+                'status' => 'status',
+            ];
+            $param_data = $this->buildParam($param);
+            //提交数据
+           	$res = model('AuthRule')->editAll($param_data);
+            if($res){
+                $this->redirect($_SERVER['HTTP_REFERER']);
+            }else{
+                $this->error('修改失败');
+            }
+        }
 	}
 
 }

@@ -1,18 +1,10 @@
 <?php 
 namespace app\common\model;
-use think\Model;
-class AuthGroup extends Model
+use app\base\model\Base;
+class AuthGroup extends Base
 {
 	
 	
-	/**
-	 * 多对多关联角色用户表
-	 * @return [type] [description]
-	 */
-	public function admins()
-    {
-        return $this->belongsToMany('Admin','AuthGroupAccess','uid','group_id');
-    }
 
     /**
      * 状态获取器

@@ -125,14 +125,15 @@ class Base extends Controller
      * @return [type] [description]
      */
     private  function leftMenu(){
-        //检测账号角色
-        $auth       = new Auth();
-        $aaa = $auth->getGroups(session(session_id().'_uid','','global'));
-         //dump($aaa);
         //菜单数据
-        $menus = model('Menu')->getLeft();
+        $menus = model('AuthRule')->getTree(['status'=>1],2);
         //dump($menus);
-        $this->assign('leftMenus',$menus);
+        //查看用户角色权限
+        $rule_access = model('AuthGroupAccess')->getAuths(session(session_id().'_uid','','global'));
+        //dump($rules);
+
+        $this->assign(['leftMenus'=>$menus,'rule_access'=>$rule_access]);
+     
     }
 
 

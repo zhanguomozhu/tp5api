@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\edit.html";i:1510123396;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\edit.html";i:1510219016;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
         <meta charset="utf-8">
-    <title>编辑配置</title>
+    <title>编辑权限</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
     
+
 </head>
 <body>
     <!-- 头部 -->
@@ -95,29 +96,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
                             </ul> 
                             <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -205,9 +207,9 @@
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
                                         <li>
-                        <a href="<?php echo url('lst'); ?>">系统配置</a>
+                        <a href="<?php echo url('lst'); ?>">权限管理</a>
                     </li>
-                    <li class="active">编辑配置</li>
+                    <li class="active">添加权限</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -219,57 +221,62 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">编辑系统配置</span>
+                <span class="widget-caption">添加权限</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" action="<?php echo url('edit'); ?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo $res['id']; ?>">
+                        <input type="hidden" name="id" value="<?php echo $rule['id']; ?>">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">英文名称</label>
+                            <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
                             <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="enname"  type="text" value="<?php echo $res['enname']; ?>">
+                               <select name="pid">
+                                   <option>顶级权限</option>
+                                   <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value="<?php echo $vo['id']; ?>" <?php if($rule['pid'] == $vo['id']): ?>selected<?php endif; ?>><?php echo $vo['title']; ?></option>
+                                   <?php endforeach; endif; else: echo "" ;endif; ?>
+                               </select>
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
                             <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="cnname"  type="text" value="<?php echo $res['cnname']; ?>">
+                                <input class="form-control" placeholder="" name="title" required="" type="text" value="<?php echo $rule['title']; ?>">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">配置类型</label>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">控制器/方法</label>
                             <div class="col-sm-6">
-                                <select name='type'>
-                                    <option value="0">请选择</option>
-                                    <option value="1" <?php if($res['type'] == 1): ?>selected="selected"<?php endif; ?>>单行文本</option>
-                                    <option value="2" <?php if($res['type'] == 2): ?>selected="selected"<?php endif; ?>>多行文本</option>
-                                    <option value="3" <?php if($res['type'] == 3): ?>selected="selected"<?php endif; ?>>单选按钮</option>
-                                    <option value="4" <?php if($res['type'] == 4): ?>selected="selected"<?php endif; ?>>复选按钮</option>
-                                    <option value="5" <?php if($res['type'] == 5): ?>selected="selected"<?php endif; ?>>下拉菜单</option>
+                                <input class="form-control" placeholder="" name="name" required="" type="text" value="<?php echo $rule['name']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限状态</label>
+                            <div class="col-sm-6">
+                                <label style="margin-top:5px; ">
+                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" <?php if($rule['status'] == 1): ?>checked<?php endif; ?> name="status" value="<?php echo $rule['status']; ?>">
+                                    <span class="text"></span>
+                                </label>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限级别</label>
+                            <div class="col-sm-6">
+                                <select name="level">
+                                    <option value="0" <?php if($rule['level'] == 0): ?>selected<?php endif; ?>>项目</option>
+                                    <option value="1" <?php if($rule['level'] == 1): ?>selected<?php endif; ?>>模块</option>
+                                    <option value="2" <?php if($rule['level'] == 2): ?>selected<?php endif; ?>>操作</option>
                                 </select>
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">可选值</label>
-                            <div class="col-sm-6">
-                                <textarea class="form-control" name="values"><?php echo $res['values']; ?></textarea>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                       <!-- <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">配置排序</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="sort"  type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div> -->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">保存信息</button>
+                                <button type="submit" class="btn btn-success">保存信息</button>
                             </div>
                         </div>
                     </form>
@@ -292,7 +299,5 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
-
 
 </body></html>

@@ -81,7 +81,7 @@ function check_login(){
 }
 
 /**
- * curl
+ * curl获取数据
  * @param  [type]  $url  [description]
  * @param  integer $type [0 get ,1 post]
  * @param  array   $data [description]
@@ -113,6 +113,62 @@ function doCurl($url,$type=0,$data=[])
   
     return $result;  
 }
+
+
+/**
+ * curl远程下载文件
+ * @return [type] [远程文件路径]
+ * return 1 or 0
+ * $url = 'http://xxx/TGPMiniLoader.2.16.0.4749.tgpgw.exe';
+ */
+function curl_upload($url){
+    //获取下载文件名称
+    $fileName = basename($url);
+    $handle = fopen('./'.$fileName,'w');
+    //初始化curl
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_FILE, $handle);
+    //执行会话
+    curl_exec($ch);
+    //关闭curl
+    curl_close($ch);
+    //使用curl下载
+    exec("curl".$url, $out, $status);
+    return $status;
+}
+
+
+/**
+ * 使用二分法查找某个值
+ * @param $start 开始位置
+ * @param $len 数组长度
+ * @param $data 要查询的数组
+ * @param $value 要查询的值
+ * @return bool|false 成功返回查询到的值的下标，否则返回false
+ * //声明一个数组
+ * $data = [2,3,4,5];
+ * //获取数组长度
+ * $len = count($data)-1;
+ * echo search(0, $len, $data,5);
+ * 3
+ */
+function search($start, $len, $data,$search)
+{
+    while($start <= $len )
+    {
+        $mid = floor(($start + $len)/2);
+        if($data[$mid] == $search){
+            return $mid;
+        }elseif ($data[$mid] < $search){
+            $start = $mid+1;
+        }else{
+            $len = $mid-1;
+        }
+    }
+    return false;
+}
+
+
 
 
 /**
@@ -755,9 +811,11 @@ function get_ueditor_image_path($str){
     //$preg='/\/ueditor\/php\/upload\/image\/u(m)?editor\/\d*\/\d*\.[jpg|jpeg|png|bmp]*/i';
     $preg='/\<img.*?src\=\"(.*?)\"[^>]*>/i';
 
+//$preg='/<li class\=\"list_item\">(.*?)<\/li>/i';
     preg_match_all($preg, $str,$data);
     return current($data);
 }
+
 
 /**
  * 字符串截取，支持中文和其他编码
@@ -959,24 +1017,34 @@ function path_decode($file_path){
 
 
 
-/**
- * 使用curl获取远程数据
- * @param  string $url url连接
- * @return string      获取到的数据
- */
-function curl_get_contents($url){
-    $ch=curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);                //设置访问的url地址
-    // curl_setopt($ch,CURLOPT_HEADER,1);               //是否显示头部信息
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);               //设置超时
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);   //用户访问代理 User-Agent
-    curl_setopt($ch, CURLOPT_REFERER,$_SERVER['HTTP_HOST']);        //设置 referer
-    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);          //跟踪301
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);        //返回结果
-    $r=curl_exec($ch);
-    curl_close($ch);
-    return $r;
-}
+// /**
+//  * 使用curl获取远程数据
+//  * @param  string $url url连接
+//  * @return string      获取到的数据
+//  */
+// function curl_get_contents($url){
+//     $ch=curl_init();
+//     curl_setopt($ch, CURLOPT_URL, $url);                //设置访问的url地址
+//     // curl_setopt($ch,CURLOPT_HEADER,1);               //是否显示头部信息
+//     curl_setopt($ch, CURLOPT_TIMEOUT, 5);               //设置超时
+//     curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);   //用户访问代理 User-Agent
+//     curl_setopt($ch, CURLOPT_REFERER,$_SERVER['HTTP_HOST']);        //设置 referer
+//     curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);          //跟踪301
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);        //返回结果
+//     $r=curl_exec($ch);
+//     curl_close($ch);
+//     return $r;
+// }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 处理post上传的文件；并返回路径
@@ -1908,6 +1976,7 @@ function validate_apple_pay($receipt_data){
     }
     return $result;
 }
+
 
 /**
  * geetest检测验证码

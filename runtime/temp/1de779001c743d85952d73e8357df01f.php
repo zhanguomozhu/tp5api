@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\conf.html";i:1510121368;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\add.html";i:1510217493;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-        <meta charset="utf-8">
-    <title>系统配置</title>
+	    <meta charset="utf-8">
+    <title>添加权限</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +19,11 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
     
+
 </head>
 <body>
-    <!-- 头部 -->
-        <div class="navbar">
+	<!-- 头部 -->
+	    <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -79,11 +80,11 @@
         </div>
     </div>
 </div>
-    <!-- /头部 -->
-    
-    <div class="main-container container-fluid">
-        <div class="page-container">
-            <!-- Page Sidebar -->
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -95,29 +96,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
                             </ul> 
                             <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -202,74 +204,82 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="#">系统</a>
+                        <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">系统配置</li>
-                                        </ul>
+                                        <li>
+                        <a href="<?php echo url('lst'); ?>">权限管理</a>
+                    </li>
+                    <li class="active">添加权限</li>
+                    </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
                     
-<button type="button" tooltip="添加系统配置" class="btn btn-sm btn-azure btn-addon"> 网站配置
-</button>
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">添加权限</span>
+            </div>
             <div class="widget-body">
-                <div class="flip-scroll">
-                <form action="" method="post">
-                    <table class="table table-bordered table-hover">
-                        <thead class="">
-                            <tr>
-                                <th class="text-center">配置名称</th>
-                                <th class="text-center">配置值</th>
-                        
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php if(is_array($data) || $data instanceof \think\Collection || $data instanceof \think\Paginator): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                            <tr>
-                                <td align="center" style="width: 20%;"><?php echo $vo['cnname']; ?></td>
-                                <td align="left" style="width: 80%;"> 
-                                    <?php if($vo['type'] == 1): ?>
-                                    <input class="form-control" placeholder="" name="<?php echo $vo['enname']; ?>"  type="text" value="<?php echo $vo['value']; ?>">
-                                    <?php elseif($vo['type'] == 2): ?>
-                                        <textarea class="form-control" name="<?php echo $vo['enname']; ?>"><?php echo $vo['value']; ?></textarea>
-                                    <?php elseif($vo['type'] == 3): if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $i = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
-                                        <div style="float: left;padding-right: 20px;">
-                                            <label>
-                                                <input name="<?php echo $vo['enname']; ?>" value="<?php echo $v; ?>" type="radio" <?php if($vo['value'] == $v): ?>checked<?php endif; ?>>
-                                                <span class="text"><?php echo $v; ?></span>
-                                            </label>
-                                        </div>
-                                        <?php endforeach; endif; else: echo "" ;endif; elseif($vo['type'] == 4): ?>
-                                        <div class="checkbox" style="">
-                                            <label>
-                                                <input name="<?php echo $vo['enname']; ?>" type="checkbox" value="<?php echo $vo['values']; ?>" <?php if($vo['value'] == $vo['values']): ?>checked<?php endif; ?> >
-                                                <span class="text"><?php echo $vo['values']; ?></span>
-                                            </label>
-                                        </div>
-                                    <?php elseif($vo['type'] == 5): ?>
-                                        <select name="<?php echo $vo['enname']; ?>">
-                                            <?php if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $k = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($k % 2 );++$k;?>
-                                                <option value="<?php echo $v; ?>" <?php if($vo['value'] == $v): ?>selected="selected"<?php endif; ?>><?php echo $v; ?></option>
-                                            <?php endforeach; endif; else: echo "" ;endif; ?>
-                                        </select>
-                                    <?php endif; ?>
-                                   
-                                </td>
-                            </tr>
-                        <?php endforeach; endif; else: echo "" ;endif; ?> 
-                          <tr >
-                                <td  colspan='2' style="text-align: center;">
-                                    <input type="submit" style="width: 500px;height: 50px;font-size: 20px;" class="btn btn-primary btn-sm shiny" name="" value="提交修改">
-                                </td>
-                            </tr>                        
-                        </tbody>
-                    </table>
-                     </form>
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="<?php echo url('add'); ?>" method="post">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
+                            <div class="col-sm-6">
+                               <select name="pid">
+                                   <option>顶级权限</option>
+                                   <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value="<?php echo $vo['id']; ?>"><?php echo $vo['title']; ?></option>
+                                   <?php endforeach; endif; else: echo "" ;endif; ?>
+                               </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="title" required="" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">控制器/方法</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="name" required="" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限状态</label>
+                            <div class="col-sm-6">
+                                <label style="margin-top:5px; ">
+                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" checked="checked" name="status" value="1">
+                                    <span class="text"></span>
+                                </label>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">权限级别</label>
+                            <div class="col-sm-6">
+                                <select>
+                                    <option value="0">项目</option>
+                                    <option value="1">模块</option>
+                                    <option value="2">操作</option>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                     
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -280,16 +290,14 @@
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-        </div>  
-    </div>
+		</div>	
+	</div>
 
-        <!--Basic Scripts-->
+	    <!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
-
 
 </body></html>

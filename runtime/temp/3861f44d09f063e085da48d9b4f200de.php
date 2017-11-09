@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html";i:1509169979;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html";i:1510216072;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -95,29 +95,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
                             </ul> 
                             <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -229,23 +230,39 @@
                                 <th class="text-center">排序</th>
                                 <th class="text-center">权限名称</th>
                                 <th class="text-center">控制器/方法</th>
+                                <th class="text-center">菜单图标</th>
                                 <th class="text-center">级别</th>
+                                <th class="text-center">是否显示</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
                         <tbody>
                         <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
                             <tr>
-                                <td align="center" style="width: 10%;"><?php echo $vo['id']; ?></td>
+                                <td align="center" style="width: 5%;"><?php echo $vo['id']; ?></td>
                                 <td align="center" style="width: 10%;">
                                     <input type="text" style="width: 50%;text-align: center;" name="<?php echo $vo['id']; ?>" value="<?php echo $vo['sort']; ?>">
                                 </td>
-                                <td align="left" style="width: 30%;"><?php echo $vo['title']; ?></td>
+                                <td align="left" style="width: 20%;"><?php echo $vo['title']; ?></td>
                                 <td align="center" style="width: 20%;"><?php echo $vo['name']; ?></td>
+                                <td align="center" style="width: 10%;"><?php echo $vo['icon']; ?></td>
                                 <td align="center" style="width: 10%;">
-                                <?php echo $vo['level']; ?>级别
+                                <?php if($vo['level'] == 0): ?>
+                                <span class="label label-danger">项目</span>
+                                <?php elseif($vo['level'] == 1): ?>
+                                <span class="label label-primary">模块</span>
+                                <?php elseif($vo['level'] == 2): ?>
+                                <span class="label label-success">操作</span>
+                                <?php endif; ?>
                                 </td>
-                               <td align="center" style="width: 20%;">
+                                <td align="center" style="width: 10%;">
+                                <?php if($vo['status'] == 1): ?>
+                                    <a href="<?php echo url('edit_status',['id'=>$vo['id'],'status'=>0]); ?>" title="点击修改状态" class="btn btn-sm btn-success">显示</a>
+                                <?php else: ?>
+                                    <a href="<?php echo url('edit_status',['id'=>$vo['id'],'status'=>1]); ?>" class="btn btn-sm btn-danger">隐藏</a>
+                                <?php endif; ?>
+                                </td>
+                               <td align="center" style="width: 15%;">
                                     <a href="<?php echo url('edit',array('id'=>$vo['id'])); ?>" class="btn btn-primary btn-sm shiny">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>

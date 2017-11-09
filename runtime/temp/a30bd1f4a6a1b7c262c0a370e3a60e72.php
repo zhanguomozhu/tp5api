@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\lst.html";i:1510130860;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\lst.html";i:1510130983;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -95,29 +95,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
                             </ul> 
                             <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -285,12 +286,7 @@
     </div>
 </div>
 
-<!-- 声明使用 TagLib -->
 
-<!-- 引入 ueditor 使用的静态资源文件 type:编辑器名称，path:编辑器静态资源存放路径 -->
-<!-- 配置文件 --><script type="text/javascript" src="http://tp5api.com/static/admin/ueditor/ueditor.config.js"></script><!-- 编辑器源码文件 --><script type="text/javascript" src="http://tp5api.com/static/admin/ueditor/ueditor.all.min.js"></script>
-<!-- 在需要使用 ueditor 编辑器的地方插入 -->
-<!-- 加载编辑器的容器 --><script id="container" name="content" type="text/plain" style=""></script><!-- 实例化编辑器 --><script type="text/javascript">var ue_container = UE.getEditor('container');</script>
 
                 </div>
                 <!-- /Page Body -->

@@ -71,7 +71,7 @@ class AuthGroup extends Base
 			if(!isset($data['status'])){
 				$data['status'] = 0;
 			}
-			//dump($data);die;
+
 			$res = model('AuthGroup')->saveGroup($data);
 			if($res){
 				$this->success('更新成功','lst');

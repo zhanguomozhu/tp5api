@@ -40,28 +40,6 @@ class AuthRule extends Base
 	}
 
 
-	/**
-	 * 编辑
-	*/
-	public function saveRule($data){
-		if(isset($data) && !empty($data)){
-			//获取父级级别
-			$parent = $this->find(['pid'=>$data['pid']]);
-			if($parent){
-				$data['level'] = $parent['level']+1;
-			}else{
-				$data['level'] = 0;
-			}
-			//插入数据库
-			if($this->save($data,['id'=>$data['id']])){
-				return true;
-			}else{
-				return flase;
-			}
-		}else{
-			return false;
-		}
-	}
 
 
 	/**
@@ -69,23 +47,14 @@ class AuthRule extends Base
 	 * @return [type] [description]
 	 */
 	public function editAll($data,$order=0){
+
 		//是否是排序
 		if(!$order){
-			if(isset($data['pid'])){
-				//获取父级级别
-				$parent = $this->find(['pid'=>$data['pid']]);
-				if($parent){
-					$data['level'] = $parent['level']+1;
-				}else{
-					$data['level'] = 0;
-				}
-			}
 			//状态
 			if(!isset($data['status'])){
 				$data['status'] = 0;
 			}
 		}
-
 		$res = $this->saveData($data);
 		if($res){
 			return $res;

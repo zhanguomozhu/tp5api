@@ -9,29 +9,34 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    {if condition="isset($leftMenus)"}
+                    {if condition="isset($leftMenus) && isset($rule_access)"}
                     {volist name="leftMenus" id="vo"}
+                    {if condition="in_array($vo.id,$rule_access)"}
                         <li>
-                            <a href="{:url($vo.path)}" class="menu-dropdown">
-                                <i class="menu-icon fa {$vo.icon}"></i>
+                            <a href="{:url($vo.name)}" class="menu-dropdown">
+                                <i class="menu-icon fa {$vo.pid}"></i>
                                 <span class="menu-text">{$vo.title}</span>
                                 <i class="menu-expand"></i>
                             </a>
                             {if condition="isset($vo.son)"}
                             <ul class="submenu">
+                                
                                 {volist name="vo.son" id="v"}
+                                {if condition="in_array($v.id,$rule_access)"}
                                 <li>
-                                    <a href="{:url($v.path)}">
-                                        <i class="menu-icon fa {$v.icon}"></i>
+                                    <a href="{:url($v.name)}">
+                                        <i class="menu-icon fa {$v.pid}"></i>
                                         <span class="menu-text">{$v.title}</span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
+                                {/if}
                                 {/volist}
+                                
                             </ul> 
                             {/if}
                         </li>
-
+                    {/if}
                     {/volist}
                     {/if}
 

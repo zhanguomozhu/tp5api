@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\editor.html";i:1510131975;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510026062;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\admin\edit.html";i:1509076324;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>系统配置</title>
+        <meta charset="utf-8">
+    <title>编辑管理员</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
     
 </head>
 <body>
-	<!-- 头部 -->
+    <!-- 头部 -->
         <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
@@ -79,11 +79,11 @@
         </div>
     </div>
 </div>
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -95,29 +95,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; ?>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
                             </ul> 
                             <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -202,9 +203,12 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                                         <li>
-                        <a href="#">系统</a>
+                        <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">系统配置</li>
+                                        <li>
+                        <a href="<?php echo url('lst'); ?>">管理员管理</a>
+                    </li>
+                                        <li class="active">编辑管理员</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -212,28 +216,145 @@
                 <!-- Page Body -->
                 <div class="page-body">
                     
-                <!-- 声明使用 TagLib -->
-                
-                <!-- 引入 ueditor 使用的静态资源文件 type:编辑器名称，src:编辑器静态资源存放路径 -->
-                <!-- 配置文件 --><script type='text/javascript' src='http://tp5api.com/static/admin/ueditor/ueditor.config.js'></script><!-- 编辑器源码文件 --><script type='text/javascript' src='http://tp5api.com/static/admin/ueditor/ueditor.all.min.js'></script><!-- 字体文件 --><script type='text/javascript' charset='utf-8' src='http://tp5api.com/static/admin/ueditor/lang/zh-cn/zh-cn.js'></script>
-                <!-- 在需要使用 ueditor 编辑器的地方插入 -->
-                <!-- 加载编辑器的容器 --><script id='container' name='content' type='text/plain' style='height:500px;'></script><!-- 实例化编辑器 --><script type='text/javascript'>UE.getEditor('container',{'initialFrameWidth':'100','initialFrameHeight':350,'maximumWords':50000});</script>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">编辑管理员</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <input type="hidden" name="id" value="<?php echo $admin['id']; ?>">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">所属用户组</label>
+                            <div class="col-sm-4">
+                                <select name="group_id">
+                                <?php if($auth_groups): if(is_array($auth_groups) || $auth_groups instanceof \think\Collection || $auth_groups instanceof \think\Paginator): $i = 0; $__LIST__ = $auth_groups;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <option value="<?php echo $vo['id']; ?>" <?php if($vo['title'] == $admin['group']): ?>selected<?php endif; ?>><?php echo $vo['title']; ?></option>
+                                    <?php endforeach; endif; else: echo "" ;endif; else: ?>
+                                    <option value="0">暂无用户组</option>
+                                <?php endif; ?>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" placeholder="" name="username" required="" type="text" value="<?php echo $admin['username']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red username">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">手机号</label>
+                            <div class="col-sm-4">
+                              <input class="form-control" placeholder="" name="phone" required="" type="text"  value="<?php echo $admin['phone']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red phone">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">管理员密码</label>
+                            <div class="col-sm-4">
+                              <input class="form-control" placeholder="" name="password" required="" type="password"  value="">
+                            </div>
+                            <p class="help-block col-sm-4 red password">* 必填</p>
+                        </div>  
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                 </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-	    <!--Basic Scripts-->
+        <!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
+    <script type="text/javascript">
+        //验证用户名   
+        $("input[name='username']").focus(function(){
+            $(".username").html('中文、字母、数字等组合,4-18个字符');
+        });
+
+        //验证用户名是否存在
+        $("input[name='username']").blur(function(){
+            if($(this).val().length!=0)
+            {
+                $.post("<?php echo url('admin/yanzheng'); ?>",{username:$(this).val()},function(res){
+                    if(res.code == 1031){
+                        $(".username").addClass('red').html(res.msg);
+                    }
+                    if(res.code == 1032){
+                        $(".username").removeClass('red').addClass('green').html(res.msg);
+                    }
+                },"json");  
+            } 
+            if($(this).val().length>18||$(this).val().length<4){
+                 $(".username").html('用户名不能为空');
+            }   
+        });
+
+
+
+
+        //验证密码
+        $("input[name='password']").focus(function(){
+            $(".password").addClass('red').html("中文、字母、数字等组合,4-18个字符");
+        });
+        //验证密码是否为空
+        $("input[name='password']").blur(function(){
+            if($(this).val().length>18 || $(this).val().length<4){
+                $(".password").addClass('red').html('密码是4-18个字符');
+            }else{
+                $(".password").removeClass('red').addClass('green').html('输入正确');
+            }
+        });
+
+        //验证手机
+        $("input[name='phone']").focus(function(){
+            $(".phone").addClass('red').html("建议使用常用手机！");
+        });
+       
+
+         $("input[name='phone']").blur(function(){ 
+            //验证手机是否为空和长度
+            if($(this).val().length!=11 || $(this).val().length==0){
+                $(".phone").html('手机号不能为空，长度11位');
+            }else{
+                //验证手机号码是否已注册
+                if($(this).val().match(/^1[34578]\d{9}$/))
+                {
+                    $.post("<?php echo url('login/yanzheng'); ?>",{phone:$(this).val()},function(res){
+                        if(res.code == 1033){
+                            $(".phone").html(res.msg);
+                        }
+                        if(res.code == 1034){
+                            $(".phone").removeClass('red').addClass('green').html(res.msg);
+                        }
+                    },"json");  
+                }else{
+                    $(".phone").html('手机号格式不正确');
+                }
+            }
+            
+        });
+    </script>
 
 
 </body></html>

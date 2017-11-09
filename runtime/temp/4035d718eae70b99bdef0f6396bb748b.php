@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\sqlbak\index.html";i:1509956385;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1509956576;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_group\edit.html";i:1509076197;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>数据库备份下载</title>
+        <meta charset="utf-8">
+    <title>编辑角色</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +18,12 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-
     
+
 </head>
 <body>
-	<!-- 头部 -->
-	    <div class="navbar">
+    <!-- 头部 -->
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -80,11 +80,11 @@
         </div>
     </div>
 </div>
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -96,27 +96,30 @@
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <?php if(isset($leftMenus)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                    <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
                         <li>
-                            <a href="<?php echo url($vo['path']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
+                            <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
+                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
+                            <?php if(isset($vo['son'])): ?>
                             <ul class="submenu">
-                                <?php if(isset($vo['son'])): if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
+                                
+                                <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
-                                    <a href="<?php echo url($v['path']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
+                                    <a href="<?php echo url($v['name']); ?>">
+                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
                                 </li>
-                                <?php endforeach; endif; else: echo "" ;endif; endif; ?>
-                            </ul>
+                                <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                                
+                            </ul> 
+                            <?php endif; ?>
                         </li>
-
-                    <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+                    <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
 
 
 
@@ -203,8 +206,11 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li class="active">数据库</li>
-                                        </ul>
+                                        <li>
+                        <a href="<?php echo url('lst'); ?>">角色管理</a>
+                    </li>
+                    <li class="active">编辑角色</li>
+                    </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
@@ -215,47 +221,58 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">
-                    <!-- 万年历 -->
-                    <script type="text/javascript" charset="utf-8" src="__ADMIN__/style/clock.js"></script>
-                    <script type="text/javascript">showcal();</script>
-                </span>
+                <span class="widget-caption">编辑角色</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <button type="button" class="btn btn-info" onclick="handle('backup')">添加备份</button>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>序号</th>
-                                  <th>备份名称</th>
-                                  <th>备份时间</th>
-                                  <th>备份大小</th>
-                                  <th>操作</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                              <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                                <tr>
-                                  <th scope="row"><?php echo $key; ?></th>
-                                  <td><?php echo $vo['name']; ?></td>
-                                  <td><?php echo $vo['time']; ?></td>
-                                  <td><?php echo $vo['size']; ?></td>
-                                  <td>
-                                  <a class="btn btn-xs btn-success" href="<?php echo url('index',['tp'=>'dowonload','name'=>$vo['name']]); ?>">下载</a>
-                                  <button type="button" class="btn btn-xs btn-warning" onclick="handle('restore','<?php echo $vo['name']; ?>')">还原</button>
-                                  <button type="button"  class="btn btn-xs btn-danger" onclick="handle('del','<?php echo $vo['name']; ?>')">删除</button>
-                                  </td>
-                                </tr>    
-                                 
-                              <?php endforeach; endif; else: echo "" ;endif; ?>
-                               
-                                 
-                              </tbody>
-                            </table>
+                    <form class="form-horizontal" role="form" action="<?php echo url('edit'); ?>" method="post">
+                     <input type="hidden" name="id" value="<?php echo $res['id']; ?>">
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">角色名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" placeholder="" name="title" required="" type="text" value="<?php echo $res['title']; ?>">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">角色状态</label>
+                            <div class="col-sm-6">
+                                <label style="margin-top:5px; ">
+                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" <?php if($res['status'] == '启用'): ?>checked<?php endif; ?> name="status" value="1">
+                                    <span class="text"></span>
+                                </label>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">配置权限</label>
+                            <div class="col-sm-6">
+                                <table class="table table-hover" style="border: 1px solid #ddd;">
+                                    <tbody>
+                                    <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                                        <tr>
+                                            <td>
+                                                 <label>
+                                                    <?php echo str_repeat('&nbsp;',$vo['level']*12); ?>
+                                                    <input dataid="id-<?php echo $vo['dataid']; ?>" type="checkbox" class="colored-blue checkbox-parent <?php if($vo['level'] != 0): ?> checkbox-child<?php endif; ?> " <?php if(in_array(($vo['id']), is_array(explode(',',$res['rules']))?explode(',',$res['rules']):explode(',',explode(',',$res['rules'])))): ?>checked="checked"<?php endif; ?> name="rules[]" value="<?php echo $vo['id']; ?>">
+                                                    <span <?php if($vo['level'] == 0): ?>style="font-weight: bold;font-size: 16px;"<?php endif; ?> class="text"><?php echo $vo['title']; ?></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                   <?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                     
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">保存信息</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -265,25 +282,54 @@
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-	    <!--Basic Scripts-->
+        <!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-
-<script>
-    function handle(tp,name=''){
-        if (tp){
-            $.post("<?php echo url('index'); ?>",{tp:tp,name:name},function(response){
-                alert(response);
-                window.location.reload();
-            }); 
+<script type="text/javascript">
+/* 权限配置 */
+$(function () {
+    //动态选择框，上下级选中状态变化
+    //父级权限变化
+    $('input.checkbox-parent').on('change', function () {
+        var dataid = $(this).attr("dataid");
+        //给子级权限追加选中状态
+        $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
+    });
+    //子级权限变化
+    $('input.checkbox-child').on('change', function () {
+        var dataid = $(this).attr("dataid");
+        //获取父级权限
+        dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+        var parent = $('input[dataid=' + dataid + ']');
+        if ($(this).is(':checked')) {
+            parent.prop('checked', true);//追加选中状态
+            //循环到顶级
+            while (dataid.lastIndexOf("-") != 2) {
+                dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                parent = $('input[dataid=' + dataid + ']');
+                parent.prop('checked', true);//追加选中状态
+            }
+        } else {
+            //父级
+            if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                parent.prop('checked', false);
+                //循环到顶级
+                while (dataid.lastIndexOf("-") != 2) {
+                    dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                    parent = $('input[dataid=' + dataid + ']');
+                    if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                        parent.prop('checked', false);
+                    }
+                }
+            }
         }
-    }
+    });
+});
 </script>
-
 </body></html>

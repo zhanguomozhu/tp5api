@@ -91,13 +91,19 @@ class Base extends Model
      * @return [type] [默认0，带前缀；1，不带前缀；2，子排序]
      * @return [type] [description]
      */
-    public function getTree($type=0)
+    public function getTree($data=[],$type=0)
     {
-        $models = $this->order('sort asc')->select();
-        if($type){
-            return $this->nsort($models);
-        }else{
-            return $this->qsort($models);
+        $models = $this->where($data)->order('sort asc')->select();
+        switch ($type) {
+            case 0:
+                return $this->qsort($models);
+                break;
+            case 1:
+                return $this->nsort($models);
+                break;
+            case 2:
+                return $this->ssort($models);
+                break;
         }
     }
 
@@ -143,6 +149,33 @@ class Base extends Model
                 $arr[] = $v;
                 $this->nsort($data,$v['id']);
                 
+            }
+        }
+        return $arr;
+    }
+
+
+
+     /**
+     * 排序不带前缀
+     * @param  [type]  $data [数据源]
+     * @param  integer $pid  [父id]
+     * @return [type]        []
+     */
+    public function ssort($data)
+    {
+        $trees = array();
+        //把数组主键ID重写到外层下标
+        foreach($data as $k => $item){
+            $trees[$item['id']]=$item->visible(['id','name','title','pid'])->toArray();
+        }
+        //组件子类树
+        $arr = array();
+        foreach ($trees as $k => $v) {
+            if(isset($trees[$v['pid']])){
+                $trees[$v['pid']]['son'][] = &$trees[$v['id']];
+            }else{
+                $arr[] = &$trees[$v['id']];
             }
         }
         return $arr;

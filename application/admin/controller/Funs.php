@@ -645,7 +645,18 @@ class Funs extends Base
 	 * @return [type] [description]
 	 */
 	public function editor(){
+		// curl远程下载文件
+		// $res = curl_upload('http://tp5api.com/databak/20171106161838.sql');
+		// if($res){
+		// 	echo '下载成功';
+		// }else{
+		// 	echo '下载失败';
+		// }
 		return $this->fetch();
 	}
+
+
+
+
 
 }

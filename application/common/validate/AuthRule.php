@@ -6,7 +6,7 @@ class AuthRule extends Validate
 	//验证规则
 	protected  $rule = [
 		'pid'    => 'require',
-        'title'  => 'require|length:4,18',
+        'title'  => 'require|length:0,18',
         'name'   => 'require',
         'status' => 'require',
 	];
