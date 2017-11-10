@@ -130,7 +130,7 @@ class Base extends Controller
         //dump($menus);
         //查看用户角色权限
         $rule_access = model('AuthGroupAccess')->getAuths(session(session_id().'_uid','','global'));
-        //dump($rules);
+        //dump($rule_access);
 
         $this->assign(['leftMenus'=>$menus,'rule_access'=>$rule_access]);
      

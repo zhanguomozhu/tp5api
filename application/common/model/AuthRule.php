@@ -28,15 +28,21 @@ class AuthRule extends Base
 			}else{
 				$data['level'] = 0;
 			}
-			//插入数据库
-			if($this->save($data)){
-				return true;
+			//状态
+			if(!isset($data['status'])){
+				$data['status'] = 0;
+			}
+			$res = $this->addData($data);
+			if($res){
+				return $res;
 			}else{
-				return flase;
+				return false;
 			}
 		}else{
 			return false;
 		}
+
+		
 	}
 
 

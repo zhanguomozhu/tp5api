@@ -528,11 +528,13 @@ class Funs extends Base
 		return $this->fetch();
 	}
 
+
+
 	/**
-	 * 抽奖
+	 * 抽奖1
 	 * @return [type] [description]
 	 */
-	public function choujiang(){
+	public function choujiang1(){
 		if(request()->isAjax()){
 			//实例化抽奖概率类
 			$lottery = new Lottery();
@@ -575,6 +577,105 @@ class Funs extends Base
 			}
 		}
 	}
+
+
+	/**
+	 * 抽奖2
+	 * @return [type] [description]
+	 */
+	public function choujiang2(){
+		if(request()->isAjax()){
+			/*
+			 * 奖项数组
+			 * 是一个二维数组，记录了所有本次抽奖的奖项信息，
+			 * 其中id表示中奖等级，prize表示奖品，v表示中奖概率。
+			 * 注意其中的v必须为整数，你可以将对应的 奖项的v设置成0，即意味着该奖项抽中的几率是0，
+			 * 数组中v的总和（基数），基数越大越能体现概率的准确性。
+			 * 本例中v的总和为100，那么平板电脑对应的 中奖概率就是1%，
+			 * 如果v的总和是10000，那中奖概率就是万分之一了。
+			 * 
+			 */
+			$prize_arr = array( 
+			    '0' => array('id'=>1,'prize'=>'平板电脑','v'=>1), 
+			    '1' => array('id'=>2,'prize'=>'数码相机','v'=>5), 
+			    '2' => array('id'=>3,'prize'=>'音箱设备','v'=>10), 
+			    '3' => array('id'=>4,'prize'=>'4G优盘','v'=>12), 
+			    '4' => array('id'=>5,'prize'=>'10Q币','v'=>22), 
+			    '5' => array('id'=>6,'prize'=>'下次没准就能中哦','v'=>50), 
+			); 
+			 
+			/*
+			 * 每次前端页面的请求，PHP循环奖项设置数组，
+			 * 通过概率计算函数get_rand获取抽中的奖项id。
+			 * 将中奖奖品保存在数组$res['yes']中，
+			 * 而剩下的未中奖的信息保存在$res['no']中，
+			 * 最后输出json个数数据给前端页面。
+			 */
+			foreach ($prize_arr as $key => $val) { 
+			    $arr[$val['id']] = $val['v']; 
+			} 
+			$rid = get_rand($arr); //根据概率获取奖项id 
+			 
+			$res['yes'] = $prize_arr[$rid-1]['prize']; //中奖项 
+			unset($prize_arr[$rid-1]); //将中奖项从数组中剔除，剩下未中奖项 
+			shuffle($prize_arr); //打乱数组顺序 
+			for($i=0;$i<count($prize_arr);$i++){ 
+			    $pr[] = $prize_arr[$i]['prize']; 
+			} 
+			$res['no'] = $pr; 
+			echo $this->show(1001,'成功',['data'=>$res['yes']]);
+		}
+	}
+
+
+	/**
+	 * 抽奖3
+	 * @return [type] [description]
+	 */
+	public function choujiang3(){
+		if(request()->isAjax()){
+			//概率算法,6个奖项
+			$prize_arr = array(
+			    '0' => array('id'=>1,'prize'=>'iphone6','v'=>1),
+			    '1' => array('id'=>2,'prize'=>'数码相机','v'=>5),
+			    '2' => array('id'=>3,'prize'=>'音箱设备','v'=>10),
+			    '3' => array('id'=>4,'prize'=>'50Q币','v'=>24),
+			    '4' => array('id'=>5,'prize'=>'10Q币','v'=>60),
+			    '5' => array('id'=>6,'prize'=>'1Q币','v'=>1900),
+			);
+			   
+			//每个奖品的中奖几率,奖品ID作为数组下标
+			foreach($prize_arr as $val){
+			    $item[$val['id']] = $val['v'];
+			}
+			   
+			function get($item){
+			    //中奖概率基数 
+			    $num = array_sum($item);//当前一等奖概率1/2000
+			   
+			    foreach($item as $k=>$v){
+			        //获取一个1到当前基数范围的随机数
+			        $rand = mt_rand(1,$num);
+			        if($rand <= $v){
+			            //假设当前奖项$k=2,$v<=5才能中奖
+			            $res = $k;
+			            break;
+			        }else{
+			            //假设当前奖项$k=6,$v>1900,则没中六等奖,总获奖基数2000-1900,前五次循环都没中则2000-1-5-10-24-60=1900,必中6等奖,哈哈
+			            $num -= $v;
+			        }
+			    }
+			    return $res;
+			}
+			   
+			   
+			$res = get($item);
+			$h = $prize_arr[$res-1]['prize'];
+			echo $this->show(1001,'成功',['data'=>$h]);
+		}
+	}
+
+
 
 
 
@@ -655,8 +756,15 @@ class Funs extends Base
 		return $this->fetch();
 	}
 
-
-
+	/**
+	 * 微信随机红包
+	 * @return [type] [description]
+	 */
+	public function redpack(){
+		$red = new \org\Redmoney(10,5,0.01);
+		$data = $red->getPack();
+		dump($data);
+	}
 
 
 }

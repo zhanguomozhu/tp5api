@@ -29,7 +29,7 @@ class AuthGroupAccess extends Base
      */
     public function getAuths($id){
     	//获取权限id
-    	$data = $this->with(['admins', 'groups'])->where('uid',$id)->find()->visible(['groups.rules'])->toArray();
+    	$data = $this->with(['admins', 'groups'])->where(['uid'=>$id])->find()->visible(['groups.rules'])->toArray();
     	$res = explode(',',$data['groups']['rules']);
     	return $res;
     }

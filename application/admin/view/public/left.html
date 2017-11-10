@@ -12,106 +12,34 @@
                     {if condition="isset($leftMenus) && isset($rule_access)"}
                     {volist name="leftMenus" id="vo"}
                     {if condition="in_array($vo.id,$rule_access)"}
+                    <!-- 第一层 -->
                         <li>
                             <a href="{:url($vo.name)}" class="menu-dropdown">
-                                <i class="menu-icon fa {$vo.pid}"></i>
+                                <i class="menu-icon fa {$vo.icon}"></i>
                                 <span class="menu-text">{$vo.title}</span>
                                 <i class="menu-expand"></i>
                             </a>
                             {if condition="isset($vo.son)"}
+                            <!-- 第二层 -->
                             <ul class="submenu">
-                                
                                 {volist name="vo.son" id="v"}
                                 {if condition="in_array($v.id,$rule_access)"}
                                 <li>
                                     <a href="{:url($v.name)}">
-                                        <i class="menu-icon fa {$v.pid}"></i>
+                                        <i class="menu-icon fa {$v.icon}"></i>
                                         <span class="menu-text">{$v.title}</span>
                                         <i class="menu-expand"></i>
                                     </a>
+
                                 </li>
                                 {/if}
                                 {/volist}
-                                
                             </ul> 
                             {/if}
                         </li>
                     {/if}
                     {/volist}
                     {/if}
-
-
-
-
-
-                    <!-- <li>
-                        <a href="{:url('index/index')}" class="menu-dropdown">
-                            <i class="menu-icon fa fa-th-large"></i>
-                            <span class="menu-text">后台首页</span>
-                            <i class="menu-expand"></i>
-                        </a>                           
-                    </li>
-                    <li>
-                        <a href="" class="menu-dropdown">
-                            <i class="menu-icon fa fa-key"></i>
-                            <span class="menu-text">权限管理</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{:url('Menu/lst')}">
-                                    <span class="menu-text">菜单管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{:url('Admin/lst')}">
-                                    <span class="menu-text">用户管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{:url('AuthGroup/lst')}">
-                                    <span class="menu-text">角色管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{:url('AuthRule/lst')}">
-                                    <span class="menu-text">权限管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{:url('cate/index')}" class="menu-dropdown">
-                            <i class="menu-icon fa fa-folder-o"></i>
-                            <span class="menu-text">常用函数</span>
-                            <i class="menu-expand"></i>
-                        </a>                           
-                    </li>
-                    <li>
-                        <a href="{:url('lists/index')}" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-tasks"></i>
-                            <span class="menu-text">常用功能</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{:url('link/index')}" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-link"></i>
-                            <span class="menu-text">api功能</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li> 
-                     <li>
-                        <a href="{:url('link/index')}" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-chain-broken"></i>
-                            <span class="menu-text">api测试</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li>    -->
                    
                 </ul>
                 <!-- /Sidebar Menu -->

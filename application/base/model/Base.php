@@ -167,7 +167,7 @@ class Base extends Model
         $trees = array();
         //把数组主键ID重写到外层下标
         foreach($data as $k => $item){
-            $trees[$item['id']]=$item->visible(['id','name','title','pid'])->toArray();
+            $trees[$item['id']]=$item->visible(['id','name','title','pid','icon'])->toArray();
         }
         //组件子类树
         $arr = array();

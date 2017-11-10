@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\admin\lst.html";i:1510219404;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510214591;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\admin\lst.html";i:1510219404;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -96,102 +96,30 @@
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
                     <?php if(isset($leftMenus) && isset($rule_access)): if(is_array($leftMenus) || $leftMenus instanceof \think\Collection || $leftMenus instanceof \think\Paginator): $i = 0; $__LIST__ = $leftMenus;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if(in_array($vo['id'],$rule_access)): ?>
+                    <!-- 第一层 -->
                         <li>
                             <a href="<?php echo url($vo['name']); ?>" class="menu-dropdown">
-                                <i class="menu-icon fa <?php echo $vo['pid']; ?>"></i>
+                                <i class="menu-icon fa <?php echo $vo['icon']; ?>"></i>
                                 <span class="menu-text"><?php echo $vo['title']; ?></span>
                                 <i class="menu-expand"></i>
                             </a>
                             <?php if(isset($vo['son'])): ?>
+                            <!-- 第二层 -->
                             <ul class="submenu">
-                                
                                 <?php if(is_array($vo['son']) || $vo['son'] instanceof \think\Collection || $vo['son'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['son'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;if(in_array($v['id'],$rule_access)): ?>
                                 <li>
                                     <a href="<?php echo url($v['name']); ?>">
-                                        <i class="menu-icon fa <?php echo $v['pid']; ?>"></i>
+                                        <i class="menu-icon fa <?php echo $v['icon']; ?>"></i>
                                         <span class="menu-text"><?php echo $v['title']; ?></span>
                                         <i class="menu-expand"></i>
                                     </a>
+
                                 </li>
                                 <?php endif; endforeach; endif; else: echo "" ;endif; ?>
-                                
                             </ul> 
                             <?php endif; ?>
                         </li>
                     <?php endif; endforeach; endif; else: echo "" ;endif; endif; ?>
-
-
-
-
-
-                    <!-- <li>
-                        <a href="<?php echo url('index/index'); ?>" class="menu-dropdown">
-                            <i class="menu-icon fa fa-th-large"></i>
-                            <span class="menu-text">后台首页</span>
-                            <i class="menu-expand"></i>
-                        </a>                           
-                    </li>
-                    <li>
-                        <a href="" class="menu-dropdown">
-                            <i class="menu-icon fa fa-key"></i>
-                            <span class="menu-text">权限管理</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="<?php echo url('Menu/lst'); ?>">
-                                    <span class="menu-text">菜单管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo url('Admin/lst'); ?>">
-                                    <span class="menu-text">用户管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo url('AuthGroup/lst'); ?>">
-                                    <span class="menu-text">角色管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo url('AuthRule/lst'); ?>">
-                                    <span class="menu-text">权限管理</span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="<?php echo url('cate/index'); ?>" class="menu-dropdown">
-                            <i class="menu-icon fa fa-folder-o"></i>
-                            <span class="menu-text">常用函数</span>
-                            <i class="menu-expand"></i>
-                        </a>                           
-                    </li>
-                    <li>
-                        <a href="<?php echo url('lists/index'); ?>" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-tasks"></i>
-                            <span class="menu-text">常用功能</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo url('link/index'); ?>" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-link"></i>
-                            <span class="menu-text">api功能</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li> 
-                     <li>
-                        <a href="<?php echo url('link/index'); ?>" class="menu-dropdown">
-                            <i class="menu-icon fa  fa-chain-broken"></i>
-                            <span class="menu-text">api测试</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                    </li>    -->
                    
                 </ul>
                 <!-- /Sidebar Menu -->

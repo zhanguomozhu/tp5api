@@ -22,6 +22,7 @@ class Index extends Base
 	 */
 	public function index()
 	{
+
 		$userInfo = $this->getUserInfo();
 		$data = array();
 		$data = [0=>[

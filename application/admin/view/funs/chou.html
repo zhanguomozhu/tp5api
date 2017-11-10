@@ -46,9 +46,9 @@
 
                 <!-- Page Body -->
                 <div class="page-body">
-                
-
-					<button onclick="chou()">点击抽奖</button>
+                    <button onclick="chou1()">点击抽奖1</button><br/>
+                    <button onclick="chou2()">点击抽奖2</button><br/>
+					<button onclick="chou3()">点击抽奖3</button><br/>
          		</div>
                 <!-- /Page Body -->
             </div>
@@ -57,22 +57,50 @@
 	</div>
 
 </body>
+    <!--Basic Scripts-->
+<script src="__ADMIN__/style/jquery_002.js"></script>
 <script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/jquery.js"></script>
+<!--Beyond Scripts-->
+<script src="__ADMIN__/style/beyond.js"></script>
 <script type="text/javascript">
 
 	//下载excel
-    function chou(){
-
+    function chou1(){
         $.ajax({
-            url: "{:url('funs/choujiang')}",
+            url: "{:url('funs/choujiang1')}",
             type: 'POST',
-            cache: false,
+            data:{aaa:'1'},
             dataType:'json',
             success:function(res){
                 console.log(res)
                 alert(res.data.data);
-                
+            }
+        });
+    }
 
+
+    function chou2(){
+        $.ajax({
+            url: "{:url('funs/choujiang2')}",
+            type: 'POST',
+            data:{aaa:'1'},
+            dataType:'json',
+            success:function(res){
+                console.log(res)
+                alert(res.data.data);
+            }
+        });
+    }
+    function chou3(){
+        $.ajax({
+            url: "{:url('funs/choujiang3')}",
+            type: 'POST',
+            data:{aaa:'1'},
+            dataType:'json',
+            success:function(res){
+                console.log(res)
+                alert(res.data.data);
             }
         });
     }

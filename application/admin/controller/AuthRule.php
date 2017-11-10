@@ -35,6 +35,7 @@ class AuthRule extends Base
                 'name' 	=> 'name',
                 'level' => 'level',
                 'status'=> 'status',
+                'icon'  => 'icon',
             ];
             $param_data = $this->buildParam($param);
             //实例化验证器
@@ -75,6 +76,7 @@ class AuthRule extends Base
                 'name' 	=> 'name',
                 'level' => 'level',
                 'status'=> 'status',
+                'icon'  => 'icon',
             ];
             $param_data = $this->buildParam($param);
             //实例化验证器
@@ -83,6 +85,9 @@ class AuthRule extends Base
     		if (!$validate->scene('edit')->check($param_data)) {
     			return $this->error($validate->getError());
     		}
+    		if($param_data['status'] === '0'){
+				$param_data['status'] = 1;
+			}
     		//插入数据库
     		$res = model('AuthRule')->editAll($param_data);
 			if($res){

@@ -29,6 +29,145 @@ function enctypetion($value, $type=0){
 }
 
 
+/**
+ * 加密解密base64和MD5加密和解密。
+ * @param  [type] $key     [description]
+ * @param  [type] $string  [description]
+ * @param  [type] $decrypt [description]
+ * //加密： 
+ * echo encryptDecrypt('password', 'Helloweba欢迎您',0); 
+ * //解密： 
+ * echo encryptDecrypt('password', 'z0JAx4qMwcF+db5TNbp/xwdUM84snRsXvvpXuaCa4Bk=',1);
+ */
+function encryptDecrypt($key, $string, $decrypt){ 
+    if($decrypt){ 
+        $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, md5(md5($key))), "12"); 
+        return $decrypted; 
+    }else{ 
+        $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, md5(md5($key)))); 
+        return $encrypted; 
+    } 
+}
+
+/**
+ * PHP防止SQL注入
+ * @param  [type] $sql_str [description]
+ * @return [type]          [description]
+ * echo injCheck('1 or 1=1');
+ */
+function injCheck($sql_str) {  
+    $check = preg_match("/select|insert|update|delete|'|/*|*|../|./|union|into|load_file|outfile/", $sql_str);
+    if ($check) { 
+        echo '非法字符！！'; 
+        exit; 
+    } else { 
+        return $sql_str; 
+    } 
+}
+
+/**
+ * 列出目录下的文件名
+ * @param  [type] $DirPath [description]
+ * @return [type]          [description]
+ */
+function listDirFiles($DirPath){ 
+    if($dir = opendir($DirPath)){ 
+         while(($file = readdir($dir))!== false){ 
+                if(!is_dir($DirPath.$file)) 
+                { 
+                    echo "filename: $file<br />"; 
+                } 
+         } 
+    } 
+}
+
+/**
+ * 简单的 php 防注入、防跨站 函数
+ * @return String
+ */
+function fn_safe($str_string) {
+    //直接剔除
+    $_arr_dangerChars = array(
+        "|", ";", "$", "@", "+", "\t", "\r", "\n", ",", "(", ")", PHP_EOL //特殊字符
+    );
+ 
+    //正则剔除
+    $_arr_dangerRegs = array(
+        /* -------- 跨站 --------*/
+ 
+        //html 标签
+        "/<(script|frame|iframe|bgsound|link|object|applet|embed|blink|style|layer|ilayer|base|meta)\s+\S*>/i",
+ 
+        //html 属性
+        "/on(afterprint|beforeprint|beforeunload|error|haschange|load|message|offline|online|pagehide|pageshow|popstate|redo|resize|storage|undo|unload|blur|change|contextmenu|focus|formchange|forminput|input|invalid|reset|select|submit|keydown|keypress|keyup|click|dblclick|drag|dragend|dragenter|dragleave|dragover|dragstart|drop|mousedown|mousemove|mouseout|mouseover|mouseup|mousewheel|scroll|abort|canplay|canplaythrough|durationchange|emptied|ended|error|loadeddata|loadedmetadata|loadstart|pause|play|playing|progress|ratechange|readystatechange|seeked|seeking|stalled|suspend|timeupdate|volumechange|waiting)\s*=\s*(\"|')?\S*(\"|')?/i",
+ 
+        //html 属性包含脚本
+        "/\w+\s*=\s*(\"|')?(java|vb)script:\S*(\"|')?/i",
+ 
+        //js 对象
+        "/(document|location)\s*\.\s*\S*/i",
+ 
+        //js 函数
+        "/(eval|alert|prompt|msgbox)\s*\(.*\)/i",
+ 
+        //css
+        "/expression\s*:\s*\S*/i",
+ 
+        /* -------- sql 注入 --------*/
+ 
+        //显示 数据库 | 表 | 索引 | 字段
+        "/show\s+(databases|tables|index|columns)/i",
+ 
+        //创建 数据库 | 表 | 索引 | 视图 | 存储过程 | 存储过程
+        "/create\s+(database|table|(unique\s+)?index|view|procedure|proc)/i",
+ 
+        //更新 数据库 | 表
+        "/alter\s+(database|table)/i",
+ 
+        //丢弃 数据库 | 表 | 索引 | 视图 | 字段
+        "/drop\s+(database|table|index|view|column)/i",
+ 
+        //备份 数据库 | 日志
+        "/backup\s+(database|log)/i",
+ 
+        //初始化 表
+        "/truncate\s+table/i",
+ 
+        //替换 视图
+        "/replace\s+view/i",
+ 
+        //创建 | 更改 字段
+        "/(add|change)\s+column/i",
+ 
+        //选择 | 更新 | 删除 记录
+        "/(select|update|delete)\s+\S*\s+from/i",
+ 
+        //插入 记录 | 选择到文件
+        "/insert\s+into/i",
+ 
+        //sql 函数
+        "/load_file\s*\(.*\)/i",
+ 
+        //sql 其他
+        "/(outfile|infile)\s+(\"|')?\S*(\"|')/i",
+    );
+ 
+    $_str_return = $str_string;
+    //$_str_return = urlencode($_str_return);
+ 
+    foreach ($_arr_dangerChars as $_key=>$_value) {
+        $_str_return = str_ireplace($_value, "", $_str_return);
+    }
+ 
+    foreach ($_arr_dangerRegs as $_key=>$_value) {
+        $_str_return = preg_replace($_value, "", $_str_return);
+    }
+ 
+    $_str_return = htmlentities($_str_return, ENT_QUOTES, "UTF-8", true);
+ 
+    return $_str_return;
+}
+
 
 /**
  * 提示操作信息的，并且跳转
@@ -57,28 +196,37 @@ function getUniqidName($length=10){
 	return substr(md5(uniqid(microtime(true),true)),0,$length);
 }
 
+/**
+ * PHP获取文件大小并格式化
+ * @param  [type] $size [description]
+ * @return [type]       [description]
+ * $thefile = filesize('test_file.mp3'); 
+ * echo formatSize($thefile);
+ */
+function formatSize($size) { 
+    $sizes = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"); 
+    if ($size == 0) {  
+        return('n/a');  
+    } else { 
+      return (round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $sizes[$i]);  
+    } 
+}
 
 /**
- * 返回用户id
- * @return integer 用户id
+ * 替换标签字符
+ * @param  [type] $string   [description]
+ * @param  [type] $replacer [description]
+ * @return [type]           [description]
+ * $string = 'The {b}anchor text{/b} is the {b}actual word{/b} or words used {br}to describe the link {br}itself'; 
+ * $replace_array = array('{b}' => '<b>','{/b}' => '</b>','{br}' => '<br />'); 
+ * echo stringParser($string,$replace_array);
  */
-function get_uid(){
-    return $_SESSION['user']['id'];
+function stringParser($string,$replacer){ 
+    $result = str_replace(array_keys($replacer), array_values($replacer),$string); 
+    return $result; 
 }
 
 
-
-/**
- * 检测是否登录
- * @return boolean 是否登录
- */
-function check_login(){
-    if (!empty($_SESSION['user']['id'])){
-        return true;
-    }else{
-        return false;
-    }
-}
 
 /**
  * curl获取数据
@@ -114,6 +262,45 @@ function doCurl($url,$type=0,$data=[])
     return $result;  
 }
 
+/**
+ * 使用代理进行curl抓取
+ * @return [type] [description]
+ */
+function  curl_proxy(){
+    $ch= curl_init(); 
+    curl_setopt($ch, CURLOPT_URL,"http://blog.51yip.com"); 
+    curl_setopt($ch, CURLOPT_HEADER, false); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+    curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE); 
+    curl_setopt($ch, CURLOPT_PROXY, '125.21.23.6:8080'); 
+    //url_setopt($ch, CURLOPT_PROXYUSERPWD, 'user:password');如果要密码的话，加上这个 
+    $result=curl_exec($ch); 
+    curl_close($ch); 
+    return $result;
+}
+
+
+
+/**
+ * 抓取一些有页面访问控制的页面
+ * @return [type] [description]
+ */
+function  curl_active(){
+     $ch= curl_init(); 
+     curl_setopt($ch, CURLOPT_URL,"http://club-china"); 
+     /*CURLOPT_USERPWD主要用来破解页面访问控制的
+     *例如平时我们所以htpasswd产生页面控制等。*/
+     //curl_setopt($ch, CURLOPT_USERPWD, '231144:2091XTAjmd='); 
+     curl_setopt($ch, CURLOPT_HTTPGET, 1); 
+     curl_setopt($ch, CURLOPT_REFERER,"http://club-china"); 
+     curl_setopt($ch, CURLOPT_HEADER, 0); 
+     $result=curl_exec($ch); 
+     curl_close($ch); 
+     return $result;
+}
+
+
+
 
 /**
  * curl远程下载文件
@@ -137,6 +324,47 @@ function curl_upload($url){
     return $status;
 }
 
+
+/**
+ * 强制下载文件
+ * @param  [type] $filename [description]
+ * @return [type]           [description]
+ */
+function download($filename){ 
+    if ((isset($filename))&&(file_exists($filename))){ 
+       header("Content-length: ".filesize($filename)); 
+       header('Content-Type: application/octet-stream'); 
+       header('Content-Disposition: attachment; filename="' . $filename . '"'); 
+       readfile("$filename"); 
+    } else { 
+       echo "Looks like file does not exist!"; 
+    } 
+}
+
+
+
+/**
+ * 下载
+ * @param [type] $filename [description]
+ * @param string $dir  [description]
+ * @return [type]   [description]
+ */
+function downloads($filename,$dir='./'){
+     $filepath = $dir.$filename;
+     if (!file_exists($filepath)){
+        header("Content-type: text/html; charset=utf-8");
+        echo "File not found!";
+        exit;
+     }else{
+        $file = fopen($filepath,"r");
+        Header("Content-type: application/octet-stream");
+        Header("Accept-Ranges: bytes");
+        Header("Accept-Length: ".filesize($filepath));
+        Header("Content-Disposition: attachment; filename=".$filename);
+        echo fread($file, filesize($filepath));
+        fclose($file);
+     }
+}
 
 /**
  * 使用二分法查找某个值
@@ -168,8 +396,21 @@ function search($start, $len, $data,$search)
     return false;
 }
 
-
-
+/**
+ * 获取当前页面URL
+ * @return [type] [description]
+ */
+function curPageURL() { 
+    $pageURL = 'http'; 
+    if (!empty($_SERVER['HTTPS'])) {$pageURL .= "s";} 
+    $pageURL .= "://"; 
+    if ($_SERVER["SERVER_PORT"] != "80") { 
+        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"]; 
+    } else { 
+        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; 
+    } 
+    return $pageURL; 
+}
 
 /**
  * 发送邮件
@@ -263,6 +504,179 @@ function get_client_ip($type = 0,$adv=false) {
     $long = sprintf("%u",ip2long($ip));
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
+}
+
+
+//获取用户真实IP 
+function getIp() { 
+    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")) 
+        $ip = getenv("HTTP_CLIENT_IP"); 
+    else 
+        if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")) 
+            $ip = getenv("HTTP_X_FORWARDED_FOR"); 
+        else 
+            if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")) 
+                $ip = getenv("REMOTE_ADDR"); 
+            else 
+                if (isset ($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")) 
+                    $ip = $_SERVER['REMOTE_ADDR']; 
+                else 
+                    $ip = "unknown"; 
+    return ($ip); 
+}
+
+/**
+ * 获取在线IP
+ * @return String
+ */
+function getOnlineIp($format=0) {
+     global $S_GLOBAL;
+     if(empty($S_GLOBAL['onlineip'])) {
+        if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+        $onlineip = getenv('HTTP_CLIENT_IP');
+      }elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+        $onlineip = getenv('HTTP_X_FORWARDED_FOR');
+      }elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+        $onlineip = getenv('REMOTE_ADDR');
+      }elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+        $onlineip = $_SERVER['REMOTE_ADDR'];
+      }
+        preg_match("/[\d\.]{7,15}/", $onlineip, $onlineipmatches);
+        $S_GLOBAL['onlineip'] = $onlineipmatches[0] ? $onlineipmatches[0] : 'unknown';
+     }
+     
+     if($format) {
+        $ips = explode('.', $S_GLOBAL['onlineip']);
+        for($i=0;$i<3;$i++) {
+            $ips[$i] = intval($ips[$i]);
+        }
+        return sprintf('%03d%03d%03d', $ips[0], $ips[1], $ips[2]);
+     } else {
+            return $S_GLOBAL['onlineip'];
+     }
+}
+
+/**
+ * 随机生成国内ip地址
+ * @return [type] [description]
+ */
+function randIp()
+{
+    $ip_long = array(
+        array('607649792', '608174079'), // 36.56.0.0-36.63.255.255
+        array('1038614528', '1039007743'), // 61.232.0.0-61.237.255.255
+        array('1783627776', '1784676351'), // 106.80.0.0-106.95.255.255
+        array('2035023872', '2035154943'), // 121.76.0.0-121.77.255.255
+        array('2078801920', '2079064063'), // 123.232.0.0-123.235.255.255
+        array('-1950089216', '-1948778497'), // 139.196.0.0-139.215.255.255
+        array('-1425539072', '-1425014785'), // 171.8.0.0-171.15.255.255
+        array('-1236271104', '-1235419137'), // 182.80.0.0-182.92.255.255
+        array('-770113536', '-768606209'), // 210.25.0.0-210.47.255.255
+        array('-569376768', '-564133889'), // 222.16.0.0-222.95.255.255
+        );
+    $rand_key = mt_rand(0, 9);
+    return $ip = long2ip(mt_rand($ip_long[$rand_key][0], $ip_long[$rand_key][1]));
+} 
+
+
+
+
+/**
+ * 友好提示并跳转
+ * @param  [type] $msgTitle [description]
+ * @param  [type] $message  [description]
+ * @param  [type] $jumpUrl  [description]
+ * @return [type]           [description]
+ */
+function message($msgTitle,$message,$jumpUrl){ 
+    $str = '<!DOCTYPE HTML>'; 
+    $str .= '<html>'; 
+    $str .= '<head>'; 
+    $str .= '<meta charset="utf-8">'; 
+    $str .= '<title>页面提示</title>'; 
+    $str .= '<style type="text/css">'; 
+    $str .= '*{margin:0; padding:0}a{color:#369; text-decoration:none;}a:hover{text-decoration:underline}body{height:100%; font:12px/18px Tahoma, Arial,  sans-serif; color:#424242; background:#fff}.message{width:450px; height:120px; margin:16% auto; border:1px solid #99b1c4; background:#ecf7fb}.message h3{height:28px; line-height:28px; background:#2c91c6; text-align:center; color:#fff; font-size:14px}.msg_txt{padding:10px; margin-top:8px}.msg_txt h4{line-height:26px; font-size:14px}.msg_txt h4.red{color:#f30}.msg_txt p{line-height:22px}'; 
+    $str .= '</style>'; 
+    $str .= '</head>'; 
+    $str .= '<body>'; 
+    $str .= '<div class="message">'; 
+    $str .= '<h3>'.$msgTitle.'</h3>'; 
+    $str .= '<div class="msg_txt">'; 
+    $str .= '<h4 class="red">'.$message.'</h4>'; 
+    $str .= '<p>系统将在 <span style="color:blue;font-weight:bold">3</span> 秒后自动跳转,如果不想等待,直接点击 <a href="{$jumpUrl}">这里</a> 跳转</p>'; 
+    $str .= "<script>setTimeout('location.replace('".$jumpUrl."')',2000)</script>"; 
+    $str .= '</div>'; 
+    $str .= '</div>'; 
+    $str .= '</body>'; 
+    $str .= '</html>'; 
+    echo $str; 
+}
+
+
+/**
+ * 二维数组排序方法,数字的倒叙排列
+ * @param arr
+ * @param field
+ */
+function sortArrByField(&$array, $field, $desc = false){
+    $fieldArr = array();
+    foreach ($array as $k => $v) {
+        $fieldArr[$k] = $v[$field];
+    }
+    $sort = $desc == false ? SORT_ASC : SORT_DESC;
+    array_multisort($fieldArr, $sort, $array);
+  
+    return $array;
+}
+
+
+
+/*
+ * 经典的概率算法，
+ * $proArr是一个预先设置的数组，
+ * 假设数组为：array(100,200,300，400)，
+ * 开始是从1,1000 这个概率范围内筛选第一个数是否在他的出现概率范围之内， 
+ * 如果不在，则将概率空间，也就是k的值减去刚刚的那个数字的概率空间，
+ * 在本例当中就是减去100，也就是说第二个数是在1，900这个范围内筛选的。
+ * 这样 筛选到最终，总会有一个数满足要求。
+ * 就相当于去一个箱子里摸东西，
+ * 第一个不是，第二个不是，第三个还不是，那最后一个一定是。
+ * 这个算法简单，而且效率非常高，
+ * 这个算法在大数据量的项目中效率非常棒。
+ */
+function get_rand($proArr) { 
+    $result = '';  
+    //概率数组的总概率精度 
+    $proSum = array_sum($proArr);  
+    //概率数组循环 
+    foreach ($proArr as $key => $proCur) { 
+        $randNum = mt_rand(1, $proSum); 
+        if ($randNum <= $proCur) { 
+            $result = $key; 
+            break; 
+        } else { 
+            $proSum -= $proCur; 
+        }       
+    } 
+    unset ($proArr);  
+    return $result; 
+} 
+
+
+/**
+ * 计算距离某个时间点时长
+ * @param  [type] $seconds [description]
+ * @return [type]          [description]
+ */
+function changeTimeType($seconds) { 
+    if ($seconds > 3600) { 
+        $hours = intval($seconds / 3600); 
+        $minutes = $seconds % 3600; 
+        $time = $hours . ":" . gmstrftime('%M:%S', $minutes); 
+    } else { 
+        $time = gmstrftime('%H:%M:%S', $seconds); 
+    } 
+    return $time; 
 }
 
 
@@ -867,6 +1281,72 @@ function get_url_to_domain($domain) {
     return $re_domain;
 }
 
+
+/**
+ * 获取当前站点的访问路径根目录
+ * @return [type] [description]
+ */
+function getSiteUrl() {
+ $uri = $_SERVER['REQUEST_URI']?$_SERVER['REQUEST_URI']:($_SERVER['PHP_SELF']?$_SERVER['PHP_SELF']:$_SERVER['SCRIPT_NAME']);
+ return 'http://'.$_SERVER['HTTP_HOST'].substr($uri, 0, strrpos($uri, '/')+1);
+}
+
+
+/**
+ * 数字转人民币,超过亿会报错，请用类
+ * @param [type] $num [description]
+ * @return [type]  [description]
+ */
+function numtormb ($num) {
+    $c1 = "零壹贰叁肆伍陆柒捌玖";
+    $c2 = "分角元拾佰仟万拾佰仟亿";
+    $num = round($num, 2);
+    $num = $num * 100;
+    if (strlen($num) > 10) {
+        return "oh,sorry,the number is too long!";
+    }
+    $i = 0;
+    $c = "";
+    while(1){
+        if ($i == 0) {
+            $n = substr($num, strlen($num)-1, 1);
+        }else{
+            $n = $num % 10;
+        }
+        $p1 = substr($c1, 3 * $n, 3);
+        $p2 = substr($c2, 3 * $i, 3);
+        if($n != '0' || ($n == '0' && ($p2 == '亿' || $p2 == '万' || $p2 == '元'))) {
+            $c = $p1 . $p2 . $c;
+        }else{
+            $c = $p1 . $c;
+        }
+        $i = $i + 1;
+        $num = $num / 10;
+        $num = (int)$num;
+        if($num == 0){
+            break;
+        }
+    }
+    $j = 0;
+    $slen = strlen($c);
+    while($j < $slen){
+        $m = substr($c, $j, 6);
+        if ($m == '零元' || $m == '零万' || $m == '零亿' || $m == '零零') {
+            $left = substr($c, 0, $j);
+            $right = substr($c, $j + 3);
+            $c = $left . $right;
+            $j = $j-3;
+            $slen = $slen-3;
+        }
+        $j = $j + 3;
+    }
+    if (substr($c, strlen($c)-3, 3) == '零') {
+        $c = substr($c, 0, strlen($c)-3);
+    } // if there is a '0' on the end , chop it out
+    return $c . "整";
+}
+
+
 /**
  * 按符号截取字符串的指定部分
  * @param string $str 需要截取的字符串
@@ -900,6 +1380,46 @@ function cut_str($str,$sign,$number){
         }
     }
 }
+
+/**
+ * 无极限分类
+ * @param  [type]  &$list [循环数据]
+ * @param  integer $pid   [父级id]
+ * @param  integer $level [级别]
+ * @param  string  $html  [前缀]
+ * @return [type]         [description]
+ */
+function tree(&$list,$pid=0,$level=0,$html='--'){
+    static $tree = array();
+    foreach($list as $v){
+        if($v['pid'] == $pid){
+            $v['level'] = $level;
+             $v['html'] = str_repeat($html,$level);
+            $tree[] = $v;
+            tree($list,$v['id'],$level+1);
+        } 
+    }
+    return $tree;
+}
+
+
+ 
+/**
+ * 将数据格式化成树形结构
+ * @author Xuefen.Tong
+ * @param array $items
+ * @return array 
+ */
+function genTree($items) {
+    $tree = array(); //格式化好的树
+    foreach ($items as $item)
+        if (isset($items[$item['pid']]))
+            $items[$item['pid']]['son'][] = &$items[$item['id']];
+        else
+            $tree[] = &$items[$item['id']];
+    return $tree;
+}
+
 
 
 /**
@@ -1982,11 +2502,11 @@ function validate_apple_pay($receipt_data){
  * geetest检测验证码
  */
 function geetest_chcek_verify($data){
-    $geetest_id=C('GEETEST_ID');
-    $geetest_key=C('GEETEST_KEY');
-    $geetest=new \Org\Xb\Geetest($geetest_id,$geetest_key);
-    $user_id=$_SESSION['geetest']['user_id'];
-    if ($_SESSION['geetest']['gtserver']==1) {
+    $geetest_id=config('geetest.geetest_id');
+    $geetest_key=config('geetest.geetest_key');
+    $geetest=new \org\Geetest($geetest_id,$geetest_key);
+    $user_id=session('geetest.user_id','','tp5');
+    if (session('geetest.gtserver','','tp5')==1) {
         $result=$geetest->success_validate($data['geetest_challenge'], $data['geetest_validate'], $data['geetest_seccode'], $user_id);
         if ($result) {
             return true;

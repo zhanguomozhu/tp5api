@@ -8,7 +8,6 @@ class AuthRule extends Validate
 		'pid'    => 'require',
         'title'  => 'require|length:0,18',
         'name'   => 'require',
-        'status' => 'require',
 	];
 	//验证提示
 	 protected $message  =   [
@@ -16,7 +15,6 @@ class AuthRule extends Validate
         'title.require' => '标题必须填写',
         'title.length'  => '标题长度必须是4-18位',
         'name.require'  => '名称必须填写',
-        'status.require'=> '状态必须填写',
         
     ];
     //验证场景
