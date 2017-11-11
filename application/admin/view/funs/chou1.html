@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>幸运大转盘</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+    <style type="text/css">
+    .demo{width:417px; height:417px; position:relative; margin:50px auto}
+    #disk{width:417px; height:417px; background:url(__ADMIN__/images/disk.jpg) no-repeat}
+    #start{width:163px; height:320px; position:absolute; top:46px; left:130px;}
+    #start img{cursor:pointer}
+    </style>
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/jQueryRotate.2.2.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/jquery.easing.min.js"></script>
+    <script type="text/javascript">
+    $(function(){ 
+         $("#startbtn").click(function(){ 
+            lottery(); 
+        }); 
+    }); 
+    function lottery(){ 
+        $.ajax({ 
+            type: 'POST', 
+            url: "{:url('funs/run')}",  //提交地址 改为你自己的
+            data:{aaa:1},
+            dataType: 'json', 
+            cache: false, 
+            error: function(){ 
+                alert('出错了！'); 
+                return false; 
+            }, 
+            success:function(json){ 
+                $("#startbtn").unbind('click').css("cursor","default"); 
+                var a = json.angle; //角度 
+                var p = json.prize; //奖项 
+                $("#startbtn").rotate({ 
+                    duration:3000, //转动时间 
+                    angle: 0, 
+                    animateTo:1800+a, //转动角度 
+                    easing: $.easing.easeOutSine, 
+                    callback: function(){ 
+                        var con = confirm('恭喜你，中得'+p+'\n还要再来一次吗？'); 
+                        if(con){ 
+                            lottery(); 
+                        }else{ 
+                            return false; 
+                        } 
+                    } 
+                }); 
+            } 
+        }); 
+    } 
+    </script>
+
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="public/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('Index/index')}">系统</a>
+                    </li>
+                                        <li class="active">幸运大转盘</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    <div id="main">
+                       <div class="msg"></div>
+                       <div class="demo">
+                            <div id="disk"></div>
+                            <div id="start"><img src="__ADMIN__/images/start.png" id="startbtn"></div>
+                       </div>
+                    </div>
+
+         		</div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+</body>
+    <!--Basic Scripts-->
+ 
+<script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/beyond.js"></script>
+
+</html>

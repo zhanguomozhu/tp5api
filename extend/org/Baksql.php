@@ -1,9 +1,8 @@
 <?php
-/*
-明天见 QQ 386117932
-*/
 namespace org;
-
+/*
+*数据库备份操作类
+*/
 class Baksql {
 
     private $config=[];

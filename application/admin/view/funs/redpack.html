@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>彩票抽奖</title>
+    <title>红包生成</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,9 @@
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
    <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
    <script type="text/javascript" src="__ADMIN__/style/bootbox.js"></script>
+   <style type="text/css">
+       li{list-style-type:none;}
+   </style>
     
 </head>
 <body>
@@ -39,16 +42,23 @@
                                         <li>
                         <a href="{:url('Index/index')}">系统</a>
                     </li>
-                                        <li class="active">彩票抽奖</li>
+                                        <li class="active">红包生成</li>
                                         </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
-  
+
                 <!-- Page Body -->
                 <div class="page-body">
-                    <button onclick="chou1()">点击抽奖1</button><br/>
-                    <button onclick="chou2()">点击抽奖2</button><br/>
-					<button onclick="chou3()">点击抽奖3</button><br/>
+                    <button onclick="chou1()">红包1</button><br/>
+                    <button onclick="chou2()">红包2</button><br/>
+                    <div id="pack1">
+                        
+                    </div>
+                    <div>
+                        <ul id="pack2">
+                            
+                        </ul>
+                    </div>
          		</div>
                 <!-- /Page Body -->
             </div>
@@ -68,13 +78,20 @@
 	//下载excel
     function chou1(){
         $.ajax({
-            url: "{:url('funs/choujiang1')}",
+            url: "{:url('funs/pack1')}",
             type: 'POST',
             data:{aaa:'1'},
             dataType:'json',
             success:function(res){
                 console.log(res)
-                alert(res.data.data);
+                var js =res.data.data;
+                var text1 = "";
+                for(var i=0;i<js.length;i++){
+                    text1 += "<ul><li>获得￥："+js[i].money+"</li><li>剩余￥："+js[i].balance+"</li></ul>";
+                }
+
+                $('#pack1').html('');
+                $('#pack1').append(text1);
             }
         });
     }
@@ -82,28 +99,25 @@
 
     function chou2(){
         $.ajax({
-            url: "{:url('funs/choujiang2')}",
+            url: "{:url('funs/pack2')}",
             type: 'POST',
             data:{aaa:'1'},
             dataType:'json',
             success:function(res){
                 console.log(res)
-                alert(res.data.data);
+                var js =res.data.data.data;
+                var text2 = "";
+                console.log(js)
+                for(var i=0;i<js.length;i++){
+                    text2 += "<li>获得￥："+js[i]+"</li>";
+                }
+                console.log(text2)
+                $('#pack2').html('');
+                $('#pack2').append(text2);
             }
         });
     }
-    function chou3(){
-        $.ajax({
-            url: "{:url('funs/choujiang3')}",
-            type: 'POST',
-            data:{aaa:'1'},
-            dataType:'json',
-            success:function(res){
-                console.log(res)
-                alert(res.data.data);
-            }
-        });
-    }
+    
 </script>
 
 </html>

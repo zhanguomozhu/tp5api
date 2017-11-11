@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\add.html";i:1510279686;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\mulcurl.html";i:1510390385;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>添加权限</title>
+        <meta charset="utf-8">
+    <title>多线程下载</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +18,13 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    
-
+    <style type="text/css">
+        li{list-style-type: none;}
+    </style>
 </head>
 <body>
-	<!-- 头部 -->
-	    <div class="navbar">
+    <!-- 头部 -->
+        <div class="navbar">
     <div class="navbar-inner">
         <div class="navbar-container">
             <!-- Navbar Barnd -->
@@ -80,11 +81,11 @@
         </div>
     </div>
 </div>
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
                       <div class="page-sidebar" id="sidebar">
                 <!-- Page Sidebar Header-->
                 <div class="sidebar-header-wrapper">
@@ -134,11 +135,8 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li>
-                        <a href="<?php echo url('lst'); ?>">权限管理</a>
-                    </li>
-                    <li class="active">添加权限</li>
-                    </ul>
+                                        <li class="active">多线程下载</li>
+                                        </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
@@ -149,70 +147,38 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">添加权限</span>
+                <span class="widget-caption">多线程下载</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="<?php echo url('add'); ?>" method="post">
+                    <form class="form-horizontal" role="form" action="" method="post">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
-                            <div class="col-sm-6">
-                               <select name="pid">
-                                   <option>顶级权限</option>
-                                   <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                                        <option value="<?php echo $vo['id']; ?>"><?php echo $vo['title']; ?></option>
-                                   <?php endforeach; endif; else: echo "" ;endif; ?>
-                               </select>
+                            <label for="username" class="col-sm-2 control-label">多线程下载</label>
+                            <div class="col-sm-3">
+                              <input class="form-control" placeholder="输入url" id="url1" name="url1" required="" type="text"  value="">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+                            <div class="col-sm-2">
+                              <input class="form-control" placeholder="输入页码,默认1" id="p" name="p" required="" type="text"  value="">
+                            </div>
+                            <div class="col-sm-1">
+                              <select id='type'>
+                                  <option>显示方式</option>
+                                  <option value="1">重写</option>
+                                  <option value="2">追加</option>
+                              </select>
+                            </div>
+                            <input type="button" id="send" class="btn btn-success" value="点击下载">
+                        </div> 
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="title" required="" type="text">
+                            <div class="col-sm-1">
+
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">控制器/方法</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="name" required="" type="text">
+                            <div class="col-sm-10">
+                                <ul class="content">
+                                </ul>
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限状态</label>
-                            <div class="col-sm-6">
-                                <label style="margin-top:5px; ">
-                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" checked="checked" name="status" value="1">
-                                    <span class="text"></span>
-                                </label>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限级别</label>
-                            <div class="col-sm-6">
-                                <select name="level">
-                                    <option value="0">项目</option>
-                                    <option value="1">模块</option>
-                                    <option value="2">操作</option>
-                                </select>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">菜单图标</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="fa-th-large" name="icon" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">保存信息</button>
-                            </div>
-                        </div>
+                        </div> 
+                        
                     </form>
                 </div>
             </div>
@@ -224,14 +190,96 @@
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-	    <!--Basic Scripts-->
+        <!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript">
+    var countdown=5; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击下载"; 
+            countdown = 5; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+
+
+
+
+      
+    //点击事件
+    $('#send').click(function(){
+        var tt = $('#type').val();
+        $.post("<?php echo url('funs/getCurl'); ?>",{url1:$('#url1').val(),p:$('#p').val()},function(res){
+            console.log(res)
+            var content = res.data.data;
+            console.log(content)
+            var text = '';
+            for(var i=0;i<content.length;i++){
+                console.log(content[i])
+                text +="<li style='float:left;'><img class='img' width='200' src='/"+content[i]+"' title='点击删除图片'></li>";
+            }
+            if(tt == 1){
+                $(".content").html(text);
+            }
+            if(tt == 2){
+                $(".content").append(text);
+            }
+            
+        },"json");
+        
+        //倒数60s
+        settime(this);
+
+    })
+
+
+
+
+//img点击删除事件,live高版本已经废除，用on
+    // $(document).live(function(){
+    // })
+    $(document).on("click",'.img',function(){
+        //提示
+        if(confirm('确认删除吗？')){
+            //执行删除
+            $.ajax({
+                url: "<?php echo url('sfun/delfile'); ?>",
+                type: 'POST',
+                data: {src:$(this).attr('src')},
+                dataType:'json',
+                success:function(json){
+                    console.log(json)
+                    //返回提示信息
+                    if(json.code == 1001){
+                        
+                        $('.img1').removeClass('red').addClass('green').html(json.msg);
+                    }
+                    if(json.code == 2001){
+                        $('.img1').addClass('red').html(json.msg);
+                    }
+                }
+            });
+            //移除节点
+            $(this).remove();
+        }
+        
+    });
+    </script>
+
 
 </body></html>

@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\add.html";i:1510279686;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\address.html";i:1510379344;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>添加权限</title>
+    <title>根据ip获得地址</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,6 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
     
-
 </head>
 <body>
 	<!-- 头部 -->
@@ -134,11 +133,8 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li>
-                        <a href="<?php echo url('lst'); ?>">权限管理</a>
-                    </li>
-                    <li class="active">添加权限</li>
-                    </ul>
+                                        <li class="active">根据ip获得地址</li>
+                                        </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
@@ -149,69 +145,33 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">添加权限</span>
+                <span class="widget-caption">根据ip获得地址</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="<?php echo url('add'); ?>" method="post">
+                    <form class="form-horizontal" role="form" action="" method="post">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
-                            <div class="col-sm-6">
-                               <select name="pid">
-                                   <option>顶级权限</option>
-                                   <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                                        <option value="<?php echo $vo['id']; ?>"><?php echo $vo['title']; ?></option>
-                                   <?php endforeach; endif; else: echo "" ;endif; ?>
-                               </select>
+                            <label for="username" class="col-sm-2 control-label no-padding-right">IP地址</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" placeholder="" name="ip" required="" type="text" id="ip" value="<?php echo $ip; ?>">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+                            <input type="button" id="send" class="btn btn-success" value="点击获取结果">
+                        </div> 
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="title" required="" type="text">
+                            <div class="col-sm-2">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+                            <p class="help-block col-sm-2 red ip"></p>
+                        </div> 
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">控制器/方法</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="name" required="" type="text">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">随机生成IP地址</label>
+                            <div class="col-sm-3">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+                            <input type="button" id="send1" class="btn btn-success" value="点击获取结果">
+                        </div> 
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限状态</label>
-                            <div class="col-sm-6">
-                                <label style="margin-top:5px; ">
-                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" checked="checked" name="status" value="1">
-                                    <span class="text"></span>
-                                </label>
+                            <div class="col-sm-2">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限级别</label>
-                            <div class="col-sm-6">
-                                <select name="level">
-                                    <option value="0">项目</option>
-                                    <option value="1">模块</option>
-                                    <option value="2">操作</option>
-                                </select>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">菜单图标</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="fa-th-large" name="icon" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">保存信息</button>
-                            </div>
+                            <p class="help-block col-sm-2 red iprand"></p>
                         </div>
                     </form>
                 </div>
@@ -233,5 +193,75 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript">
+    var countdown=5; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击获取结果"; 
+            countdown = 5; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+
+
+    $.post("<?php echo url('funs/getCityByIp'); ?>",{ip:$('#ip').val()},function(res){
+        console.log(res)
+        var address = res.data.data;
+        console.log(address)
+        $(".ip").html(address.country+','+address.city+','+address.isp);
+    },"json");
+
+
+
+      
+    //点击事件
+    $('#send').click(function(){
+        if($('#ip').val()){
+            //检测手机号格式
+            if($('#ip').val().match(/^(((1?\d{1,2})|(2[0-4]\d)|(25[0-5]))\.){3}((1?\d{1,2})|(2[0-4]\d)|(25[0-5]))$/)){
+                    $.post("<?php echo url('funs/getCityByIp'); ?>",{ip:$('#ip').val()},function(res){
+                        console.log(res)
+                        var address = res.data.data;
+                        console.log(address)
+                        $(".ip").html(address.country+','+address.city+','+address.isp);
+                    },"json");
+                    
+                    //倒数60s
+                    settime(this);
+            }else{
+                $('.ip').html('IP格式不正确');
+            }
+            
+        }else{
+            $('.ip').html('请输入IP地址');
+        }
+        
+    })
+
+
+
+    //点击事件
+    $('#send1').click(function(){
+       
+        $.post("<?php echo url('funs/randIp'); ?>",{ip:1},function(res){
+            console.log(res)
+            var address = res.data.data;
+            console.log(address)
+            $(".iprand").html(address);
+        },"json");
+        
+        //倒数60s
+        settime(this);
+    })
+    </script>
+
 
 </body></html>

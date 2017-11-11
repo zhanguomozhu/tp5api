@@ -20,29 +20,32 @@ class Redmoney
         $this->min = $min;
     }
 
-	/**生成红包的函数*/
-	public function getRandMoney(){
+    /**生成红包的函数*/
+    public function getRandMoney(){
+
         $randRemainMoney = $this->total - $this->num * $this->min;//剩余需要随机的钱数
         return $this->_getRandMoney($randRemainMoney, $this->num, $this->min);
     }
-	 
-	/**红包生成的逻辑代码*/
-	private function _getRandMoney(){
-	 
-	        $returnMessage = array('status'=>1, 'data'=>NULL);
-	        if($this->total > 0){
-	            $returnMessage['data'] = $this->_randMoney($this->total, $this->num, $this->min);
-	        }elseif($this->total == 0){
-	            $returnMessage['data'] = array_fill(0, $this->num, 1);
-	        }else{
-	            $returnMessage['status'] = -1;
-	            $returnMessage['data'] = '参数传递有误，生成红包失败';
-	        }
-	        return $returnMessage;
-	    }
-	 
-	/*参数无误，开始生成对应的红包金额*/
-	private function _randMoney(){
+ 
+    /**红包生成的逻辑代码*/
+    private function _getRandMoney(){
+
+        $returnMessage = array('status'=>1, 'data'=>NULL);
+        if($this->total > 0){
+            $returnMessage['data'] = $this->_randMoney($this->total, $this->num, $this->min);
+        }elseif($this->total == 0){
+            $returnMessage['data'] = array_fill(0, $this->num, 1);
+        }else{
+            $returnMessage['status'] = -1;
+            $returnMessage['data'] = '参数传递有误，生成红包失败';
+        }
+
+        return $returnMessage;
+    }
+ 
+    /*参数无误，开始生成对应的红包金额*/
+    private function _randMoney(){
+
         $data = array_fill(0, $this->num, $this->min);
         if($this->num > 1){
             foreach($data as $k => $v){
@@ -51,7 +54,7 @@ class Redmoney
                     break;
                 }else {
                     if($this->total == 0) break;
-                    $randMoney = rand(0, $this->total);
+                    $randMoney = rand(0, $this->total*100)/100;
                     $this->total -= $randMoney;
                     $data[$k] = $randMoney + $v;
                 }                
@@ -59,7 +62,6 @@ class Redmoney
         }
         return $data;
     }
-
 
     //红包结果
     public function getPack()
@@ -80,7 +82,7 @@ class Redmoney
         }
         //最后一个红包，不用随机       
         $readPack[] = [
-            'money'=>$money,
+            'money'=>$total,
             'balance'=>0,
         ];
         //返回结果

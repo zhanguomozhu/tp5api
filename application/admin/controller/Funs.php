@@ -529,6 +529,54 @@ class Funs extends Base
 	}
 
 
+	/**
+	 * 抽奖实例
+	 * @return [type] [description]
+	 */
+	public function chou1(){
+		
+		return $this->fetch();
+	}
+
+	/**
+	 * 大转盘
+	 * @return [type] [description]
+	 */
+	public function run(){
+    	$proArr = array();
+    	//v 是中奖概率   id为奖品编号  min max 分别为最大和最小角度
+		$prize_arr = array( 
+		    '0' => array('id'=>1,'min'=>1,'max'=>29,'prize'=>'一等奖','v'=>0.01), 
+		    '1' => array('id'=>2,'min'=>302,'max'=>328,'prize'=>'二等奖','v'=>0.99), 
+		    '2' => array('id'=>3,'min'=>242,'max'=>268,'prize'=>'三等奖','v'=>1), 
+		    '3' => array('id'=>4,'min'=>182,'max'=>208,'prize'=>'四等奖','v'=>3), 
+		    '4' => array('id'=>5,'min'=>122,'max'=>148,'prize'=>'五等奖','v'=>5), 
+		    '5' => array('id'=>6,'min'=>62,'max'=>88,'prize'=>'六等奖','v'=>10), 
+		    '6' => array('id'=>7,'min'=>array(32,92,152,212,272,332), 'max'=>array(58,118,178,238,298,358),'prize'=>'七等奖','v'=>80) 
+		); 
+		//获取随机奖品
+		foreach ($prize_arr as $v) {
+			$proArr[$v['id']] = $v['v'];
+		}
+		$rid = get_rand($proArr); //根据概率获取奖项id 
+		//p($proArr);
+		$res = $prize_arr[$rid-1]; //中奖项 
+		//p($res);die;
+		$min = $res['min']; 
+		$max = $res['max']; 
+
+		if($res['id']==7){ //七等奖 
+		    $i = mt_rand(0,5); 
+		    $result['angle'] = mt_rand($min[$i],$max[$i]); 
+		}else{ 
+		    $result['angle'] = mt_rand($min,$max); //随机生成一个角度 
+		} 
+		$result['prize'] = $res['prize']; 
+		 
+		echo json_encode($result); 
+    }
+
+
 
 	/**
 	 * 抽奖1
@@ -761,10 +809,131 @@ class Funs extends Base
 	 * @return [type] [description]
 	 */
 	public function redpack(){
-		$red = new \org\Redmoney(10,5,0.01);
-		$data = $red->getPack();
-		dump($data);
+		return $this->fetch();
 	}
 
+
+	/**
+	 * 微信随机红包1
+	 * @return [type] [description]
+	 */
+	public function pack1(){
+		$red = new \org\Redmoney(10,3,0.1);
+		$data = $red->getPack();
+		if($data){
+        	echo $this->show(1001,'成功',['data'=>$data]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
+
+
+	/**
+	 * 微信随机红包2
+	 * @return [type] [description]
+	 */
+	public function pack2(){
+		$red = new \org\Redmoney(10,10,0.1);
+		$data = $red->getRandMoney();
+		if($data){
+        	echo $this->show(1001,'成功',['data'=>$data]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
+
+
+	/**
+	 * 获取ip的城市地址
+	 * @return [type] [description]
+	 */
+	public function address(){
+		$ip = get_client_ip();
+		return $this->fetch('',['ip'=>$ip]);
+	}
+
+	/**
+	 * 根据Ip获取城市
+	 * @return [type] [description]
+	 */
+	public function getCityByIp(){
+		$IP = new \org\Iplib();
+		$data = $IP->get_ip_info_sina(input('ip'));
+		if($data){
+        	echo $this->show(1001,'成功',['data'=>$data]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
+
+
+
+	/**
+	 * 随机生成ip
+	 * @return [type] [description]
+	 */
+	public function randIp(){
+		$data = randIp();
+		if($data){
+        	echo $this->show(1001,'成功',['data'=>$data]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
+
+	/**
+	 * 零钱
+	 * @return [type] [description]
+	 */
+	public function zhao(){
+		return $this->fetch();
+	}
+
+
+	/**
+	 * 找零钱
+	 * @return [type] [description]
+	 */
+	public function zhaoling(){
+		//面额
+		$m = explode(',',input('m'));
+		//需要找的面额
+		$n = input('n');
+		$data = zhaoqian($m,$n);
+		if($data){
+        	echo $this->show(1001,'成功',['data'=>$data]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
+
+
+	/**
+	 * curl多线程下载
+	 * @return [type] [description]
+	 */
+	public function mulcurl(){
+		return $this->fetch();
+	}
+
+	/**
+	 * 多线程下载
+	 * @return [type] [description]
+	 */
+	public function getCurl(){
+		$default = 'http://api.lovebizhi.com/macos_v4.php?a=category&spdy=1&tid=3&order=hot&color_id=3&device=105&uuid=436e4ddc389027ba3aef863a27f6e6f9&mode=0&retina=0&client_id=1008&device_id=31547324&model_id=105&size_id=0&channel_id=70001&screen_width=1920&screen_height=1200&bizhi_width=1920&bizhi_height=1200&version_code=19&language=zh-Hans&jailbreak=0&mac=&p=';
+		//下载地址
+		$url = input('url')?input('url'):$default;
+		$p = input('p')?input('p'):1;
+		//保存路径
+		$savepath ='down/images/';
+		$hd = new \org\HDbutifulyGril($url,$savepath);
+		$res = $hd->start($p);
+		if($res){
+        	echo $this->show(1001,'成功',['data'=>$res]);
+        }else{
+        	echo $this->show(2001,'失败');
+        }
+	}
 
 }

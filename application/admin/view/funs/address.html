@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>根据ip获得地址</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+	<!-- 头部 -->
+	{include file="public/top"}
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:url('Index/index')}">系统</a>
+                    </li>
+                                        <li class="active">根据ip获得地址</li>
+                                        </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">根据ip获得地址</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" action="" method="post">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">IP地址</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" placeholder="" name="ip" required="" type="text" id="ip" value="{$ip}">
+                            </div>
+                            <input type="button" id="send" class="btn btn-success" value="点击获取结果">
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                            </div>
+                            <p class="help-block col-sm-2 red ip"></p>
+                        </div> 
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label no-padding-right">随机生成IP地址</label>
+                            <div class="col-sm-3">
+                            </div>
+                            <input type="button" id="send1" class="btn btn-success" value="点击获取结果">
+                        </div> 
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                            </div>
+                            <p class="help-block col-sm-2 red iprand"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript">
+    var countdown=5; 
+    function settime(obj) { 
+        if (countdown == 0) { 
+            obj.removeAttribute("disabled");    
+            obj.value="点击获取结果"; 
+            countdown = 5; 
+            return;
+        } else { 
+            obj.setAttribute("disabled", true); 
+            obj.value="重新发送(" + countdown + ")"; 
+            countdown--; 
+        } 
+    setTimeout(function() { 
+        settime(obj) }
+        ,1000) 
+    }
+
+
+    $.post("{:url('funs/getCityByIp')}",{ip:$('#ip').val()},function(res){
+        console.log(res)
+        var address = res.data.data;
+        console.log(address)
+        $(".ip").html(address.country+','+address.city+','+address.isp);
+    },"json");
+
+
+
+      
+    //点击事件
+    $('#send').click(function(){
+        if($('#ip').val()){
+            //检测手机号格式
+            if($('#ip').val().match(/^(((1?\d{1,2})|(2[0-4]\d)|(25[0-5]))\.){3}((1?\d{1,2})|(2[0-4]\d)|(25[0-5]))$/)){
+                    $.post("{:url('funs/getCityByIp')}",{ip:$('#ip').val()},function(res){
+                        console.log(res)
+                        var address = res.data.data;
+                        console.log(address)
+                        $(".ip").html(address.country+','+address.city+','+address.isp);
+                    },"json");
+                    
+                    //倒数60s
+                    settime(this);
+            }else{
+                $('.ip').html('IP格式不正确');
+            }
+            
+        }else{
+            $('.ip').html('请输入IP地址');
+        }
+        
+    })
+
+
+
+    //点击事件
+    $('#send1').click(function(){
+       
+        $.post("{:url('funs/randIp')}",{ip:1},function(res){
+            console.log(res)
+            var address = res.data.data;
+            console.log(address)
+            $(".iprand").html(address);
+        },"json");
+        
+        //倒数60s
+        settime(this);
+    })
+    </script>
+
+
+</body></html>

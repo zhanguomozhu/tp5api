@@ -49,6 +49,36 @@ function encryptDecrypt($key, $string, $decrypt){
     } 
 }
 
+
+/**
+ * 字符串与二进制互转
+ * @param [type] $str  [字符串]
+ * @param [type] $type [0，字符串转二进制，1，二进制转字符串]
+ */
+function StrToBin($str,$type){
+    if(!$type){
+        //1.列出每个字符
+        $arr = preg_split('/(?<!^)(?!$)/u', $str);
+        //2.unpack字符
+        foreach($arr as &$v){
+            $temp = unpack('H*', $v);
+            $v = base_convert($temp[1], 16, 2);
+            unset($temp);
+        }
+        return join(' ',$arr);
+    }else{
+        $arr = explode(' ', $str);
+        foreach($arr as &$v){
+            $v = pack("H".strlen(base_convert($v, 2, 16)), base_convert($v, 2, 16));
+        }
+      
+        return join('', $arr);
+    }
+}
+
+
+
+
 /**
  * PHP防止SQL注入
  * @param  [type] $sql_str [description]
@@ -80,6 +110,99 @@ function listDirFiles($DirPath){
          } 
     } 
 }
+
+
+/**
+ * 正则去除PHP代码注释
+ * @param string $content 代码内容
+ * @return string 去除注释之后的内容
+ */
+function removeComment($content){
+  return preg_replace("/(\/\*.*\*\/)|(#.*?\n)|(\/\/.*?\n)/s", '', str_replace(array("\r\n", "\r"), "\n", $content));
+}
+
+
+
+/**
+ * 去除代码中的空白和注释
+ * @param string $content 代码内容
+ * @return string
+ */
+function strip_whitespace($content) {
+    $stripStr   = '';
+    //分析php源码
+    $tokens     = token_get_all($content);
+    $last_space = false;
+    for ($i = 0, $j = count($tokens); $i < $j; $i++) {
+        if (is_string($tokens[$i])) {
+            $last_space = false;
+            $stripStr  .= $tokens[$i];
+        } else {
+            switch ($tokens[$i][0]) {
+                //过滤各种PHP注释
+                case T_COMMENT:
+                    break;
+                case T_DOC_COMMENT:
+                    break;
+                //过滤空格
+                case T_WHITESPACE:
+                    if (!$last_space) {
+                        $stripStr  .= ' ';
+                        $last_space = true;
+                    }
+                    break;
+                case T_START_HEREDOC:
+                    $stripStr .= "<<<THINK\n";
+                    break;
+                case T_END_HEREDOC:
+                    $stripStr .= "THINK;\n";
+                    for($k = $i+1; $k < $j; $k++) {
+                        if(is_string($tokens[$k]) && $tokens[$k] == ';') {
+                            $i = $k;
+                            break;
+                        } else if($tokens[$k][0] == T_CLOSE_TAG) {
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    $last_space = false;
+                    $stripStr  .= $tokens[$i][1];
+            }
+        }
+    }
+    return $stripStr;
+}
+
+
+/**
+ * 批量修改内容
+ * @param  [type] $dir      [文件夹路径]
+ * @param  array  $research [修改的]
+ * @param  array  $replace  [替换的]
+ * @return [type]           [description]
+ */
+function find_all_dir( $dir,$research=array(), $replace=array()){
+    //找到目录下的所有文件：
+    $dh = opendir( $dir );
+    while ( $file = readdir( $dh ) ) {
+        if ( $file != "." && $file != ".." ) {
+            $fullpath = $dir . "/" . $file;
+            if ( !is_dir( $fullpath ) ) {
+                $f=fopen($fullpath, 'r');
+                $text=fread($f, filesize($fullpath));
+                //对内容进行修改
+                $text=str_replace($research, $replace , $text);
+                //判断结果
+                $result=file_put_contents($fullpath, $text);
+            } else {
+                find_all_dir( $fullpath, $research, $replace );
+            }
+        }
+    }
+    closedir( $dh );
+}
+
 
 /**
  * 简单的 php 防注入、防跨站 函数
@@ -630,9 +753,68 @@ function sortArrByField(&$array, $field, $desc = false){
 }
 
 
+/**
+ * 递归调用数组值并用其执行指定函数
+ * @param  [type] $function [执行的方法]
+ * @param  [type] $value    [数组]
+ * @return [type]           [description]
+ */
+function function_deep($function,$value) {
+ 
+    try {
+        if(!function_exists($function)){
+            $error = '"'.$function.'" is undefined';
+            throw new Exception($error);
+        }
+    } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+        die();
+    }
+ 
+    if ( is_array($value) ) {
+        $fun = Array();
+        for($i=1;$i<=count($value);$i++){
+            $fun[] = $function; 
+        }
+        $value = array_map("function_deep",$fun, $value);
+    } elseif ( is_object($value) ) {
+        $vars = get_object_vars( $value );
+        foreach ($vars as $key=>$data) {
+            $value->{$key} = function_deep($function,$data );
+        }
+    } elseif ( is_string( $value ) ) {
+        $value = call_user_func($function,$value);
+    }
+ 
+    return $value;
+}
+
+
+
+
+/**
+ * @desc 获取快递信息 
+ * @param string $code 快递公司编码
+ * @param string $invoice 快递单号
+ * @return mixed $result(
+      'status','info','state','data'
+   )
+ */
+function getExpressDelivery($code,$invoice){
+    $result = array('status'=>0,'info'=>'未知错误');
+    $url = "http://m.kuaidi100.com/query?type={$code}&postid={$invoice}&id=1&valicode=&temp=".rand(1,710);
+    $body = file_get_contents($url); //FIXME
+    $body = json_decode($body,true);
+    $result['status'] = $body['status'] == 200 ? 1 : 0;
+    $result['info'] = $body['message'];
+    $result['data'] = $body['data'];
+    isset($body['data']) && ($result['state']=$body['state']) && ($result['data'] = $body['data']) ;
+    return $result;
+}
+
 
 /*
- * 经典的概率算法，
+ * 经典的概率算法，抽奖
  * $proArr是一个预先设置的数组，
  * 假设数组为：array(100,200,300，400)，
  * 开始是从1,1000 这个概率范围内筛选第一个数是否在他的出现概率范围之内， 
@@ -1348,6 +1530,71 @@ function numtormb ($num) {
 
 
 /**
+ * 找零钱方案
+ * @param  [type] $m [description]
+ * @param  [type] $n [description]
+ * @return [type]    [description]
+ */
+function zhaoqian($m,$n)
+{
+
+    $k=count($m);
+    for($i=0;$i<$k;$i++)
+    {
+        $num[$i]['con']=$m[$i].'面值';
+        $num[$i]['num']=(int)($n/$m[$i]);
+        $n=$n%$m[$i];  
+    } 
+    return  $num; 
+}
+
+
+
+
+
+/**
+ * 检查是否是身份证号
+ * @param  [type]  $number [description]
+ * @return boolean         [description]
+ */
+function isIdCard($number) { // 检查是否是身份证号
+    //$number = getIDCard($number);
+    // 转化为大写，如出现x
+    $number = strtoupper($number);
+    //加权因子
+    $wi = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+    //校验码串
+    $ai = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+    //按顺序循环处理前17位
+    $sigma = 0;
+    for ($i = 0;$i < 17;$i++) {
+        //提取前17位的其中一位，并将变量类型转为实数
+        $b = (int) $number{$i};
+
+        //提取相应的加权因子
+        $w = $wi[$i];
+
+        //把从身份证号码中提取的一位数字和加权因子相乘，并累加
+        $sigma += $b * $w;
+    }
+    //计算序号
+    $snumber = $sigma % 11;
+
+    //按照序号从校验码串中提取相应的字符。
+    $check_number = $ai[$snumber];
+
+    if ($number{17} == $check_number) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
+
+/**
  * 按符号截取字符串的指定部分
  * @param string $str 需要截取的字符串
  * @param string $sign 需要截取的符号
@@ -1379,6 +1626,51 @@ function cut_str($str,$sign,$number){
             return $array[$number];
         }
     }
+}
+
+
+
+/**
+ * 根据开始字符串和结束字符串截取需要的采集内容数据
+ * @param  [type]  &$str      [需要采集的字符串]
+ * @param  [type]  $findStart [开始位置]
+ * @param  boolean $findEnd   [结束为止]
+ * @param  string  $encoding  [编码]
+ * @return [type]             [description]
+ * $str = '1234567890';
+ * var_dump(strCutByStr($str, '2', '9'));//输出 345678
+ * var_dump(strCutByStr($str, array('a', '4'), array('b', '7')));//输出 56，因为第一组匹配没有找到，就执行第二组，以此类推
+ * 如果要采集网页，需要将网页转换成html格式然后保存为变量！
+ */
+function strCutByStr(&$str, $findStart, $findEnd = false, $encoding = 'utf-8'){
+    if(is_array($findStart)){
+        if(count($findStart) === count($findEnd)){
+            foreach($findStart as $k => $v){
+                if(($result = strCutByStr($str, $v, $findEnd[$k], $encoding)) !== false){
+                    return $result;
+                }
+            }
+            return false;
+        }else{
+            return false;
+        }
+    }
+     
+    if(($start = mb_strpos($str, $findStart, 0, $encoding)) === false){
+        return false;
+    }
+     
+    $start += mb_strlen($findStart, $encoding);
+     
+    if($findEnd === false){
+        return mb_substr($str, $start, NULL, $encoding);
+    }
+     
+    if(($length = mb_strpos($str, $findEnd, $start, $encoding)) === false){
+        return false;
+    }
+     
+    return mb_substr($str, $start, $length - $start, $encoding);
 }
 
 /**

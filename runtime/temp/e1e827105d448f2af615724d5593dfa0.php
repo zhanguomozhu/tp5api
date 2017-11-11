@@ -1,8 +1,8 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\add.html";i:1510279686;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\chou1.html";i:1510369939;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
-    <title>添加权限</title>
+    <title>幸运大转盘</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +12,59 @@
     <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
     <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
     <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
-
+    <style type="text/css">
+    .demo{width:417px; height:417px; position:relative; margin:50px auto}
+    #disk{width:417px; height:417px; background:url(__ADMIN__/images/disk.jpg) no-repeat}
+    #start{width:163px; height:320px; position:absolute; top:46px; left:130px;}
+    #start img{cursor:pointer}
+    </style>
     <!--Beyond styles-->
     <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
-    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <script type="text/javascript" src="__ADMIN__/style/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/jQueryRotate.2.2.js"></script>
+    <script type="text/javascript" src="__ADMIN__/style/jquery.easing.min.js"></script>
+    <script type="text/javascript">
+    $(function(){ 
+         $("#startbtn").click(function(){ 
+            lottery(); 
+        }); 
+    }); 
+    function lottery(){ 
+        $.ajax({ 
+            type: 'POST', 
+            url: "<?php echo url('funs/run'); ?>",  //提交地址 改为你自己的
+            data:{aaa:1},
+            dataType: 'json', 
+            cache: false, 
+            error: function(){ 
+                alert('出错了！'); 
+                return false; 
+            }, 
+            success:function(json){ 
+                $("#startbtn").unbind('click').css("cursor","default"); 
+                var a = json.angle; //角度 
+                var p = json.prize; //奖项 
+                $("#startbtn").rotate({ 
+                    duration:3000, //转动时间 
+                    angle: 0, 
+                    animateTo:1800+a, //转动角度 
+                    easing: $.easing.easeOutSine, 
+                    callback: function(){ 
+                        var con = confirm('恭喜你，中得'+p+'\n还要再来一次吗？'); 
+                        if(con){ 
+                            lottery(); 
+                        }else{ 
+                            return false; 
+                        } 
+                    } 
+                }); 
+            } 
+        }); 
+    } 
+    </script>
 
 </head>
 <body>
@@ -134,104 +180,32 @@
                                         <li>
                         <a href="<?php echo url('Index/index'); ?>">系统</a>
                     </li>
-                                        <li>
-                        <a href="<?php echo url('lst'); ?>">权限管理</a>
-                    </li>
-                    <li class="active">添加权限</li>
-                    </ul>
+                                        <li class="active">幸运大转盘</li>
+                                        </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                    
-<div class="row">
-    <div class="col-lg-12 col-sm-12 col-xs-12">
-        <div class="widget">
-            <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">添加权限</span>
-            </div>
-            <div class="widget-body">
-                <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="<?php echo url('add'); ?>" method="post">
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
-                            <div class="col-sm-6">
-                               <select name="pid">
-                                   <option>顶级权限</option>
-                                   <?php if(is_array($rules) || $rules instanceof \think\Collection || $rules instanceof \think\Paginator): $i = 0; $__LIST__ = $rules;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-                                        <option value="<?php echo $vo['id']; ?>"><?php echo $vo['title']; ?></option>
-                                   <?php endforeach; endif; else: echo "" ;endif; ?>
-                               </select>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="title" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">控制器/方法</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="" name="name" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限状态</label>
-                            <div class="col-sm-6">
-                                <label style="margin-top:5px; ">
-                                    <input class="checkbox-slider toggle colored-blue" type="checkbox" checked="checked" name="status" value="1">
-                                    <span class="text"></span>
-                                </label>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">权限级别</label>
-                            <div class="col-sm-6">
-                                <select name="level">
-                                    <option value="0">项目</option>
-                                    <option value="1">模块</option>
-                                    <option value="2">操作</option>
-                                </select>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">菜单图标</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" placeholder="fa-th-large" name="icon" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">保存信息</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div id="main">
+                       <div class="msg"></div>
+                       <div class="demo">
+                            <div id="disk"></div>
+                            <div id="start"><img src="__ADMIN__/images/start.png" id="startbtn"></div>
+                       </div>
+                    </div>
 
-                </div>
+         		</div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
 		</div>	
 	</div>
 
-	    <!--Basic Scripts-->
-    <script src="__ADMIN__/style/jquery_002.js"></script>
-    <script src="__ADMIN__/style/bootstrap.js"></script>
-    <script src="__ADMIN__/style/jquery.js"></script>
-    <!--Beyond Scripts-->
-    <script src="__ADMIN__/style/beyond.js"></script>
+</body>
+    <!--Basic Scripts-->
+ 
+<script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/beyond.js"></script>
 
-</body></html>
+</html>
