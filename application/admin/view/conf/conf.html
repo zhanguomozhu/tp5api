@@ -66,10 +66,13 @@
                             <tr>
                                 <td align="center" style="width: 20%;">{$vo.cnname}</td>
                                 <td align="left" style="width: 80%;"> 
+                                    <!-- 单行文本 -->
                                     {if condition="$vo.type eq 1"}
                                     <input class="form-control" placeholder="" name="{$vo.enname}"  type="text" value="{$vo.value}">
+                                    <!-- 多行文本 -->
                                     {elseif  condition="$vo.type eq 2"}
                                         <textarea class="form-control" name="{$vo.enname}">{$vo.value}</textarea>
+                                    <!-- 单选 -->
                                     {elseif  condition="$vo.type eq 3"}
                                         {volist name="vo.values|trim|explode=',',###" id="v"}
                                         <div style="float: left;padding-right: 20px;">
@@ -79,6 +82,7 @@
                                             </label>
                                         </div>
                                         {/volist}
+                                    <!-- 多选 -->
                                     {elseif  condition="$vo.type eq 4"}
                                         <div class="checkbox" style="">
                                             <label>
@@ -86,6 +90,7 @@
                                                 <span class="text">{$vo.values}</span>
                                             </label>
                                         </div>
+                                    <!-- 下拉菜单 -->
                                     {elseif  condition="$vo.type eq 5"}
                                         <select name="{$vo.enname}">
                                             {volist name="vo.values|trim|explode=',',###" id="v" key="k"}

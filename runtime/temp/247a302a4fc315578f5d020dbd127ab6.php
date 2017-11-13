@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\api\express.html";i:1510382533;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\api\express.html";i:1510383762;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
 	    <meta charset="utf-8">
@@ -160,7 +160,7 @@
                                </select>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" placeholder="" id='invoice' name="invoice" required="" type="text" id="ip" value="">
+                                <input class="form-control" placeholder="" id='invoice' name="invoice" required="" type="text" value="">
                             </div>
                             <input type="button" id="send" class="btn btn-success" value="点击查询">
                         </div> 

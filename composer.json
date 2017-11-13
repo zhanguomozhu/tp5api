@@ -21,7 +21,8 @@
         "topthink/think-captcha": "1.*",
         "endroid/qrcode": "^1.9",
         "topthink/think-image": "^1.0",
-        "zoujingli/pay-php-sdk": "^1.0"
+        "zoujingli/pay-php-sdk": "^1.0",
+        "weiwei/api-doc": "^1.4"
     },
     "extra": {
         "think-path": "thinkphp"

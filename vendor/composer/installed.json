@@ -294,6 +294,91 @@
         "description": "The ThinkPHP5 Image Package"
     },
     {
+        "name": "topthink/think-helper",
+        "version": "v1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/top-think/think-helper.git",
+            "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/top-think/think-helper/0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f.zip",
+            "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
+            "shasum": ""
+        },
+        "time": "2017-04-05T07:15:37+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "think\\helper\\": "src"
+            },
+            "files": [
+                "src/helper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "yunwuxin",
+                "email": "448901948@qq.com"
+            }
+        ],
+        "description": "The ThinkPHP5 Helper Package"
+    },
+    {
+        "name": "weiwei/api-doc",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zhangweiwei0326/api-doc.git",
+            "reference": "d476fb73d2e4e264f19e6041ce9265dfcb50a3d0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/zhangweiwei0326/api-doc/d476fb73d2e4e264f19e6041ce9265dfcb50a3d0.zip",
+            "reference": "d476fb73d2e4e264f19e6041ce9265dfcb50a3d0",
+            "shasum": ""
+        },
+        "require": {
+            "topthink/think-helper": ">=1.0.4",
+            "topthink/think-installer": ">=1.0.10"
+        },
+        "time": "2017-10-31T01:46:43+00:00",
+        "type": "think-extend",
+        "extra": {
+            "think-config": {
+                "doc": "src/config.php"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Api\\Doc\\": "src"
+            },
+            "files": [
+                "src/helper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "weiwei",
+                "email": "1763692101@qq.com"
+            }
+        ],
+        "description": "The ThinkPHP5 Api Doc Package"
+    },
+    {
         "name": "zoujingli/pay-php-sdk",
         "version": "v1.0.2",
         "version_normalized": "1.0.2.0",
