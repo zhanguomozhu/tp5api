@@ -177,7 +177,7 @@ class Base extends Controller
     }
 
 	/**
-	 * api返回数据
+	 * api返回数据json
 	 * @param  [type] $code    [状态]
 	 * @param  [type] $msg     [提示]
 	 * @param  array  $data    [数据]
@@ -199,6 +199,8 @@ class Base extends Controller
         }
         return json_encode($return_data);
 	}
+
+
 
 
 	/**
@@ -360,6 +362,11 @@ class Base extends Controller
                 }
         }
     }
+
+    
+
+
+    
 
 }
 

@@ -9,7 +9,7 @@ class ComposerStaticInit2d9ae6040777a9c31a6650c37e069647
     public static $files = array (
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
-        '644e9cafc67b331e17cc7661548f33d0' => __DIR__ . '/..' . '/apidoc/api-doc/src/helper.php',
+        '644e9cafc67b331e17cc7661548f33d0' => __DIR__ . '/..' . '/weiwei/api-doc/src/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -70,7 +70,7 @@ class ComposerStaticInit2d9ae6040777a9c31a6650c37e069647
         ),
         'Api\\Doc\\' => 
         array (
-            0 => __DIR__ . '/..' . '/apidoc/api-doc/src',
+            0 => __DIR__ . '/..' . '/weiwei/api-doc/src',
         ),
     );
 

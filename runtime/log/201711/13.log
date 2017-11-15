@@ -32634,3 +32634,686 @@ ts\/css/bootstrap.min.css.map): failed to open stream: No such file or directory
 )
 [ info ] [ RUN ] Api\Doc\DocController->assets[ D:\phpStudy\WWW\tp5api\vendor\apidoc\api-doc\src\DocController.php ]
 [ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-11-13T17:16:58+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/auth_group/lst.html
+[ info ] tp5api.com/admin/auth_group/lst.html [运行时间：0.025001s][吞吐率：40.00req/s] [内存消耗：1,636.94kb] [文件加载：63]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_group',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/word/api/getdoc.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-11-13T17:17:06+08:00 ] 127.0.0.1 127.0.0.1 GET /admin
+[ info ] tp5api.com/admin [运行时间：0.043002s][吞吐率：23.25req/s] [内存消耗：1,635.66kb] [文件加载：63]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; thinkphp_show_page_trace=0|0; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-11-13T17:17:09+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/login/login.html
+[ info ] tp5api.com/admin/login/login.html [运行时间：0.046003s][吞吐率：21.74req/s] [内存消耗：1,694.86kb] [文件加载：64]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->login[ D:\phpStudy\WWW\tp5api\application\admin\controller\Login.php ]
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\public/../application/admin\view\login\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-11-13T17:17:09+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/login/verify.html
+[ info ] tp5api.com/admin/login/verify.html [运行时间：0.074005s][吞吐率：13.51req/s] [内存消耗：1,594.91kb] [文件加载：59]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'verify',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/login/login.html',
+  'accept' => 'image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->verify[ D:\phpStudy\WWW\tp5api\application\admin\controller\Login.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-11-13T17:17:21+08:00 ] 127.0.0.1 127.0.0.1 POST /admin/login/login.html
+[ info ] tp5api.com/admin/login/login.html [运行时间：0.058003s][吞吐率：17.24req/s] [内存消耗：2,623.16kb] [文件加载：75]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/login/login.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://tp5api.com',
+  'cache-control' => 'max-age=0',
+  'content-length' => '39',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+  'username' => 'admin',
+  'password' => 'admin',
+  'code' => 'mgcm',
+)
+[ info ] [ RUN ] app\admin\controller\Login->login[ D:\phpStudy\WWW\tp5api\application\admin\controller\Login.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.006001s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `username` = 'admin' LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_admin`  SET `logintime`=1510564641,`loginip`='127.0.0.1',`session_id`='06pgplmf6rdg1sl7mab36qeu77',`num`=31,`update_time`=1510564641  WHERE  `id` = 41 [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:17:25+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ info ] tp5api.com/admin/index/index.html [运行时间：0.122006s][吞吐率：8.20req/s] [内存消耗：2,939.56kb] [文件加载：84]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/login/login.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\Index->index[ D:\phpStudy\WWW\tp5api\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\public/../application/admin\view\index\index.html [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'data',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010001s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] select version() as ver [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW TABLE STATUS FROM tp5api LIKE 'tp_%' [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:17:30+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/auth_rule/lst.html
+[ info ] tp5api.com/admin/auth_rule/lst.html [运行时间：0.124007s][吞吐率：8.06req/s] [内存消耗：3,180.07kb] [文件加载：84]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_rule',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/index/index.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\AuthRule->lst[ D:\phpStudy\WWW\tp5api\application\admin\controller\AuthRule.php ]
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'rules',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` ORDER BY sort asc [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:17:39+08:00 ] 127.0.0.1 127.0.0.1 POST /admin/auth_rule/lst.html
+[ info ] tp5api.com/admin/auth_rule/lst.html [运行时间：0.103005s][吞吐率：9.71req/s] [内存消耗：2,963.13kb] [文件加载：87]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_rule',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/auth_rule/lst.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://tp5api.com',
+  'cache-control' => 'max-age=0',
+  'content-length' => '350',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+  0 => '50',
+  1 => '1',
+  2 => '2',
+  3 => '50',
+  4 => '50',
+  5 => '50',
+  6 => '50',
+  7 => '3',
+  8 => '50',
+  9 => '50',
+  10 => '50',
+  11 => '50',
+  12 => '4',
+  13 => '50',
+  14 => '50',
+  15 => '50',
+  16 => '50',
+  17 => '5',
+  18 => '50',
+  19 => '50',
+  20 => '50',
+  21 => '50',
+  22 => '50',
+  23 => '6',
+  24 => '50',
+  25 => '50',
+  26 => '50',
+  27 => '50',
+  28 => '50',
+  29 => '50',
+  30 => '50',
+  31 => '50',
+  32 => '50',
+  33 => '50',
+  34 => '50',
+  35 => '50',
+  36 => '50',
+  37 => '50',
+  38 => '50',
+  39 => '50',
+  40 => '50',
+  41 => '50',
+  42 => '50',
+  43 => '50',
+  44 => '50',
+  45 => '50',
+  46 => '50',
+  47 => '50',
+  48 => '50',
+  49 => '50',
+  50 => '1',
+  51 => '2',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\AuthRule->lst[ D:\phpStudy\WWW\tp5api\application\admin\controller\AuthRule.php ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'code',
+  4 => 'msg',
+  5 => 'data',
+  6 => 'url',
+  7 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.006001s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.008000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.005001s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 95 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=1,`update_time`=1510564659  WHERE  `id` = 137 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=2,`update_time`=1510564659  WHERE  `id` = 96 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 101 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=3,`update_time`=1510564659  WHERE  `id` = 97 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 105 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=4,`update_time`=1510564659  WHERE  `id` = 98 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 109 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=5,`update_time`=1510564659  WHERE  `id` = 99 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 113 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=6,`update_time`=1510564659  WHERE  `id` = 100 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564659  WHERE  `id` = 118 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=1,`update_time`=1510564659  WHERE  `id` = 145 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=2,`update_time`=1510564659  WHERE  `id` = 146 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:17:42+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/auth_rule/lst.html
+[ info ] tp5api.com/admin/auth_rule/lst.html [运行时间：0.129007s][吞吐率：7.75req/s] [内存消耗：3,180.10kb] [文件加载：84]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_rule',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/auth_rule/lst.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\AuthRule->lst[ D:\phpStudy\WWW\tp5api\application\admin\controller\AuthRule.php ]
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'rules',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.006001s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.005001s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` ORDER BY sort asc [ RunTime:0.001000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:21:12+08:00 ] 127.0.0.1 127.0.0.1 POST /admin/auth_rule/lst.html
+[ info ] tp5api.com/admin/auth_rule/lst.html [运行时间：0.094005s][吞吐率：10.64req/s] [内存消耗：2,964.41kb] [文件加载：87]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_rule',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/auth_rule/lst.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://tp5api.com',
+  'cache-control' => 'max-age=0',
+  'content-length' => '349',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+  0 => '50',
+  1 => '1',
+  2 => '2',
+  3 => '50',
+  4 => '50',
+  5 => '50',
+  6 => '50',
+  7 => '3',
+  8 => '50',
+  9 => '50',
+  10 => '50',
+  11 => '50',
+  12 => '4',
+  13 => '50',
+  14 => '50',
+  15 => '50',
+  16 => '50',
+  17 => '5',
+  18 => '50',
+  19 => '50',
+  20 => '50',
+  21 => '50',
+  22 => '50',
+  23 => '6',
+  24 => '50',
+  25 => '50',
+  26 => '50',
+  27 => '50',
+  28 => '50',
+  29 => '50',
+  30 => '50',
+  31 => '50',
+  32 => '50',
+  33 => '50',
+  34 => '50',
+  35 => '50',
+  36 => '50',
+  37 => '50',
+  38 => '50',
+  39 => '50',
+  40 => '50',
+  41 => '50',
+  42 => '50',
+  43 => '50',
+  44 => '50',
+  45 => '50',
+  46 => '50',
+  47 => '1',
+  48 => '50',
+  49 => '1',
+  50 => '2',
+  51 => '50',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\AuthRule->lst[ D:\phpStudy\WWW\tp5api\application\admin\controller\AuthRule.php ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'code',
+  4 => 'msg',
+  5 => 'data',
+  6 => 'url',
+  7 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.005001s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 95 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=1,`update_time`=1510564872  WHERE  `id` = 137 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=2,`update_time`=1510564872  WHERE  `id` = 96 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 101 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=3,`update_time`=1510564872  WHERE  `id` = 97 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 105 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=4,`update_time`=1510564872  WHERE  `id` = 98 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 109 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=5,`update_time`=1510564872  WHERE  `id` = 99 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 113 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=6,`update_time`=1510564872  WHERE  `id` = 100 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 118 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=1,`update_time`=1510564872  WHERE  `id` = 144 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 138 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=1,`update_time`=1510564872  WHERE  `id` = 145 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=2,`update_time`=1510564872  WHERE  `id` = 146 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `tp_auth_rule`  SET `sort`=50,`update_time`=1510564872  WHERE  `id` = 142 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2017-11-13T17:21:15+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/auth_rule/lst.html
+[ info ] tp5api.com/admin/auth_rule/lst.html [运行时间：0.103006s][吞吐率：9.71req/s] [内存消耗：3,180.11kb] [文件加载：84]
+[ info ] [ LANG ] D:\phpStudy\WWW\tp5api\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'auth_rule',
+    2 => 'lst',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=610447360; OUTFOX_SEARCH_USER_ID_NCOO=657300298.1678416; _ga=GA1.2.1682893292.1510044400; PHPSESSID=06pgplmf6rdg1sl7mab36qeu77; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://tp5api.com/admin/auth_rule/lst.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'close',
+  'host' => 'tp5api.com',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\admin\controller\AuthRule->lst[ D:\phpStudy\WWW\tp5api\application\admin\controller\AuthRule.php ]
+[ info ] [ VIEW ] D:\phpStudy\WWW\tp5api\public/../application/admin\view\auth_rule\lst.html [ array (
+  0 => 'user',
+  1 => 'leftMenus',
+  2 => 'rule_access',
+  3 => 'rules',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=tp5api;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_admin` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `username` FROM `tp_admin` WHERE  `id` = 41  AND `username` = 'admin' [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `admin` FROM `tp_admin` WHERE  `id` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_rule` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` WHERE  `status` = 1 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group_access` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group_access` WHERE  `uid` = 41 LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_admin` WHERE  `id` = 41 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_auth_group` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_group` WHERE  `id` = 12 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_auth_rule` ORDER BY sort asc [ RunTime:0.000000s ]

@@ -11,8 +11,8 @@
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "zhanguomozhu",
+            "email": "976352324@qq.com"
         }
     ],
     "require": {
@@ -20,9 +20,7 @@
         "topthink/framework": "^5.0",
         "topthink/think-captcha": "1.*",
         "endroid/qrcode": "^1.9",
-        "topthink/think-image": "^1.0",
-        "zoujingli/pay-php-sdk": "^1.0",
-        "weiwei/api-doc": "^1.4"
+        "topthink/think-image": "^1.0"
     },
     "extra": {
         "think-path": "thinkphp"

@@ -11,7 +11,6 @@ return array(
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\' => array($baseDir . '/thinkphp/library/think', $vendorDir . '/topthink/think-image/src'),
     'Symfony\\Component\\OptionsResolver\\' => array($vendorDir . '/symfony/options-resolver'),
-    'Pay\\' => array($vendorDir . '/zoujingli/pay-php-sdk/src'),
     'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qrcode/src'),
     'Api\\Doc\\' => array($vendorDir . '/apidoc/api-doc/src'),
 );

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\info.html";i:1510553452;s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\base.html";i:1510553452;s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\head.html";i:1510553452;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\info.html";i:1510710985;s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\base.html";i:1510710985;s:63:"D:\phpStudy\WWW\tp5api\vendor\weiwei\api-doc\src\view\head.html";i:1510710985;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

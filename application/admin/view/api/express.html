@@ -60,7 +60,9 @@
                             <label for="username" class="col-sm-2 control-label">快递查询</label>
                             <div class="col-sm-1">
                                <select name='code' id='code'>
-                                   <option value="ems">邮政</option>
+                                {volist name="res" id='vo'}
+                                   <option value="{$vo.code}">{$vo.name}</option>
+                                {/volist}
                                </select>
                             </div>
                             <div class="col-sm-3">

@@ -9,7 +9,8 @@ class Api extends Base
 	 * @return [type] [description]
 	 */
 	public function express(){
-		return $this->fetch();
+		$res = config('express');
+		return $this->fetch('',['res'=>$res]);
 	}
 
 	/**
