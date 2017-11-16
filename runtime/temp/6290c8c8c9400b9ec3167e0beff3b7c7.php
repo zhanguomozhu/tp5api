@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:69:"D:\phpStudy\WWW\tp5api\public/../application/chat\view\man\index.html";i:1510800784;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

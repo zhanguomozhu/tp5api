@@ -1,9 +1,10 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:71:"D:\phpStudy\WWW\tp5api\public/../application/push\view\index\index.html";i:1510800397;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>即时通讯系统</title>
-<link rel="stylesheet" href="__CHAT__/man/css/style.css" media="screen" type="text/css" />
+<link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
 </head>
 <style type="text/css">
 	
@@ -25,7 +26,7 @@
 			<button class="but" onclick="speak_to_all()">发送</button>
 		</div>
 	</div>
- <script src='__CHAT__/man/js/jquery.js'></script>
+ <script src='jquery.js'></script>
  <script type="text/javascript">
  	var name=prompt("请填写昵称");
 

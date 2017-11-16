@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\conf.html";i:1510121368;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510277372;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:70:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\conf\conf.html";i:1510535848;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
         <meta charset="utf-8">
@@ -162,10 +162,13 @@
                             <tr>
                                 <td align="center" style="width: 20%;"><?php echo $vo['cnname']; ?></td>
                                 <td align="left" style="width: 80%;"> 
+                                    <!-- 单行文本 -->
                                     <?php if($vo['type'] == 1): ?>
                                     <input class="form-control" placeholder="" name="<?php echo $vo['enname']; ?>"  type="text" value="<?php echo $vo['value']; ?>">
+                                    <!-- 多行文本 -->
                                     <?php elseif($vo['type'] == 2): ?>
                                         <textarea class="form-control" name="<?php echo $vo['enname']; ?>"><?php echo $vo['value']; ?></textarea>
+                                    <!-- 单选 -->
                                     <?php elseif($vo['type'] == 3): if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $i = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
                                         <div style="float: left;padding-right: 20px;">
                                             <label>
@@ -173,13 +176,16 @@
                                                 <span class="text"><?php echo $v; ?></span>
                                             </label>
                                         </div>
-                                        <?php endforeach; endif; else: echo "" ;endif; elseif($vo['type'] == 4): ?>
+                                        <?php endforeach; endif; else: echo "" ;endif; ?>
+                                    <!-- 多选 -->
+                                    <?php elseif($vo['type'] == 4): ?>
                                         <div class="checkbox" style="">
                                             <label>
                                                 <input name="<?php echo $vo['enname']; ?>" type="checkbox" value="<?php echo $vo['values']; ?>" <?php if($vo['value'] == $vo['values']): ?>checked<?php endif; ?> >
                                                 <span class="text"><?php echo $vo['values']; ?></span>
                                             </label>
                                         </div>
+                                    <!-- 下拉菜单 -->
                                     <?php elseif($vo['type'] == 5): ?>
                                         <select name="<?php echo $vo['enname']; ?>">
                                             <?php if(is_array(explode(',',trim($vo['values']))) || explode(',',trim($vo['values'])) instanceof \think\Collection || explode(',',trim($vo['values'])) instanceof \think\Paginator): $k = 0; $__LIST__ = explode(',',trim($vo['values']));if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($k % 2 );++$k;?>

@@ -20,7 +20,9 @@
         "topthink/framework": "^5.0",
         "topthink/think-captcha": "1.*",
         "endroid/qrcode": "^1.9",
-        "topthink/think-image": "^1.0"
+        "topthink/think-image": "^1.0",
+        "topthink/think-worker": "^1.0",
+        "workerman/workerman-for-win": "^3.5"
     },
     "extra": {
         "think-path": "thinkphp"
