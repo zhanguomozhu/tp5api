@@ -75,11 +75,11 @@ class Base extends Controller
      */
     private function  checkLogin(){
         //检测session 是否有用户信息
-        if(!session(session_id().'_uid','','global') && !session(session_id().'_username','','global')){
+        if(!session(session_id().'_uid','') && !session(session_id().'_username','')){
             $this->error('您尚未登录','login/login');
         }else{
             //账户信息
-            $admin = model('admin')->where(['id'=>session(session_id().'_uid','','global'),'username'=>session(session_id().'_username','','global')])->column('username');
+            $admin = model('admin')->where(['id'=>session(session_id().'_uid',''),'username'=>session(session_id().'_username','')])->column('username');
             if($admin){
                 $this->assign('user',$admin[0]);//登录用户名
             }else{
@@ -108,10 +108,10 @@ class Base extends Controller
                         );
         if(session(session_id().'_uid') != 1){              //检测是用户是否登录
              //检测是否超级管理员
-             $admin = model('Admin')->field('admin')->find(session(session_id().'_uid','','global'));
+             $admin = model('Admin')->field('admin')->find(session(session_id().'_uid',''));
             if($admin['admin'] != 0){
                 if(!in_array($name,$not_check)){                //过滤权限检测
-                    if(!$auth->check($name,session(session_id().'_uid','','global'))){//检测权限
+                    if(!$auth->check($name,session(session_id().'_uid',''))){//检测权限
                         $this->error('没有权限','Index/index');
                     }
                 }
@@ -129,7 +129,7 @@ class Base extends Controller
         $menus = model('AuthRule')->getTree(['status'=>1],2);
         //dump($menus);
         //查看用户角色权限
-        $rule_access = model('AuthGroupAccess')->getAuths(session(session_id().'_uid','','global'));
+        $rule_access = model('AuthGroupAccess')->getAuths(session(session_id().'_uid',''));
         //dump($rule_access);
 
         $this->assign(['leftMenus'=>$menus,'rule_access'=>$rule_access]);
@@ -143,7 +143,7 @@ class Base extends Controller
      */
     public function checkSessionId(){
         //查询数据表
-        $user = model('Admin')->where(['id'=>session(session_id().'_uid','','global')])->find();  
+        $user = model('Admin')->where(['id'=>session(session_id().'_uid','')])->find();
         //本地session
         $session_id = session_id();
         //判断是否异地
@@ -158,7 +158,7 @@ class Base extends Controller
      *  获取用户信息
      */
     public function getUserInfo(){
-        $res = model('Admin')->where(['id'=>session(session_id().'_uid','','global')])->find();
+        $res = model('Admin')->where(['id'=>session(session_id().'_uid','')])->find();
         return $res;
     }
 

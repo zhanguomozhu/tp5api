@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html><head>
-	    <meta charset="utf-8">
+<html>
+<head>
+    <meta charset="utf-8">
     <title>添加管理员</title>
 
     <meta name="description" content="Dashboard">
@@ -17,177 +18,181 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-    
+
 </head>
 <body>
-	<!-- 头部 -->
-	{include file="public/top"}
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			<!-- Page Sidebar -->
-            {include file="public/left"}
-            <!-- /Page Sidebar -->
-            <!-- Page Content -->
-            <div class="page-content">
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                                        <li>
+<!-- 头部 -->
+{include file="public/top"}
+<!-- /头部 -->
+
+<div class="main-container container-fluid">
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left"}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
                         <a href="{:url('Index/index')}">系统</a>
                     </li>
-                                        <li>
+                    <li>
                         <a href="{:url('lst')}">管理员管理</a>
                     </li>
-                                        <li class="active">添加管理员</li>
-                                        </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-
-                <!-- Page Body -->
-                <div class="page-body">
-                    
-<div class="row">
-    <div class="col-lg-12 col-sm-12 col-xs-12">
-        <div class="widget">
-            <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">添加管理员</span>
+                    <li class="active">添加管理员</li>
+                </ul>
             </div>
-            <div class="widget-body">
-                <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="" method="post">
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">所属用户组</label>
-                            <div class="col-sm-4">
-                                <select name="group_id">
-                                {if condition="$auth_groups"}
-                                    {volist name="auth_groups" id="vo"}
-                                        <option value="{$vo.id}">{$vo.title}</option>
-                                    {/volist}
-                                {else /}
-                                    <option value="0">暂无用户组</option>
-                                {/if}
-                                </select>
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+            <!-- /Page Breadcrumb -->
 
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" placeholder="" name="username" required="" type="text">
+            <!-- Page Body -->
+            <div class="page-body">
+
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">添加管理员</span>
                             </div>
-                            <p class="help-block col-sm-4 red username">* 必填</p>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form" action="" method="post">
+                                        <div class="form-group">
+                                            <label for="username"
+                                                   class="col-sm-2 control-label no-padding-right">所属用户组</label>
+                                            <div class="col-sm-4">
+                                                <select name="group_id">
+                                                    {if condition="$auth_groups"}
+                                                    {volist name="auth_groups" id="vo"}
+                                                    <option value="{$vo.id}">{$vo.title}</option>
+                                                    {/volist}
+                                                    {else /}
+                                                    <option value="0">暂无用户组</option>
+                                                    {/if}
+                                                </select>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username"
+                                                   class="col-sm-2 control-label no-padding-right">管理员名称</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" name="username" required=""
+                                                       type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red username">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="group_id"
+                                                   class="col-sm-2 control-label no-padding-right">手机号</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" name="phone" required=""
+                                                       type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red phone">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="group_id"
+                                                   class="col-sm-2 control-label no-padding-right">管理员密码</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" name="password" required=""
+                                                       type="password">
+                                            </div>
+                                            <p class="help-block col-sm-4 red password">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-success">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label no-padding-right">手机号</label>
-                            <div class="col-sm-4">
-                              <input class="form-control" placeholder="" name="phone" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red phone">* 必填</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label no-padding-right">管理员密码</label>
-                            <div class="col-sm-4">
-                              <input class="form-control" placeholder="" name="password" required="" type="password">
-                            </div>
-                            <p class="help-block col-sm-4 red password">* 必填</p>
-                        </div>  
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">保存信息</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+
             </div>
+            <!-- /Page Body -->
         </div>
+        <!-- /Page Content -->
     </div>
 </div>
 
-                </div>
-                <!-- /Page Body -->
-            </div>
-            <!-- /Page Content -->
-		</div>	
-	</div>
+<!--Basic Scripts-->
+<script src="__ADMIN__/style/jquery_002.js"></script>
+<script src="__ADMIN__/style/bootstrap.js"></script>
+<script src="__ADMIN__/style/jquery.js"></script>
+<!--Beyond Scripts-->
+<script src="__ADMIN__/style/beyond.js"></script>
+<script type="text/javascript">
+    //验证用户名
+    $("input[name='username']").focus(function () {
+        $(".username").html('中文、字母、数字等组合,4-18个字符');
+    });
 
-	    <!--Basic Scripts-->
-    <script src="__ADMIN__/style/jquery_002.js"></script>
-    <script src="__ADMIN__/style/bootstrap.js"></script>
-    <script src="__ADMIN__/style/jquery.js"></script>
-    <!--Beyond Scripts-->
-    <script src="__ADMIN__/style/beyond.js"></script>
-    <script type="text/javascript">
-        //验证用户名   
-        $("input[name='username']").focus(function(){
-            $(".username").html('中文、字母、数字等组合,4-18个字符');
-        });
-
-        //验证用户名是否存在
-        $("input[name='username']").blur(function(){
-            if($(this).val().length!=0)
-            {
-                $.post("{:url('admin/yanzheng')}",{username:$(this).val()},function(res){
-                    if(res.code == 1031){
-                        $(".username").addClass('red').html(res.msg);
-                    }
-                    if(res.code == 1032){
-                        $(".username").removeClass('red').addClass('green').html(res.msg);
-                    }
-                },"json");  
-            } 
-            if($(this).val().length>18||$(this).val().length<4){
-                 $(".username").html('用户名不能为空');
-            }   
-        });
-
-
-
-
-        //验证密码
-        $("input[name='password']").focus(function(){
-            $(".password").addClass('red').html("中文、字母、数字等组合,4-18个字符");
-        });
-        //验证密码是否为空
-        $("input[name='password']").blur(function(){
-            if($(this).val().length>18 || $(this).val().length<4){
-                $(".password").addClass('red').html('密码是4-18个字符');
-            }else{
-                $(".password").removeClass('red').addClass('green').html('输入正确');
-            }
-        });
-
-        //验证手机
-        $("input[name='phone']").focus(function(){
-            $(".phone").addClass('red').html("建议使用常用手机！");
-        });
-       
-
-         $("input[name='phone']").blur(function(){ 
-            //验证手机是否为空和长度
-            if($(this).val().length!=11 || $(this).val().length==0){
-                $(".phone").html('手机号不能为空，长度11位');
-            }else{
-                //验证手机号码是否已注册
-                if($(this).val().match(/^1[34578]\d{9}$/))
-                {
-                    $.post("{:url('login/yanzheng')}",{phone:$(this).val()},function(res){
-                        if(res.code == 1033){
-                            $(".phone").html(res.msg);
-                        }
-                        if(res.code == 1034){
-                            $(".phone").removeClass('red').addClass('green').html(res.msg);
-                        }
-                    },"json");  
-                }else{
-                    $(".phone").html('手机号格式不正确');
+    //验证用户名是否存在
+    $("input[name='username']").blur(function () {
+        if ($(this).val().length != 0) {
+            $.post("{:url('admin/yanzheng')}", {username: $(this).val()}, function (res) {
+                if (res.code == 1031) {
+                    $(".username").addClass('red').html(res.msg);
                 }
+                if (res.code == 1032) {
+                    $(".username").removeClass('red').addClass('green').html(res.msg);
+                }
+            }, "json");
+        }
+        if ($(this).val().length > 18 || $(this).val().length < 4) {
+            $(".username").html('用户名不能为空');
+        }
+    });
+
+
+    //验证密码
+    $("input[name='password']").focus(function () {
+        $(".password").addClass('red').html("中文、字母、数字等组合,4-18个字符");
+    });
+    //验证密码是否为空
+    $("input[name='password']").blur(function () {
+        if ($(this).val().length > 18 || $(this).val().length < 4) {
+            $(".password").addClass('red').html('密码是4-18个字符');
+        } else {
+            $(".password").removeClass('red').addClass('green').html('输入正确');
+        }
+    });
+
+    //验证手机
+    $("input[name='phone']").focus(function () {
+        $(".phone").addClass('red').html("建议使用常用手机！");
+    });
+
+
+    $("input[name='phone']").blur(function () {
+        //验证手机是否为空和长度
+        if ($(this).val().length != 11 || $(this).val().length == 0) {
+            $(".phone").html('手机号不能为空，长度11位');
+        } else {
+            //验证手机号码是否已注册
+            if ($(this).val().match(/^1[34578]\d{9}$/)) {
+                $.post("{:url('login/yanzheng')}", {phone: $(this).val()}, function (res) {
+                    if (res.code == 1033) {
+                        $(".phone").html(res.msg);
+                    }
+                    if (res.code == 1034) {
+                        $(".phone").removeClass('red').addClass('green').html(res.msg);
+                    }
+                }, "json");
+            } else {
+                $(".phone").html('手机号格式不正确');
             }
-            
-        });
-    </script>
+        }
+
+    });
+</script>
 
 
-</body></html>
+</body>
+</html>

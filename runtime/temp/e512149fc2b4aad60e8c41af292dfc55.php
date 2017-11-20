@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\mulcurl.html";i:1510390385;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\funs\mulcurl.html";i:1510536097;s:71:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\top.html";i:1509518630;s:72:"D:\phpStudy\WWW\tp5api\public/../application/admin\view\public\left.html";i:1510292249;}*/ ?>
 <!DOCTYPE html>
 <html><head>
         <meta charset="utf-8">
@@ -162,7 +162,6 @@
                             </div>
                             <div class="col-sm-1">
                               <select id='type'>
-                                  <option>显示方式</option>
                                   <option value="1">重写</option>
                                   <option value="2">追加</option>
                               </select>

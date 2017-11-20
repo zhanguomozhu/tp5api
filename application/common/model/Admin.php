@@ -1,6 +1,7 @@
 <?php 
 namespace app\common\model;
 use app\base\model\Base;
+use think\Session;
 class Admin extends Base
 {
 	
@@ -160,8 +161,8 @@ class Admin extends Base
 		if($res){
 			if($res['password'] == md5($data['password'])){
 				//存储session，session_id 用户标识，防止覆盖
-				session(session_id().'_uid',$res['id'],'global');
-				session(session_id().'_username',$res['username'],'global');
+				session(session_id().'_uid',$res['id']);
+				session(session_id().'_username',$res['username']);
 				//修改数据表
 				$param = [
 					'logintime'	=>time(),
@@ -198,8 +199,8 @@ class Admin extends Base
 			//插入数据库
 			if($this->allowField(true)->save($data)){
 				//存入session  session_id 用户标识，防止覆盖
-				session(session_id().'_uid',$this->id,'global');
-				session(session_id().'_username',$data['username'],'global');
+				session(session_id().'_uid',$this->id);
+				session(session_id().'_username',$data['username']);
 				return $this->id;//返回自增id
 			}else{
 				return false;
