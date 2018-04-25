@@ -11,18 +11,15 @@ class Num{
 		static $advanced=array(1=>"拾","佰","仟");
 
 		public static function ParseNumber($number){
-			$number=trim($number);
+			$number=abs(trim($number));
 			if ($number>999999999999) return "数字太大，无法处理。抱歉！";
 			if ($number==0) return "零";
 			if(strpos($number,'.')){
 				$number=round($number,2);
 				$data=explode(".",$number);
 				$data[0]=self::int($data[0]);
-				if(isset($data[1])){
-					$data[1]=self::dec($data[1]);
-					return $data[0].$data[1];
-				}
-				return $data[0];
+				$data[1]=self::dec($data[1]);
+				return $data[0].$data[1];
 			}else{
 				return self::int($number).'整';
 			}
