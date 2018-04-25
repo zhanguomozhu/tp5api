@@ -18,8 +18,11 @@ class Num{
 				$number=round($number,2);
 				$data=explode(".",$number);
 				$data[0]=self::int($data[0]);
-				$data[1]=self::dec($data[1]);
-				return $data[0].$data[1];
+				if(isset($data[1])){
+					$data[1]=self::dec($data[1]);
+					return $data[0].$data[1];
+				}
+				return $data[0];
 			}else{
 				return self::int($number).'整';
 			}
